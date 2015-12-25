@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>三列布局</title>
+</head>
+<style type="text/css">
+	*{margin: 0px;padding: 0px;}
+	h2{height: 36px;line-height: 36px;}
+	small{font-size: 60%;color:#ccc;padding:0 10px;}
+	.handle-list{float:left;width: 110px;height: 55px;line-height:55px;background-color: #ccc;}
+	/* 关键属性在与overflow:hidden;并且要把中间显示的div放在最下边 */
+	.header-title{padding:0 20px;margin:0 30px; height: 55px;line-height:55px; background-color: red;overflow: hidden;}
+	.handle-menu{float:right;background-color: #ccc;height: 55px;line-height:55px;}
+	.analysis-list-panel{
+		position: absolute;
+		top: 55px;
+		right: 0px;
+		bottom: 0px;
+		width: 280px;
+		border: 1px solid #ccc;
+	}
+	.analysis-list-panel-header{
+		height: 100px;
+		border-bottom: 1px solid #ccc;
+	}
+	.analysis-list-panel-body{
+
+	}
+	.analysis-list-item{
+		display: block;
+		height: 100px;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.analysis-list-item ul li{
+		display: inline-block;
+		height:100px;
+	}
+	.item-icon{
+		width: 99px;
+		border-right: 1px solid #ccc;
+	}
+	.item-content{
+		box-sizing:border-box;
+		width: 150px;
+		vertical-align: top;
+		padding: 10px;
+	}
+	.item-check{
+		width: 30px;
+		background-color: #ccc;
+	}
+
+</style>
+<body>
+	<h2>两边固定，中间自适应<small>关键属性在与overflow:hidden;并且要把中间显示的div放在最下边</small></h2>
+	<div id="my_dashboard_head" class="header header-fixed my-dashboard-head">
+	  <ul class="handle-list">
+	    <li><a href="overview-list.html" class="icon-back">返回</a></li>
+	  </ul>
+	  <div class="handle-menu"><a href="javascript:void(0);" class="btn btn-add-analysis" data-e-click="AppPage.toggleAnalysisListPanel"><i class="icon-toggle-show"></i>添加分析</a></div>
+	  <div class="header-title">
+	    <h1>商品数据概览</h1>
+	  </div>
+	</div>
+	<div class="analysis-list-panel">
+		<div class="analysis-list-panel-header"></div>
+		<div class="analysis-list-panel-body">
+			<ul>
+				<li class="analysis-list-item">
+					<ul>
+						<li class="item-icon"></li>
+						<li class="item-content">任意事件的总次数，触发 用户数，按屏幕宽度查看 触发用户数</li>
+						<li class="item-check">
+							<i class="check-un"></i>
+						</li>
+					</ul>
+				</li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+				<li class="analysis-list-item"></li>
+			</ul>
+		</div>
+		<div class="analysis-list-panel-footer"></div>
+	</div>
+</body>
+</html>
