@@ -16,6 +16,24 @@ module.exports = function(grunt) {
 		banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
 			'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
 			'* Copyright (c) <%= grunt.template.today("yyyy") %> ',
+		uglify: {
+			// options: {
+			// 	banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+			// 		'<%= grunt.template.today("yyyy-mm-dd") %> */'
+			// },
+			/*my_target: {
+				files: {
+					'dest/output.min.js': ['src/input1.js', 'src/input2.js']
+				}
+			}*/
+			options: {
+				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+			},
+			build: {
+				src: 'src/*.js',
+				dest: 'dest/build/<%= pkg.name %>.min.js'
+			}
+		},
 		// Task configuration.
 		sass: {
 			dist: {
@@ -44,9 +62,11 @@ module.exports = function(grunt) {
 	});
 
 	// These plugins provide necessary tasks.
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Default task.
+	grunt.registerTask('test', ['uglify']);
 	grunt.registerTask('default', ['sass']);
 };
