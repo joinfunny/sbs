@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <title>通过拖放实现添加、删除</title>
+        <style type="text/css">
+            div>div{
+                display:inline-block;
+                padding: 10px;
+                background-color: #aaa;
+                margin: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:600px;border:1px solid black;">
+            <h2>可将喜欢的项目拖到收藏夹</h2>
+            <div draggable="true" ondragstart="dsHandler(event);">勿忘心安</div>
+            <div draggable="true" ondragstart="dsHandler(event);">照顾自己</div>
+            <div draggable="true" ondragstart="dsHandler(event);">Number 9</div>
+            <div draggable="true" ondragstart="dsHandler(event);">崇拜</div>
+        </div>
+        <div id="dest" style="width:400px;height:400px;border:1px solid black;float:left;">
+            <h2 ondragleave="return false;">收藏夹</h2>
+        </div>
+        <div id="gb" draggable="false" style="width:100px;height:100px;border:1px solid red;float:left;">我是垃圾桶</div>
+        <script type="text/javascript">
+            var dest = document.getElementById("dest");
+            var dsHandler = function (evt){
+                evt.dataTransfer.setData("text/plain","<item>"+evt.target.innerHTML);
+            }
+ 
+            dest.ondrop = function(evt){
+                var text = evt.dataTransfer.getData("text/plain");
+                if(text.indexOf("<item>") == 0){
+                    var newEle = document.createElement("div");
+                    newEle.id = new Date().getUTCMilliseconds();
+                    newEle.innerHTML = text.substring(6);
+                    newEle.draggable = "true";
+                    newEle.ondragstart = function(evt){
+                        evt.dataTransfer.setData("text/plain","<remove>"+newEle.id);
+                    }
+                    dest.appendChild(newEle);
+                }
+            }
+ 
+            document.getElementById("gb").ondrop = function(evt){
+                var id = evt.dataTransfer.getData("text/plain");
+                if(id.indexOf("<remove>") == 0){
+                    var target = document.getElementById(id.substring(8));
+                    dest.removeChild(target);
+                }
+            }
+ 
+            document.ondragover = function(evt){
+                return false;
+            }
+ 
+            document.ondrop = function(evt){
+                return false;
+            }
+        </script>
+    </body>
+</html>
