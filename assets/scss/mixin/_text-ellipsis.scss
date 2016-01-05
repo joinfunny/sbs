@@ -1,0 +1,12 @@
+// text-overflow
+//----------------------------------------
+@mixin text-ellipsis {
+	display: block;
+	overflow: hidden;
+	/* width: ; 必须赋值 */
+	white-space: nowrap;
+	word-break: break-all; /* IE */
+	-webkit-text-overflow: ellipsis; /* Safari/chrome */
+	-o-text-overflow: ellipsis; /* Opera */
+	text-overflow: ellipsis; /* IE */
+}

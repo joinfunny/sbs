@@ -1,0 +1,7 @@
+//@import "prefixer";
+
+// border-radius
+//----------------------------------------
+@mixin border-radius($radius:1px, $prefixes:$prefixes){
+	@include prefixer(border-radius, $radius, $prefixes);
+}
