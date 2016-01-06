@@ -1,0 +1,13 @@
+//@import "prefixer";
+
+///* http://www.w3cplus.com/content/css3-transform
+//
+//   transform : none | <transform-function> [ <transform-function> ]* 
+//   transform : rotate | scale | translate | skew | matrix;
+// */
+@mixin transform($value:rotate(0deg) scale(1,1) translate(0,0) skew(0deg,0deg), $prefixes:$prefixes){///* matrix(0,0,0,0,0,0)*/
+	@include prefixer(transform, $value, $prefixes);
+}
+@mixin transform-origin($value:50% 50%, $prefixes:$prefixes){
+	@include prefixer(transform-origin, $value, $prefixes);
+}

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 		// Metadata.
 		meta: {
 			basePath: '.',
-			srcPath: 'assets/sass/',
+			srcPath: 'assets/scss/',
 			deployPath: 'assets/css/'
 		},
 
@@ -38,15 +38,22 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
-					style: 'expanded',
+					//style: 'expanded',
 					sourcemap: 'none',
 					noCache: true
 				},
+				//将test1文件夹
 				files: [{
 					expand: true,
 					cwd: '<%= meta.srcPath %>',
-					src: ['*.scss'],
-					dest: '<%= meta.deployPath %>',
+					src: ['**/*.scss'],
+					//可以将文件路径重新定义
+					rename: function(dest, src, config) {
+						var reg = /\/scss\//i;
+						var dest = config.cwd.replace(reg, '/css/');
+						console.log(dest + src);
+						return dest + src;
+					},
 					ext: '.css'
 				}]
 			}
@@ -54,7 +61,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: [
-					'<%= meta.srcPath %>/**/*.scss'
+					'./**/*.scss'
 				],
 				tasks: ['sass']
 			}

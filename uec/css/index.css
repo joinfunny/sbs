@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.home, .boy, .home2{
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+}
+.home {
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/home.jpg");
+    z-index: 1;
+}
+.home2 {
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/home2.png");
+    z-index: 4;
+}
+.boy{
+    width: 1.7rem;
+    height: 4rem;
+    background-image: url("../images/boy.png");
+    z-index: 2;
+}
+.boyOne{
+    animation:boyOne 4s ease-out forwards;
+}
+@keyframes boyOne{
+    from{top:6.5rem;left:4.5rem}
+    40%{top:7.2rem;left:10rem}
+    55%{top:9.5rem;left:10.5rem}
+    to{top:10.5rem;left:3.5rem}
+}
+.boyTwo{
+    animation:boyTwo 4s ease-out forwards;
+}
+@keyframes boyTwo{
+    from{top:10.5rem;left:3.5rem}
+    10%{top:10.5rem;left:2rem}
+    55%{top:16rem;left:3.2rem}
+    to{top:17.5rem;left:11rem}
+}
+.boyThr{
+    animation:boyThr 4s ease-out forwards;
+}
+@keyframes boyThr{
+    from{top:17.5rem;left:11rem}
+    40%{top:22rem;left:13rem}
+    to{top:23.5rem;left:3.5rem}
+}
+.boyFour{
+    animation:boyFour 4s ease-out forwards;
+}
+@keyframes boyFour{
+    from{top:23.5rem;left:3.5rem}
+    20%{top:24rem;left:0.5rem}
+    60%{top:28rem;left:2.8rem}
+    to{top:29.5rem;left:10rem}
+}

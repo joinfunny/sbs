@@ -1,0 +1,118 @@
+@import "base";
+@include reset;
+
+%transition{ @include transition(all .1s ease-out 0s); }
+%transition-none{ @include transition(none); }
+$top-height:50px;
+$left-width:176px;
+$left-collapse-width:40px;
+
+html, body { width: 100%; height: 100%; }
+body{ font-family:$font-family-zh; overflow:hidden; }
+
+.header { width: 100%; height:$top-height; background: #2865ca; color:#fff; 
+	.header-left { float:left; position:relative; }
+	.header-logo{ width: 91px; height: 34px; margin: 8px 20px; background: url(../img/index/logo.png) no-repeat;}
+	.icon-menu{ position:absolute; top:16px; left:176px; cursor:pointer; 
+	&:hover{ @include opacity(.6);}
+	}
+	.header-right{ float:right; margin:16px; }
+	li{ @include inline-block; margin:auto 6px;
+		a{ color:#fff; 
+		&:hover{ @include opacity(.6);}
+		}
+		img{ margin:auto 6px; }
+	}
+}	
+.left{ @extend %transition; @extend %abs-full; top:$top-height; width:$left-width; background: #292a2b;
+	.left-menu { margin: 6px auto;
+		$li-height:40px;
+		li { position: relative; margin:1px auto; min-height:$li-height; line-height:$li-height; white-space:nowrap; border-left:3px solid transparent; 
+			[class^="icon"],[class^=" icon"] { @include inline-block; width: 20px; height: 20px; margin: -1px 6px auto 14px; vertical-align: middle; }
+			.icon-block { background: url(../img/index/block.png) no-repeat; }
+			.icon-ansis { background: url(../img/index/ansis.png) no-repeat; }
+			.icon-behavior { background: url(../img/index/behavior.png) no-repeat; }
+			.icon-funnel { background: url(../img/index/funnel.png) no-repeat; }
+			.icon-retained { background: url(../img/index/retained.png) no-repeat; }
+			.icon-revisit { background: url(../img/index/revisit.png) no-repeat; }
+			
+			.tree-a { display: block; cursor: pointer; color: #747474; }
+			#user_analysis{ cursor:default; color:#747474; }
+			.tree-a:hover { color: #c0c0c0; }
+		&:first-child { }
+		&:last-child { }
+		&:hover, &.branch-actived{ border-color:#2865ca; background-color:#1e1e1e;
+			.icon-block{ background-image:url(../img/index/block_hover.png); }
+			.icon-ansis{ background-image:url(../img/index/ansis_hover.png); }
+			.icon-behavior { background: url(../img/index/behavior_hover.png) no-repeat; }
+			.icon-funnel { background: url(../img/index/funnel_hover.png) no-repeat; }
+			.icon-retained { background: url(../img/index/retained_hover.png) no-repeat; }
+			.icon-revisit { background: url(../img/index/revisit_hover.png) no-repeat; }
+			>.tree-a{ color: #c0c0c0; }
+		}
+			>ul{
+				$li-height:28px;
+				.icon{ visibility:hidden; }
+				li{ border:none; min-height:$li-height; line-height:$li-height;
+				&:hover, &.branch-actived{ 
+					.tree-a{ color: #1999E0; }
+				}
+				&:last-child {
+					a{ padding-bottom:6px; }
+				}
+				}
+			}
+		}
+	}
+}
+.main{ @extend %transition; @extend %abs-full; top:$top-height; left:$left-width;
+	iframe { display:block; width:100%; height:100%; }
+}
+	
+@mixin collapse-left{
+	#user_analysis{ display:none; }
+	.left{ width:$left-collapse-width;
+		.left-menu {
+			li{
+				.icon { margin: -1px 6px auto 8px; }
+				.tree-a{
+					span {display:none;}
+				}
+			}
+			li+li { border:none;
+			&:hover, &.branch-actived{ background-color:transparent;
+				.icon-behavior { background: url(../img/index/behavior.png) no-repeat; }
+				.icon-funnel { background: url(../img/index/funnel.png) no-repeat; }
+				.icon-retained { background: url(../img/index/retained.png) no-repeat; }
+				.icon-revisit { background: url(../img/index/revisit.png) no-repeat; }
+			}
+				>ul{
+					$li-height:40px;
+					li{ border-left:3px solid transparent; min-height:$li-height; line-height:$li-height;
+					&:hover, &.branch-actived{ border-left:3px solid #2865ca; background-color:#1e1e1e;
+						.icon-behavior { background: url(../img/index/behavior_hover.png) no-repeat; }
+						.icon-funnel { background: url(../img/index/funnel_hover.png) no-repeat; }
+						.icon-retained { background: url(../img/index/retained_hover.png) no-repeat; }
+						.icon-revisit { background: url(../img/index/revisit_hover.png) no-repeat; }
+					}
+					}
+					
+					.icon{ visibility:visible; }
+				}
+			}
+			[class^="icon"],[class^=" icon"]{ margin-left:10px; }
+		}
+	}
+	.main{ left:$left-collapse-width; }
+}
+.collapse-left{ @include collapse-left; }
+
+@media (max-width: 1200px){
+	@include collapse-left;
+}
+
+@include ui-mask(#000, .38);
+
+@import 'ui/loading/loading-rotate-fade';
+
+

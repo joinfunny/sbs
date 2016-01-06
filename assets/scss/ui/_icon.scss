@@ -1,0 +1,5 @@
+// icon
+//----------------------------------------
+@mixin icon($width:16px, $height:$width){
+	overflow:hidden; @include inline-block; width:$width; height:$height; vertical-align:middle; text-indent:-32766px; border:none; background:none; background-repeat:no-repeat; background-position:50%;
+}
