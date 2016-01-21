@@ -12,5 +12,9 @@
     "grunt-cssc": "*",
     "grunt-htmlhint": "*",
     "matchdep": "*"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+     "ejs": "*"
   }
 }
