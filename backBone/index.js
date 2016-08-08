@@ -20,7 +20,7 @@ var Person = Backbone.Model.extend({
 	},
 
 	defaults: {
-		name: 'joinfunnyA',
+		name: 'joinfunnyB',
 		height: '3\"'
 	}
 
