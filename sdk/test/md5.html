@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>BAS用户追踪埋点</title>
+	<style>
+		pre {
+			padding: 1em;
+			background-color: #eee;
+		}
+	</style>
+	<script src="../src/require.js"></script>
+	<script>
+		require(['../src/md5'], function(md5) {
+			var input = document.getElementById('md5');
+			var md5Value = document.getElementById('md5Value');
+			var btn = document.getElementById('toMd5');
+			btn.addEventListener('click', function(e) {
+				var val = md5.hex_md5(input.value);
+				md5Value.value = val;
+			}, false)
+		});
+	</script>
+	<style>
+		input[type="text"] {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div><input type="text" id="md5"></div>
+	<div><button id="toMd5" onclick="toMd5">加密</button></div>
+	<div><input type="text" id="md5Value"></div>
+</body>
+
+</html>

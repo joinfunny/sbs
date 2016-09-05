@@ -65,6 +65,9 @@ module.exports = function(grunt) {
 				],
 				tasks: ['sass']
 			}
+		},
+		rev:{
+
 		}
 	});
 
@@ -72,6 +75,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-rev');
+	grunt.loadNpmTasks('grunt-usemin');
 
 	// Default task.
 	grunt.registerTask('test', ['uglify']);
