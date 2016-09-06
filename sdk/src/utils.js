@@ -577,7 +577,6 @@ _.info = {
             return null;
         }
     },
-
     browser: function (user_agent, vendor, opera) {
         var vendor = vendor || ''; // vendor is undefined for at least IE9
         if (opera || _.includes(user_agent, " OPR/")) {
@@ -643,7 +642,6 @@ _.info = {
         }
         return String(parseFloat(matches[matches.length - 2]));
     },
-
     os: function () {
         var a = userAgent;
         if (/Windows/i.test(a)) {
@@ -665,7 +663,6 @@ _.info = {
             return '';
         }
     },
-
     device: function (user_agent) {
         if (/iPad/.test(user_agent)) {
             return 'iPad';
@@ -689,7 +686,6 @@ _.info = {
             return '';
         }
     },
-
     referringDomain: function (referrer) {
         var split = referrer.split('/');
         if (split.length >= 3) {
@@ -697,7 +693,6 @@ _.info = {
         }
         return '';
     },
-
     getBrowser: function () {
         return {
             b_dollar_browser: detector.browser.name,
@@ -726,7 +721,6 @@ _.info = {
             b_dollar_win_height: winHeight
         };
     },
-
     properties: function () {
         return _.extend(_.generateNewProperties({
             b_dollar_os: detector.os.name,
@@ -745,6 +739,16 @@ _.info = {
     currentProps: {},
     register: function (obj) {
         _.extend(_.info.currentProps, obj);
+    },
+    //保存临时的Subject（主体对象），只针对当前页面有效
+    currentSubject:{},
+    registerSubject:function(sbj){
+        _.extend(_.info.currentSubject,sbj);
+    },
+    //保存临时的Object（客体对象），只针对当前页面有效
+    currentObject:{},
+    registerObject:function(obj){
+        _.extend(_.info.currentObject,obj);
     }
 };
 module.exports = _;

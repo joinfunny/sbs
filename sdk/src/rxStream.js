@@ -21,7 +21,11 @@ var commonWays = {
     getStayTime: function () {
         return ((new Date()) - config.loadTime) / 1000;
     },
-    //set init referrer
+    /**
+     * 全局设置第一次访问网站时的referrer信息
+     * referrer
+     * domain
+     */
     setInitReferrer: function () {
         var _referrer = document.referrer;
         store.setPropsOnce({
@@ -29,7 +33,11 @@ var commonWays = {
             b_dollar_referrer_domain: _.info.referringDomain(_referrer)
         });
     },
-    // set init sessionRegister cookie
+    /**
+     * Session设置初始化
+     * referrer
+     * domain
+     */
     setSessionReferrer: function () {
         var _referrer = document.referrer;
         store.setSessionPropsOnce({
@@ -37,7 +45,12 @@ var commonWays = {
             b_dollar_session_referrer_domain: _.info.referringDomain(_referrer)
         });
     },
-    // set default referrr and pageurl
+    /**
+     * 注册当前页面的初始化信息
+     * pageUrl
+     * referrer
+     * domain
+     */
     setDefaultAttr: function () {
         _.info.register({
             b_dollar_page_url: location.href,
@@ -253,7 +266,6 @@ rxStream.identify = function (id, isSave) {
     } else if (core.check({
         uniqueId: id
     })) {
-
         if (isSave === true) {
             store.set('uniqueId', id);
         } else {

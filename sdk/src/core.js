@@ -171,15 +171,26 @@ module.exports = {
   send: function (p) {
     var data = {
       uniqueId: store.getDeviceId(),
-      properties: {}
+      properties: {},
+      subject: {},
+      object: {}
     };
     _.extend(data, p);
     if (_.isObject(p.properties) && !_.isEmptyObject(p.properties)) {
       _.extend(data.properties, p.properties);
     }
+    if (_.isObject(p.subject) && !_.isEmptyObject(p.subject)) {
+      _.extend(data.subject, p.subject);
+    }
+    if (_.isObject(p.object) && !_.isEmptyObject(p.object)) {
+      _.extend(data.object, p.object);
+    }
     // profile时不传公用属性
     if (!p.type || p.type.slice(0, 7) !== 'profile') {
+      //优先级：系统默认属性<本页设置的属性<session属性<全局存储属性<事件属性
       _.extend(data.properties, store.getProps(), store.getSessionProps(), _.info.currentProps, _.info.properties());
+      _.extend(data.subject, store.getSubject(), store.getSessionSubject(), _.info.currentSubject);
+      _.extend(data.object, store.getObject(), store.getSessionObject(), _.info.currentObject);
     }
     data.time = _.formatDate(new Date());
     data.domain = store.getDomain();
@@ -338,7 +349,7 @@ module.exports = {
      * 500 系统错误
      */
 
-    var postData= that.getPackingEvents(data);
+    var postData = that.getPackingEvents(data);
 
     console.log(postData);
 
@@ -360,7 +371,7 @@ module.exports = {
             sessionProp[MONITORSTATE.SENDINGDATALEN] = 0;
             store.setSessionProps(sessionProp);
           }
-          if (_.isEmptyObject(data) || (data.code===200)) {
+          if (_.isEmptyObject(data) || (data.code === 200)) {
             exec();
           } else if (data.code === 402) {
             //授权失效状态，重新发送授权
@@ -390,12 +401,12 @@ module.exports = {
       sessionId = session.sessionId, deviceId = store.getDeviceId(),
       eventsStr = JSON.stringify(events),
       props = store.getProps(),
-      dataStr= JSON.stringify({
-          "appId": config.appId,
-          "uniqueId": deviceId,
-          "userId": props ? props['userId'] : '',
-          "events": eventsStr
-        }),
+      dataStr = JSON.stringify({
+        "appId": config.appId,
+        "uniqueId": deviceId,
+        "userId": props ? props['userId'] : '',
+        "events": eventsStr
+      }),
       sign = md5(dataStr + token),
       postData = JSON.stringify({
         "datatime": _.formatDate(new Date()),

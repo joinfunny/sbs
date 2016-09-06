@@ -9,6 +9,18 @@ module.exports = {
   getSessionProps: function () {
     return this._sessionState;
   },
+  getSubject:function(){
+    return this._state.subject;
+  },
+  getObject:function(){
+    return this._state.object;
+  },
+  getSessionSubject:function(){
+    return this._sessionState.subject;
+  },
+  getSessionObject:function(){
+    return this._sessionObject.object;
+  },
   /**
    * 获取会话的CookieID
    * 默认过期时间为2年
@@ -69,6 +81,30 @@ module.exports = {
     var props = this._sessionState;
     _.coverExtend(props, newp);
     this.sessionSave(props);
+  },
+  setSessionSubject: function (newp) {
+    var sessionState = this._sessionState,subject=sessionState.subject||{};
+    _.extend(subject, newp);
+    sessionState.subject=subject;
+    this.sessionSave(sessionState);
+  },
+  setSessionSubjectOnce: function (newp) {
+    var sessionState = this._sessionState,subject=sessionState.subject||{};
+    _.coverExtend(subject, newp);
+    sessionState.subject=subject;
+    this.sessionSave(sessionState);
+  },
+  setSessionObject: function (newp) {
+    var sessionState = this._sessionState,object=sessionState.subject||{};
+    _.extend(object, newp);
+    sessionState.object=object;
+    this.sessionSave(sessionState);
+  },
+  setSessionObjectOnce: function (newp) {
+    var sessionState = this._sessionState,object=sessionState.subject||{};
+    _.coverExtend(object, newp);
+    sessionState.object=object;
+    this.sessionSave(sessionState);
   },
   setProps: function (newp) {
     this._setPropsOnce('props', newp);
