@@ -451,7 +451,7 @@ _.ajax = function (params) {
         }
     }
     xhr.open(params.type, params.url, params.async === void 0 ? !0 : params.async);
-    /*xhr.withCredentials = !0;*/
+    /*xhr.withCredentials = true;*/
     if (_.isObject(params.header))
         for (var i in params.header) {
             xhr.setRequestHeader(i, params.header[i]);

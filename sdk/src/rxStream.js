@@ -48,12 +48,12 @@ var commonWays = {
     autoTrack: function () {
         var that = this;
         var compaignParams = _.info.campaignParams();
-        rxStream.setOnceProfile(_.extend({
+        /*rxStream.setOnceProfile(_.extend({
             b_dollar_first_visit_time: new Date(),
             b_dollar_first_referrer: document.referrer,
             b_dollar_first_referrer_host: _.info.referringDomain(document.referrer),
             b_dollar_domain: _.info.referringDomain(location.href)
-        }, compaignParams));
+        }, compaignParams));*/
 
         var h1s = document.body && document.body.getElementsByTagName('h1') || [];
         var pageH1 = '';
