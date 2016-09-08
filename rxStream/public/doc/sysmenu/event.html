@@ -1,0 +1,358 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <title>3.1.1事件分析 · RX STREAM 文档中心</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="funnel.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://stream.ruixuesoft.com" target="_blank" class="custom-link">RX Stream</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    1.帮助文档简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../quick_start.html">
+            
+                <a href="../quick_start.html">
+            
+                    
+                    2.快速使用指南（简单数据接入）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../how_to_user_rx_stream.html">
+            
+                <a href="../how_to_user_rx_stream.html">
+            
+                    
+                    3.如何使用RX Stream
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    3.1功能介绍
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1.1" data-path="event.html">
+            
+                <a href="event.html">
+            
+                    
+                    3.1.1事件分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.2" data-path="funnel.html">
+            
+                <a href="funnel.html">
+            
+                    
+                    3.1.2漏斗分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.3" data-path="retain.html">
+            
+                <a href="retain.html">
+            
+                    
+                    3.1.3留存分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.4" data-path="revisit.html">
+            
+                <a href="revisit.html">
+            
+                    
+                    3.1.4回访分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.1.5" data-path="myoveview.html">
+            
+                <a href="myoveview.html">
+            
+                    
+                    3.1.5我的数据概览
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../sdk/">
+            
+                <a href="../sdk/">
+            
+                    
+                    4.开发者文档（高级数据接入）
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../sdk/javascript.html">
+            
+                <a href="../sdk/javascript.html">
+            
+                    
+                    4.1Javascript SDK
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >3.1.1事件分析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4E8B;&#x4EF6;&#x884C;&#x4E3A;&#x5206;&#x6790;">&#x4E8B;&#x4EF6;&#x884C;&#x4E3A;&#x5206;&#x6790;</h1><h2 id="1-&#x4EC0;&#x4E48;&#x662F;&#x4E8B;&#x4EF6;&#xFF1F;">1. &#x4EC0;&#x4E48;&#x662F;&#x201C;&#x4E8B;&#x4EF6;&#x201D;&#xFF1F;</h2><p>&#x4E8B;&#x4EF6;&#x662F;&#x901A;&#x8FC7; RX Stream SDK &#x6216;&#x6570;&#x636E;&#x5BFC;&#x5165;&#x5DE5;&#x5177;&#xFF0C;&#x8FFD;&#x8E2A;&#x6216;&#x8BB0;&#x5F55;&#x7684;&#x7528;&#x6237;&#x884C;&#x4E3A;&#x6216;&#x4E1A;&#x52A1;&#x8FC7;&#x7A0B;&#x3002;&#x4E3E;&#x4F8B;&#x6765;&#x8BF4;&#xFF0C;
+&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x7684;&#x7F51;&#x7AD9;&#x53EF;&#x80FD;&#x5305;&#x542B;&#x5982;&#x4E0B;&#x4E8B;&#x4EF6;&#xFF1A;</p><p>1&#x3001;&#x7528;&#x6237;&#x6D4F;&#x89C8;&#x4E3B;&#x9875;&#xFF1B;</p><p>2&#x3001;&#x7528;&#x6237;&#x70B9;&#x51FB;&#x94FE;&#x63A5;&#xFF1B;</p><p>3&#x3001;&#x7528;&#x6237;&#x8DF3;&#x8F6C;&#x65B0;&#x9875;&#x9762;&#xFF1B;</p><p>4&#x3001;&#x7528;&#x6237;&#x70B9;&#x51FB;&#x6309;&#x94AE;&#xFF1B;</p><p>&#x3002;&#x3002;&#x3002;</p><h2 id="2-&#x4E8B;&#x4EF6;">2. &#x4E8B;&#x4EF6;</h2><p>&#x4E8B;&#x4EF6;&#x5206;&#x6790;&#x53EF;&#x4EE5;&#x505A;&#x4EC0;&#x4E48;&#xFF1F;&#x7528;&#x6237;&#x884C;&#x4E3A;&#x4E8B;&#x4EF6;&#x5206;&#x6790;&#x529F;&#x80FD;&#x5177;&#x6709;&#x4EFB;&#x610F;&#x4E8B;&#x4EF6;&#x6307;&#x6807;&#x7684;&#x5206;&#x7EC4;&#x805A;&#x5408;&#x7EDF;&#x8BA1;&#x529F;&#x80FD;&#xFF0C;&#x53EF;&#x4EE5;&#x63ED;&#x793A;&#x4EE5;&#x4E0B;&#x7C7B;&#x4F3C;&#x7684;&#x4E1A;&#x52A1;&#x95EE;&#x9898;&#xFF1A;</p><p><em>
+<strong>&#x6700;&#x8FD1;&#x4E00;&#x4E2A;&#x6708;&#x6765;&#x81EA;&#x54EA;&#x4E2A;&#x6E20;&#x9053;&#x7684;&#x7528;&#x6237;&#x6CE8;&#x518C;&#x91CF;&#x6700;&#x9AD8;&#xFF1F;&#x53D8;&#x5316;&#x7684;&#x8D8B;&#x52BF;&#x5982;&#x4F55;&#xFF1F;</strong>
+</em></p><p><em>
+<strong>&#x6700;&#x8FD1;&#x4E00;&#x5468;&#x5546;&#x54C1;&#x7684;&#x9500;&#x552E;&#x60C5;&#x51B5;&#xFF0C;&#x6309;&#x4E0D;&#x540C;&#x5355;&#x54C1;&#x9500;&#x91CF;&#x4ECE;&#x5927;&#x5230;&#x5C0F;&#x6392;&#x5217;&#x3002;</strong>
+</em></p><p><em>
+<strong>3&#x5929;&#x6765;&#x81EA;&#x5317;&#x4EAC;&#x5E02;&#x7684;&#x72EC;&#x7ACB;&#x8BBF;&#x5BA2;&#x662F;&#x591A;&#x5C11;&#xFF1F;&#x5176;&#x4E2D;&#x6709;&#x8F6C;&#x5316;&#x8D2D;&#x4E70;&#x7684;&#x662F;&#x591A;&#x5C11;&#xFF1F;&#x8D2D;&#x4E70;&#x6700;&#x591A;&#x7684;&#x5546;&#x54C1;&#x662F;&#x4EC0;&#x4E48;&#xFF1F;</strong>
+</em></p><p>&#x4E8B;&#x4EF6;&#x5206;&#x6790;&#x53EF;&#x4EE5;&#x5206;&#x6790;&#x7EDD;&#x5927;&#x591A;&#x6570;&#x7684;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#xFF0C;&#x901A;&#x8FC7;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x7EC6;&#x5206;&#x5E76;&#x52A0;&#x5165;&#x7528;&#x6237;&#x7684;&#x7279;&#x5F81;&#xFF0C;&#x53EF;&#x4EE5;&#x63A2;&#x7A76;&#x5F71;&#x54CD;&#x4E1A;&#x52A1;&#x589E;&#x957F;&#x7684;&#x5173;&#x952E;&#x56E0;&#x7D20;&#x3002;</p><h2 id="3-&#x6307;&#x6807;">3. &#x6307;&#x6807;</h2><p>&#x6307;&#x6807;&#x662F;&#x8BF4;&#x660E;&#x603B;&#x4F53;&#x6570;&#x91CF;&#x7279;&#x5F81;&#x7684;&#x6982;&#x5FF5;&#x3002;&#x5728;&#x7F51;&#x7AD9;&#x5206;&#x6790;&#x9886;&#x57DF;&#xFF0C;&#x9875;&#x9762;&#x6D4F;&#x89C8;&#x7684;PV&#x3001;UV&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x6807;&#xFF1B;&#x5728;&#x5546;&#x4E1A;&#x9886;&#x57DF;&#xFF0C;&#x9500;&#x552E;&#x989D;&#xFF0C;&#x8D2D;&#x4E70;&#x6B21;&#x6570;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x6807;&#xFF0C;&#x6307;&#x6807;&#x7684;&#x7279;&#x70B9;&#x662F;&#x53EF;&#x4EE5;&#x88AB;&#x6570;&#x5B66;&#x8FD0;&#x7B97;&#x7684;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x6807;&#x8BC6;&#x6570;&#x503C;&#x578B;&#x7684;&#x6570;&#x636E;&#x5C31;&#x662F;&#x6307;&#x6807;&#xFF0C;&#x6BD4;&#x5982;&#x5C4F;&#x5E55;&#x7684;&#x5206;&#x8FA8;&#x7387;&#xFF0C;1920&#x662F;&#x5C4F;&#x5E55;&#x7684;&#x5BBD;&#x5EA6;&#xFF0C;&#x662F;&#x6570;&#x503C;&#x578B;&#xFF0C;&#x4F46;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x6807;&#x3002;</p><h2 id="4-&#x7EF4;&#x5EA6;">4. &#x7EF4;&#x5EA6;</h2><p>&#x7EF4;&#x5EA6;&#xFF0C;&#x53C8;&#x79F0;&#x7EF4;&#x6570;&#xFF0C;&#x662F;&#x6570;&#x5B66;&#x4E2D;&#x72EC;&#x7ACB;&#x53C2;&#x6570;&#x7684;&#x6570;&#x76EE;&#x3002;&#x5728;&#x7269;&#x7406;&#x5B66;&#x548C;&#x54F2;&#x5B66;&#x7684;&#x9886;&#x57DF;&#x5185;&#xFF0C;&#x6307;&#x72EC;&#x7ACB;&#x7684;&#x65F6;&#x7A7A;&#x5750;&#x6807;&#x7684;&#x6570;&#x76EE;&#x3002;0&#x7EF4;&#x662F;&#x4E00;&#x70B9;&#xFF0C;&#x6CA1;&#x6709;&#x957F;&#x5EA6;&#x3002;1&#x7EF4;&#x662F;&#x7EBF;&#xFF0C;&#x53EA;&#x6709;&#x957F;&#x5EA6;&#x3002;2&#x7EF4;&#x662F;&#x4E00;&#x4E2A;&#x5E73;&#x9762;&#xFF0C;&#x662F;&#x7531;&#x957F;&#x5EA6;&#x548C;&#x5BBD;&#x5EA6;(&#x6216;&#x66F2;&#x7EBF;)&#x5F62;&#x6210;&#x9762;&#x79EF;&#x3002;3&#x7EF4;&#x662F;2&#x7EF4;&#x52A0;&#x4E0A;&#x9AD8;&#x5EA6;&#x5F62;&#x6210;&#x4F53;&#x79EF;&#x9762;&#x3002;</p><p>&#x5728;&#x6211;&#x4EEC;&#x7684;&#x4EA7;&#x54C1;&#x4E2D;&#xFF0C;&#x65F6;&#x95F4;&#x662F;&#x4E00;&#x4E2A;&#x56FA;&#x6709;&#x7684;&#x7EF4;&#x5EA6;&#xFF0C;&#x56E0;&#x4E3A;&#x7528;&#x6237;&#x7684;&#x4E8B;&#x4EF6;&#x662F;&#x901A;&#x8FC7;&#x4E00;&#x6761;&#x8FDE;&#x7EED;&#x7684;&#x65F6;&#x95F4;&#x7EBF;&#x4E32;&#x8D77;&#x6765;&#x7684;&#xFF1B;&#x53E6;&#x4E00;&#x4E2A;&#x56FA;&#x6709;&#x7EF4;&#x5EA6;&#x662F;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x7684;&#x4E8B;&#x4EF6;&#x7684;&#x6307;&#x6807;&#xFF0C;&#x5982;&#x6D4F;&#x89C8;&#x6B21;&#x6570;&#xFF1B;&#x6211;&#x4EEC;&#x662F;&#x652F;&#x6301;&#x591A;&#x7EF4;&#x5206;&#x6790;&#x7684;&#xFF0C;&#x6BD4;&#x5982;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x5728;&#x4EC0;&#x4E48;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;iphone&#x6216;&#x5176;&#x4ED6;&#x624B;&#x673A;&#xFF0C;&#x7528;&#x6237;&#x7684;&#x6027;&#x522B;&#x3001;&#x5E74;&#x9F84;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x662F;&#x7EF4;&#x5EA6;&#x3002;</p><h2 id="5-&#x754C;&#x9762;&#x64CD;&#x4F5C;">5. &#x754C;&#x9762;&#x64CD;&#x4F5C;</h2><p>&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#xFF0C;&#x4EFB;&#x4F55;&#x4EBA;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7B80;&#x5355;&#x7684;&#x62D6;&#x62FD;&#xFF0C;&#x4F7F;&#x7528;&#x6570;&#x636E;&#x5206;&#x6790;&#x3002;</p><p>&#x6211;&#x4EEC;&#x4EE5;&#x4E00;&#x4E2A;&#x4E1A;&#x52A1;&#x5206;&#x6790;&#x9700;&#x6C42;&#x4E3A;&#x4F8B;&#xFF0C;&#x8BB2;&#x89E3;&#x7CFB;&#x7EDF;&#x7684;&#x4F7F;&#x7528;&#xFF1A;</p><p>&#x3010;&#x5206;&#x6790;&#x4E0A;&#x5B63;&#x5EA6;<strong>&#x63D0;&#x4EA4;&#x8BA2;&#x5355;</strong>&#x7684;&#x603B;&#x6B21;&#x6570;&#xFF0C;&#x6309;&#x7167;<strong>&#x57CE;&#x5E02;</strong>&#x5206;&#x7EC4;&#x67E5;&#x770B;&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x901A;&#x8FC7;<strong>WIFI</strong>&#x4E0A;&#x7F51;&#x7684;&#x5BA2;&#x6237;&#x3011;</p><p>&#x3010;1&#x3011;&#x9009;&#x62E9;&#x65F6;&#x95F4;&#x533A;&#x95F4;&#x3010;&#x5FEB;&#x6377;&#x65B9;&#x5F0F;-&#x81EA;&#x7136;&#x65F6;&#x95F4;-&#x4E0A;&#x5B63;&#x5EA6;&#x3011;&#xFF1B;</p><p>tips:&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x8BB8;&#x591A;&#x65F6;&#x95F4;&#x533A;&#x95F4;&#x5355;&#x4F4D;&#xFF0C;&#x65B9;&#x4FBF;&#x7528;&#x6237;&#x5FEB;&#x901F;&#x9009;&#x62E9;&#x3002;</p><p>&#x3010;2&#x3011;&#x62D6;&#x52A8;&#x4E00;&#x4E2A;&#x6307;&#x6807;&#x5230;&#x3010;3&#x3011;&#xFF0C;&#x9009;&#x62E9;&#x603B;&#x6B21;&#x6570;&#xFF1B;</p><p>tips:&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x6307;&#x6807;&#xFF0C;&#x671F;&#x5F85;&#x60A8;&#x6765;&#x53D1;&#x6398;&#x3002;</p><p>&#x3010;4&#x3011;&#x62D6;&#x52A8;&#x4E00;&#x4E2A;&#x7EF4;&#x5EA6;&#x5230;&#x3010;5&#x3011;&#xFF1B;</p><p>&#x3010;4&#x3011;&#x62D6;&#x52A8;&#x4E00;&#x4E2A;&#x7EF4;&#x5EA6;&#x5230;&#x3010;6&#x3011;&#xFF0C;&#x9009;&#x62E9;&#x4E3A;&#x771F;&#xFF1B;</p><p>&#x3010;7&#x3011;&#x6253;&#x5F00;&#x5BF9;&#x6BD4;&#x529F;&#x80FD;&#xFF1B;</p><p>&#x3010;8&#x3011;&#x9009;&#x62E9;&#x201C;&#x5929;&#x201D;&#x8BBE;&#x7F6E;&#x4E3A;&#x5206;&#x6790;&#x7684;&#x65F6;&#x95F4;&#x805A;&#x5408;&#x5355;&#x4F4D;&#xFF1B;</p><p>&#x3010;9&#x3011;&#x4FDD;&#x5B58;&#x8BE5;&#x7EC4;&#x6761;&#x4EF6;&#x4E3A;&#x4E00;&#x4E2A;&#x5206;&#x6790;&#xFF1B;</p><p>&#x3010;11&#x3011;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x5206;&#x6790;&#x7684;&#x540D;&#xFF1B;</p><p>&#x3010;10&#x3011;&#x6253;&#x5F00;&#x5DF2;&#x4FDD;&#x5B58;&#x7684;&#x5206;&#x6790;&#x5217;&#x8868;&#x3002;</p><p><img alt="" src="../imgs/S1.png"></p>
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 3.1功能介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="funnel.html" class="navigation navigation-next " aria-label="Next page: 3.1.2漏斗分析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"3.1.1事件分析","level":"1.3.1.1","depth":3,"next":{"title":"3.1.2漏斗分析","level":"1.3.1.2","depth":3,"path":"sysmenu/funnel.md","ref":"sysmenu/funnel.md","articles":[]},"previous":{"title":"3.1功能介绍","level":"1.3.1","depth":2,"path":"sysmenu/README.md","ref":"sysmenu/README.md","articles":[{"title":"3.1.1事件分析","level":"1.3.1.1","depth":3,"path":"sysmenu/event.md","ref":"sysmenu/event.md","articles":[]},{"title":"3.1.2漏斗分析","level":"1.3.1.2","depth":3,"path":"sysmenu/funnel.md","ref":"sysmenu/funnel.md","articles":[]},{"title":"3.1.3留存分析","level":"1.3.1.3","depth":3,"path":"sysmenu/retain.md","ref":"sysmenu/retain.md","articles":[]},{"title":"3.1.4回访分析","level":"1.3.1.4","depth":3,"path":"sysmenu/revisit.md","ref":"sysmenu/revisit.md","articles":[]},{"title":"3.1.5我的数据概览","level":"1.3.1.5","depth":3,"path":"sysmenu/myoveview.md","ref":"sysmenu/myoveview.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","include-codeblock","toggle-chapters"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"fontSettings":{"theme":"sepia","family":"serif","size":1},"include-codeblock":{},"toggle-chapters":{},"highlight":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"github":null,"theme":"default","githubHost":"https://github.com/","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"RX STREAM 文档中心","language":"zh-hans","links":{"sidebar":{"RX Stream":"http://stream.ruixuesoft.com"},"sharing":{"google":null,"facebook":null,"twitter":null,"weibo":null,"all":null}},"gitbook":"*","description":null,"extension":null},"file":{"path":"sysmenu/event.md","mtime":"2016-07-18T07:57:17.594Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-07-20T05:13:28.578Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

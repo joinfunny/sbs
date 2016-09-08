@@ -1,0 +1,32 @@
+// triangle
+//----------------------------------------
+@mixin triangle($direction:right, $borderColor:#fff, $size:10px) {
+  content:"";
+  height: 0;
+  width: 0;
+
+  @if $direction == top {
+    border-top:none;
+    border-bottom:$size solid $borderColor;
+    border-left:$size dashed transparent;
+    border-right:$size dashed transparent;
+  } 
+  @else if $direction == right {
+    border-right:none;
+    border-left:$size solid $borderColor;
+    border-top:$size dashed transparent;
+    border-bottom:$size dashed transparent;
+  } 
+  @else if $direction == bottom {
+    border-bottom:none;
+    border-top:$size solid $borderColor;
+    border-left:$size dashed transparent;
+    border-right:$size dashed transparent;
+  } 
+  @else if $direction == left {
+    border-left:none;
+    border-right:$size solid $borderColor;
+    border-top:$size dashed transparent;
+    border-bottom:$size dashed transparent;
+  }
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户事件-回访频次</title>
+<link rel="stylesheet" href="../css/common.css">
+<script src="../../bower_components/lodash/lodash.js"></script>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script src="../js/bas.js"></script>
+<script src="../js/createDateTree.js"></script>
+<script>
+$(function() {
+	//console.time('计时器1');
+	var trs = $('tbody>tr').toArray();
+	var tree = bas.UBA.Behavior.actions.dataTree;
+	
+	bas.getTreeByTableRows(trs, tree.children, tree.bname, 1, 0);
+	//console.timeEnd('计时器2');
+	
+	//console.log(tree);
+	console.log(JSON.stringify(tree.children, null));
+	$('.data-code').html(JSON.stringify(tree.children, null, 4));
+	
+	var h = {
+		operation: {
+			'actionName': [
+				{
+					name: 'operation',
+					label: '事件触发次数',
+					value: 'general'
+				},
+				{
+					name: 'operation',
+					label: '独立用户数',
+					value: 'unique'
+				},
+				{
+					name: 'operation',
+					label: '用户平均次数',
+					value: 'average'
+				}
+			],
+			'field': [
+				{
+					name: 'operation',
+					label: '数值总和',
+					value: 'sum'
+				},
+				{
+					name: 'operation',
+					label: '数值最大值',
+					value: 'max'
+				},
+				{
+					name: 'operation',
+					label: '数值最小值',
+					value: 'min'
+				},
+				{
+					name: 'operation',
+					label: '数值平均值',
+					value: 'avg'
+				}
+			]
+		}
+	};
+	
+ var actions = [
+   {
+     name: 'actionName',
+     label: '任意事件',
+     value: '*'
+   },
+   {
+     name: 'actionName',
+     label: '取消订单',
+     value: 'CancelOrder',
+   }
+ ];
+	
+});
+</script>
+</head>
+
+<body>
+<h1>用户事件-回访频次</h1>
+<div class="table-wrapper">
+  <table border="1" cellspacing="1" cellpadding="2">
+    <thead>
+      <tr>
+        <th>事件类型</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-name="actionName" data-value="*">任意事件</td>
+      </tr>
+      <tr>
+        <td data-name="actionName" data-value="CancelOrder">取消订单</td>
+      </tr>
+      <tr>
+        <td data-name="actionName" data-value="CreateOrder">创建订单</td>
+      </tr>
+      <tr>
+        <td data-name="actionName" data-value="FinishOrder">确认收货</td>
+      </tr>
+      <tr>
+        <td data-name="actionName" data-value="PayOrder">支付订单</td>
+      </tr>
+      <tr>
+        <td data-name="actionName" data-value="SendGoods">商家发货</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="data-wrapper">
+  <pre class="data-code"></pre>
+</div>
+</body>
+</html>

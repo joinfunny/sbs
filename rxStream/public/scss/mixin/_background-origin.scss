@@ -1,0 +1,8 @@
+// background-origin
+//----------------------------------------
+///*
+//	background-origin: border-box|padding-box|content-box;
+//*/
+@mixin background-origin($origin:border-box, $prefixes:$prefixes){
+	@include prefixer(background-origin, $origin, $prefixes);
+}

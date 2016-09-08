@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>数据概览</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/css/main/overview-list.css">
+    <% include ../../inc/base-script.html %>
+</head>
+<body>
+<div class="overviews-wrapper user-analysis">
+  <ul class="overview-list" data-role="Spread">
+    <li class="overview overview-new"><a href="/main/user-analysis/Spread/analysis?new" class="overview-link"> </a></li>
+</ul>
+</div> 
+    <script id="overview-temp" type="text/x-dot-template">
+    {{if(it && it.length>0) { for(var i=0;i<it.length;i++){ var curOverView=it[i];}}
+        <li class="overview" data-overview-id="{{= curOverView.UniqueID }}">
+            <% include ../../inc/overview-remove.html %>
+            <a href="/main/user-analysis/Spread/analysis?id={{= curOverView.UniqueID }}" class="overview-link">
+               <div class="icons-analysis">
+                  <ul>
+                    <li class="icon-spread"></li>
+                  </ul>
+                </div>
+                <div class="overview-content">
+                  <div class="overview-header">
+                    <h2 class="overview-h">订单取消率</h2>
+                  </div>
+                  <div class="overview-body">
+                    <p class="description"><span>显示用户在：</span>1小时之内</p>
+                    <p class="description"><span>用户操作：</span>取消订单</p>
+                    <p class="count"><b class="number">1263</b>次</p>
+                  </div>
+                  <div class="overview-footer">
+                    <p class="last-update"><span class="date">2015.10.25 - 2015.11.25</span></p>
+                  </div>
+                </div>
+            </a>
+        </li>
+        {{
+ }
+  }
+        }}
+    </script>
+    <script src="/js/main/user-analysis/Spread/index.js"></script>
+</body>
+</html>

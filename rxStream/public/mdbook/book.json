@@ -1,0 +1,32 @@
+{
+    "language": "zh-hans",
+    "generator": "site",
+    "title": "RX STREAM 文档中心",
+    "description": null,
+    "extension": null,
+    "github": null,
+    "githubHost": "https://github.com/",
+    "plugins": ["-search", "include-codeblock", "toggle-chapters"],
+    "pluginsConfig": {
+        "fontSettings": {
+            "theme": "sepia",
+            "family": "serif",
+            "size": 1
+        }
+    },
+    "links": {
+        "sidebar": {
+            "RX Stream": "http://stream.ruixuesoft.com"
+        },
+        "sharing": {
+            "google": null,
+            "facebook": null,
+            "twitter": null,
+            "weibo": null,
+            "all": null
+        }
+    },
+    "styles": {
+        "website": "styles/website.css"
+    }
+}

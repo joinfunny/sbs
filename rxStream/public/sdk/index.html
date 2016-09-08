@@ -1,0 +1,297 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="目录"><i class="fa fa-align-justify"></i></a>
+    <!--    <a href="#" class="btn pull-left toggle-search" aria-label="搜索"><i class="fa fa-search"></i></a> -->
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="字体设置"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">衬线体</button>
+        <button type="button" data-font="1" class="button">无衬线体</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">白色</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">棕褐色</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">夜间</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+
+    
+    
+    
+    
+    <a href="#" target="_blank" class="btn pull-right weibo-sharing-link sharing-link" data-sharing="weibo" aria-label="Weibo"><i class="fa fa-weibo"></i></a>
+    
+    
+
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="./">Sensors Analytics 使用手册</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="javascript-sdk-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E">JavaScript SDK 使用说明</h1>
+<blockquote>
+<h3 id="-%E5%9C%A8%E4%BD%BF%E7%94%A8%E5%89%8D%EF%BC%8C%E8%AF%B7%E5%85%88%E9%98%85%E8%AF%BB-%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B-data-model-md-%E7%9A%84%E4%BB%8B%E7%BB%8D%E3%80%82"><em>在使用前，请先阅读<a href="data_model.html">数据模型</a>的介绍。</em></h3>
+</blockquote>
+<h2 id="1-%E8%8E%B7%E5%8F%96%E5%92%8C%E5%BC%95%E5%85%A5-sensors-analytics-sdk">1. 获取和引入 Sensors Analytics SDK</h2>
+<h3 id="1-1-%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF">1.1 获取配置信息</h3>
+<p>首先从 Sensors Analytics 的主页中，获取采集数据的 URL、Token 及获取配置信息的 URL。</p>
+<p><img src="img/ios_sdk_0.png?t=1" alt=""></p>
+<p>如果使用 Sensors Analytics Cloud 服务，需获取的配置信息为:</p>
+<ul>
+<li>数据接收地址: <a href="http://{service_name}.cloud.sensorsdata.cn:8006/sa?token={project_token}" target="_blank">http://{service_name}.cloud.sensorsdata.cn:8006/sa?token={project_token}</a></li>
+</ul>
+<p>如果用户使用私有部署的 Sensors Analytics，默认的配置信息为：</p>
+<ul>
+<li>数据接收地址: <a href="http://{host_name}:8006/sa" target="_blank">http://{host_name}:8006/sa</a></li>
+</ul>
+<p>如果私有部署的过程中修改了 Nginx 的默认配置，或通过 CDN 等访问 Sensors Analytics，则请咨询相关人员获得配置信息，特别地，除上述采集事件的 URL 和获取配置信息的 URL 外，还需要获取可视化埋点服务的 URL。</p>
+<h3 id="1-2-%E5%BC%95%E5%85%A5-sdk-%E4%BB%A3%E7%A0%81">1.2 引入 SDK 代码</h3>
+<pre><code class="lang-javascript">    (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">para</span>) </span>{
+      <span class="hljs-keyword">var</span> p = para.sdk_url, n = para.name, w = <span class="hljs-built_in">window</span>, d = <span class="hljs-built_in">document</span>, s = <span class="hljs-string">'script'</span>,x = <span class="hljs-literal">null</span>,y = <span class="hljs-literal">null</span>;
+      w[<span class="hljs-string">'sensorsDataAnalytic201505'</span>] = n;
+      w[n] = w[n] || <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a</span>) </span>{<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{(w[n]._q = w[n]._q || []).push([a, <span class="hljs-built_in">arguments</span>]);}};
+      <span class="hljs-keyword">var</span> ifs = [<span class="hljs-string">'track'</span>,<span class="hljs-string">'quick'</span>,<span class="hljs-string">'register'</span>,<span class="hljs-string">'registerPage'</span>,<span class="hljs-string">'registerOnce'</span>,<span class="hljs-string">'registerSession'</span>,<span class="hljs-string">'registerSessionOnce'</span>,<span class="hljs-string">'trackSignup'</span>, <span class="hljs-string">'trackAbtest'</span>, <span class="hljs-string">'setProfile'</span>,<span class="hljs-string">'setOnceProfile'</span>,<span class="hljs-string">'appendProfile'</span>, <span class="hljs-string">'incrementProfile'</span>, <span class="hljs-string">'deleteProfile'</span>, <span class="hljs-string">'unsetProfile'</span>, <span class="hljs-string">'identify'</span>];
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; ifs.length; i++) {
+        w[n][ifs[i]] = w[n].call(<span class="hljs-literal">null</span>, ifs[i]);
+      }
+      <span class="hljs-keyword">if</span> (!w[n]._t) {
+        x = d.createElement(s), y = d.getElementsByTagName(s)[<span class="hljs-number">0</span>];
+        x.async = <span class="hljs-number">1</span>;
+        x.src = p;
+        y.parentNode.insertBefore(x, y);
+        w[n]._t = <span class="hljs-number">1</span> * <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+        w[n].para = para;
+      }
+    })({
+      sdk_url: <span class="hljs-string">'/sdk/sensorsdata.1.3.4.js'</span>,
+      name: <span class="hljs-string">'sa'</span>,
+      server_url:<span class="hljs-string">'http://xx.com/sa?token=xxx'</span>
+    });
+</code></pre>
+<ul>
+<li>将以上代码放入 html 的 head 里面,一般最好放在稍微靠前点的位置。 </li>
+<li>您在写具体代码时，如 track 一个事件时，只要保证写在上面引用的代码的下面就可以，不需要等 onload 后再执行。</li>
+</ul>
+<p>必填参数：</p>
+<ul>
+<li><strong>sdk_url</strong>: 是 SDK 文件的地址。<a href="/sdk/sensorsdata.1.3.4.js" target="_blank">/sdk/sensorsdata.1.3.4.js</a> 这个最新的sdk地址。为了提高稳定性，建议你们下载下来放在你们服务器或者cdn上。这个文件是utf8编码的，如果打开乱码的话，在浏览器查看中指定下unicode编码。</li>
+<li><strong>name</strong>: 是 SDK 使用的一个默认的全局变量，如定义成 sa 的话，后面接可以使用 <code>sa.track()</code> 用来跟踪信息。为了防止变量名重复，你可以修改成其他名称比如 sensorsdata 等 。</li>
+<li><strong>server_url</strong>: 即上面获取到的采集事件的 URL。</li>
+</ul>
+<p>可选参数：</p>
+<ul>
+<li><strong>cross_subdomain</strong>: 设置成 tru e后，表示在根域下设置 cookie。也就是如果你有 zhidao.baidu 和 tieba.baidu 两个域，且有一个用户在同一个浏览器都登录过这两个域的话，我们会认为这个用户是一个用户。如果设置成 false 的话，会认为是两个用户。默认 true。   </li>
+<li><strong>show_log</strong>: 设置 true 后会在网页控制台打 logger，会显示发送的数据,设置 false 表示不显示。默认 true。  </li>
+<li><strong>debug_mode</strong>: 线上环境不能开启，只供开发者测试时使用。设置成 true 后，会把数据传到沙盒环境暂存。同时每条数据在后端会校验是否成功。具体参考 <a href="debug_mode.html">debug_mode使用说明</a> 。默认 false。</li>
+<li><strong>debug_mode_upload</strong>: 设置 false 的话，发到后端的数据只会在沙盒暂存，设置 true 的话，会发到数据库中。默认 false。</li>
+<li><strong>debug_mode_url</strong>: 是开启 debug 模式后，发送数据的地址。不填的话可以自动计算。</li>
+</ul>
+<p>可视化埋点参数配置：</p>
+<ul>
+<li>如果你要用可视化埋点的话，上面的参数通用，只需要把 sdk_url 修改为 <em><a href="/sdk/vtrack.1.3.4.js" target="_blank">/sdk/vtrack.1.3.4.js</a></em> 就行。关于可视化埋点的其它配置和介绍，参考 <a href="vtrack_intro.html">可视化埋点</a></li>
+</ul>
+<h2 id="2-distinct-id-%E8%AF%B4%E6%98%8E">2. distinct_id 说明</h2>
+<p><strong>distinct_id</strong> 是用来标识用户的，一段唯一的字符串，默认情况下  JavaScript SDK 会自动生成一个 <strong>distinct_id</strong> 并永久保存在浏览器中的 Cookie 中（我们暂时称这个为 <strong>cookie_id</strong>），你也可以把用户的真实的 <strong>user_id</strong>，通过 <code>identify(user_id)</code> 来做为 <strong>distinct_id</strong>。</p>
+<h2 id="3-%E4%BA%8B%E4%BB%B6%E8%BF%BD%E8%B8%AA">3. 事件追踪</h2>
+<p>用户通过 <code>sa.track(event_name, [properties])</code> 记录事件  </p>
+<ul>
+<li><strong>event_name</strong>: <code>string</code>, 表示要追踪的事件名{必须}  </li>
+<li><strong>properties</strong>: <code>object</code>，表示这个事件的属性{可选}   </li>
+</ul>
+<pre><code class="lang-javascript">    <span class="hljs-comment">// 追踪首页打开事件index_visit，并标记是从baidu来的。  </span>
+    sa.track(<span class="hljs-string">'index_visit'</span>,{from:<span class="hljs-string">'baidu'</span>});
+</code></pre>
+<h2 id="4-%E5%A6%82%E4%BD%95%E5%87%86%E7%A1%AE%E7%9A%84%E6%A0%87%E8%AF%86%E7%94%A8%E6%88%B7">4. 如何准确的标识用户</h2>
+<h3 id="4-1-sa-identify">4.1 sa.identify</h3>
+<p>默认情况下，是把 <strong>cookie_id</strong> 做为 <strong>distinct_id</strong> 的。如果有用户登录行为的话，可以用 <code>sa.identify(user_id)</code> 来把 <strong>user_id</strong> 做为 <strong>distinct_id</strong>。这样就能标识出发生事件的真实用户。建议在用户登录后，立即调用这个方法。</p>
+<p>这个方法有三种使用方式:  </p>
+<ul>
+<li><code>sa.identify(user_id)</code>: 这个 <strong>user_id</strong> 仅对当前页面有效 （应用较多）   </li>
+<li><code>sa.identify(user_id, true)</code>: 会把这个 <strong>user_id</strong> 一直保存下来使用，永久有效 （应用较多）   </li>
+<li><code>sa.identify()</code>: 重新生成一个新的 <strong>cookie_id</strong>（很少使用）   </li>
+</ul>
+<p>应用场景:  </p>
+<ul>
+<li>如果你只想在用户登录后，使用真实的 <strong>user_id</strong>，但在非登录情况下，一直使用原有的 <strong>cookie_id</strong>。可以使用<code>sa.identify(user_id)</code>。这个方法只针对于当前页面有效。也就是说，各 页面登录后，都要首先掉用一下 <code>sa.identify(user_id)</code>。   </li>
+<li>如果你想在用户登录后，使用真实的 <strong>user_id</strong>，且之后所有页面一直使用这个 <strong>user_id</strong>。可以使用 <code>sa.identify(user_id,true)</code>。  </li>
+<li>如果你想换一个 <strong>cookie_id</strong>,可以使用 <code>sa.identify()</code>。这个并不常用。</li>
+</ul>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">if</span> (user_id) {
+   sa.identify(user_id);  <span class="hljs-comment">//参数必须是字符串，且必须有值 </span>
+ }
+</code></pre>
+<h3 id="4-2-sa-tracksignup">4.2 sa.trackSignup</h3>
+<p><code>trackSignUp</code> 是一个较为复杂的功能，请在使用前先阅读<a href="track_signup.html">相关说明</a>，并在必要时联系我们的技术支持人员。    </p>
+<p>通过 <code>sa.trackSignup(user_id, event_name, [properties])</code> 来把之前 SDK 自动生成的 <strong>cookie_id</strong> 关联成现在传入的 <strong>user_id</strong>。且以后会一直使用这个 <strong>user_id</strong>。      </p>
+<ul>
+<li><strong>user_id</strong>: <code>string</code>, 表示您产品里用户的唯一标识，例如数据库中的 <strong>user_id</strong> {必须}    </li>
+<li><strong>event_name</strong>: <code>string</code>, 表示事件名 {必须}   </li>
+<li><strong>properties</strong>: <code>object</code>，表示需要加的属性 {可选}  </li>
+</ul>
+<pre><code class="lang-javascript">    sa.trackSignup(<span class="hljs-string">'user1312312123'</span>,<span class="hljs-string">'signup'</span>,{
+      from:<span class="hljs-string">'nav1'</span>
+    });
+</code></pre>
+<p>一般情况下，不建议在前端页面调用这个方法，而是应该在后端的注册流程完成之后直接调用。</p>
+<p>注意，<code>sa.trackSignup</code> 是将用户 <strong>注册</strong> 前后的 ID 关联起来，并不能用于关联 <strong>登录</strong> 前后的 ID。此外，<code>sa.trackSignup</code> 只可调用一次，相同 ID 调用多次的话，只保留第一次，后面几次的关联是无效的。</p>
+<h2 id="5-%E5%9C%A8%E5%90%8E%E7%BB%AD%E5%8F%91%E7%94%9F%E7%9A%84%E6%89%80%E6%9C%89%E4%BA%8B%E4%BB%B6%E4%B8%AD%E9%83%BD%E5%B8%A6%E4%B8%8A%E4%BC%A0%E5%85%A5%E7%9A%84%E5%B1%9E%E6%80%A7">5 在后续发生的所有事件中都带上传入的属性</h2>
+<p>如果你不想每次都传一些固定的属性，想保存下来一直使用。比如你根据用户的行为得到了一些信息想一直保存下来。你可以使用 <code>sa.register({gender:"male"})</code> 。这样的话，下次你在使用 <code>sa.track("index_visit")</code> 时等同于 <code>sa.track("index_visit", {gender:"male"})</code>。</p>
+<h3 id="5-1-sa-registerpage-object">5.1 sa.registerPage(object)</h3>
+<p>在当前页面的，后续事件中都注入这些属性，只针对当前页面有效  </p>
+<pre><code class="lang-javascript">    sa.registerPage({
+      current_url: location.href
+      referrer: <span class="hljs-built_in">document</span>.referrer
+    });
+    sa.track(<span class="hljs-string">'button_A_click'</span>); <span class="hljs-comment">// 这时候，这个 button_A_click 事件，就会带有current_url和referrer这些属性。且仅对当前页面有效。</span>
+</code></pre>
+<h3 id="5-2-sa-register-object">5.2 sa.register(object)</h3>
+<p>在 Cookie 中永久保存属性，永久有效，如果存在这个属性了则覆盖。</p>
+<h3 id="5-3-sa-registeronce-object">5.3 sa.registerOnce(object)</h3>
+<p>在 Cookie 中永久保存属性，如果存在这个属性了则不覆盖。</p>
+<h3 id="5-4-sa-registersession-object">5.4 sa.registerSession(object)</h3>
+<p>在 Cookie 中保存时，不设置过期时间，也就是在当前浏览器 Session 里保存属性，关闭浏览器后这些属性会失效。如果存在这个属性则覆盖。（并不是支持所有浏览器，如果 Chrome 浏览器开启了，启动时从上次地方继续，关闭浏览器后 Cookie 并没有删除）。</p>
+<h3 id="5-5-sa-registersessiononce-object">5.5 sa.registerSessionOnce(object)</h3>
+<p>同上,如果存在这个属性不覆盖。 </p>
+<p>比如，你想记录你们网站的 referrer，但是你们网站有很多页面，可能你们网站的 B 页面是从你们网站的 A 页面跳转过来的，这样 B 记录到的 referrer 就是 A 而不是最初的 referrer。你可以通过 <code>sa.registerSessionOnce({referrer: document.referrer})</code> 来记录当前浏览器 Session 状态下的 referrer。</p>
+<h2 id="6-%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E5%B1%9E%E6%80%A7">6. 设置用户属性</h2>
+<p>除了追踪事件，SDK 还提供 API 设置用户的属性，并支持以用户属性为维度进行数据分析。你可以首先使用上面的 <code>identify(userid)</code> 或者 <code>trackSignup()</code> 来标识用户。然后可以对这个特定的用户设置一些属性，比如这个人的性别，年龄，等等。如果你不用这两个方法去标识用户，就会以 Cookie 中的匿名 <code>distinct_id</code> 来标识用户。</p>
+<h3 id="6-1-sa-setprofile-properties">6.1 sa.setProfile(properties)</h3>
+<p>设置用户的属性</p>
+<ul>
+<li>properties <code>object</code>。{必须}  </li>
+</ul>
+<pre><code class="lang-javascript">    sa.setProfile({email:<span class="hljs-string">'xxx@xx'</span>});
+</code></pre>
+<h3 id="6-2-sa-setonceprofile-properties">6.2 sa.setOnceProfile(properties)</h3>
+<p>如果不存在则设置，存在就不设置</p>
+<ul>
+<li>properties <code>object</code>。{必须} *  </li>
+</ul>
+<pre><code class="lang-javascript">    sa.setOnceProfile({email:<span class="hljs-string">'xxx@xx'</span>});
+</code></pre>
+<h3 id="6-3-sa-appendprofile-properties">6.3 sa.appendProfile(properties)</h3>
+<p>给数组属性添加值。通过setProfile只能改变属性的值。如果这个属性是数组类型的，你不想完全改变这个值，只想做添加操作，案例如下两种方式  </p>
+<ul>
+<li>properties <code>object</code>。{必须}  </li>
+</ul>
+<pre><code class="lang-javascript">    <span class="hljs-comment">//给category增加两个值</span>
+    sa.appendProfile({catrgory: [<span class="hljs-string">'玉米'</span>,<span class="hljs-string">'白菜'</span>]});
+    <span class="hljs-comment">//给category增加一个值      </span>
+    sa.appendProfile({catrgory: <span class="hljs-string">'玉米'</span>});
+</code></pre>
+<h3 id="6-4-sa-incrementprofile-properties">6.4 sa.incrementProfile(properties)</h3>
+<p>对当前用户的属性做递增或者递减.</p>
+<ul>
+<li>properties <code>object</code> 或者 <code>string</code>。{必须}</li>
+</ul>
+<pre><code class="lang-javascript">    <span class="hljs-comment">//表示navClick递减</span>
+    例<span class="hljs-number">1</span>: sa.incrementProfile({<span class="hljs-string">'navClick'</span>:-<span class="hljs-number">1</span>});
+    <span class="hljs-comment">//表示navClick递增2   </span>
+    例<span class="hljs-number">2</span>: sa.incrementProfile({<span class="hljs-string">'navClick'</span>:<span class="hljs-number">2</span>});    
+    <span class="hljs-comment">//直接传入一个属性名，表示递增1</span>
+    例<span class="hljs-number">3</span>: sa.incrementProfile(<span class="hljs-string">'navClick'</span>);
+</code></pre>
+<h3 id="6-5-sa-deleteprofile">6.5 sa.deleteProfile()</h3>
+<p>删除当前用户，不需要参数</p>
+<h3 id="6-6-sa-unsetprofile-property">6.6 sa.unsetProfile(property)</h3>
+<p>删除当前用户的一些属性</p>
+<ul>
+<li>property <code>array</code> 或者 <code>string</code></li>
+</ul>
+<pre><code class="lang-javascript">    <span class="hljs-comment">//删除email和location属性</span>
+    sa.unsetProfile([<span class="hljs-string">'email'</span>,<span class="hljs-string">'location'</span>]);   
+    <span class="hljs-comment">//删除email属性</span>
+    sa.unsetProfile(<span class="hljs-string">'email'</span>);
+</code></pre>
+<h2 id="7-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%AF%B4%E6%98%8E">7. 数据类型说明</h2>
+<ul>
+<li>object: 上面 properties 是 object 类型。但是里面必须是 key:valu e格式。且 value 必须只能是 string/number/date/boolean 这几种类型  </li>
+<li>string: 一般情况下的值都是 string 类型</li>
+<li>number: 如 sa.incrementProfile 中会用到</li>
+<li>date: 属性的值可以传入 new Date 的值</li>
+<li>boolan: 属性的值可以是 true/false</li>
+<li>array: 只有在 sa.unsetProfile 里会用到，其中 array 里的必须是字符串  </li>
+</ul>
+<h2 id="8-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">8. 常见问题</h2>
+<ul>
+<li>设置页面停留时间  </li>
+</ul>
+<pre><code class="lang-javascript"><span class="hljs-built_in">window</span>.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// 在页面加载完毕或者也不用加载完毕,定义一个初始时间</span>
+    <span class="hljs-keyword">var</span> start = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    <span class="hljs-comment">// 在页面关闭前,调用sa的track方法</span>
+    <span class="hljs-built_in">window</span>.onunload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> end = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+      <span class="hljs-keyword">var</span> duration = (end.getTime() - start.getTime()) / <span class="hljs-number">1000</span>;
+      <span class="hljs-comment">// 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)</span>
+      sa.track(<span class="hljs-string">'pageView'</span>, {
+        pageStayTime: duration,
+        pageUrl: <span class="hljs-built_in">window</span>.location.href
+      });
+    };
+  }
+</code></pre>
+<ul>
+<li>设置 IP</li>
+</ul>
+<p>在 JavaScript SDK 中不需要传入 $ip 属性。接收数据的服务端会自动解析访问者的 IP。如果您主动设置了 $ip 属性，将会使用你设置的 IP 属性。   </p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+            <br>
+            <div style="text-align: center; padding: 25px; color: rgba(160, 160, 160, 1);">
+                © Sensors Data 2015 | Terms, Conditions and Privacy Policy | 京ICP备15055677号
+            </div>
+        </div>
+
+        
+        <a href="./ruby_sdk.html" class="navigation navigation-prev " aria-label="Previous page: Ruby SDK"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="./js_sdk_demo.html" class="navigation navigation-next " aria-label="Next page: JavaScript SDK Demo" style="margin-right: 0px;"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+//@import "../$/prefixes";
+
+// keyframes
+//----------------------------------------
+@mixin keyframes($ident:animation-name, $prefixes:$prefixes){
+  @each $prefix in $prefixes {
+
+    @if $prefix == webkit and $prefix-for-webkit == true {
+      @-webkit-keyframes #{$ident} { @content; }
+    }
+    @else if $prefix == moz and $prefix-for-mozilla == true {
+      @-moz-keyframes #{$ident} { @content; }
+    }
+    @else if $prefix == ms and $prefix-for-microsoft == true {
+      @-ms-keyframes #{$ident} { @content; }
+    }
+    @else if $prefix == o and $prefix-for-opera == true {
+      @-o-keyframes #{$ident} { @content; }
+    }
+    @else if $prefix == spec and $prefix-for-spec == true {
+      @keyframes #{$ident} { @content; }
+    }
+    @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+@mixin keyframes-prefixer-content($ident:animation-name, $prefixes:$prefixes){
+  @each $prefix in $prefixes {
+
+    @if $prefix == webkit and $prefix-for-webkit == true {
+      @-webkit-keyframes #{$ident} { @include prefixer-content(webkit spec); }
+    }
+    @else if $prefix == moz and $prefix-for-mozilla == true {
+      @-moz-keyframes #{$ident} { @include prefixer-content(moz spec); }
+    }
+    @else if $prefix == ms and $prefix-for-microsoft == true {
+      @-ms-keyframes #{$ident} { @include prefixer-content(ms spec); }
+    }
+    @else if $prefix == o and $prefix-for-opera == true {
+      @-o-keyframes #{$ident} { @include prefixer-content(o spec); }
+    }
+    @else if $prefix == spec and $prefix-for-spec == true {
+      @keyframes #{$ident} { @include prefixer-content(spec); }
+    }
+    @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}

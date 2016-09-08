@@ -1,0 +1,31 @@
+
+///* drag 
+// 启用拖拽
+//<div class="dom-dragable"></div>
+// 禁用拖拽
+//<div class="dom-dragdisable"></div>
+//
+//*/
+.dom-drag-target{ z-index:9999!important; }
+.dom-dragging{
+	.dom-dragging-mask{ @extend %abs-full; position: fixed; z-index:32766; cursor:move; }
+}
+.dom-dragable{ cursor:move!important; }
+.dom-dragdisable{ cursor: no-drop!important; cursor: not-allowed!important; @include opacity(.6!important); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

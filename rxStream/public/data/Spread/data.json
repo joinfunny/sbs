@@ -1,0 +1,1378 @@
+{
+  "actions": [
+    {
+      "level": 1,
+      "bname": "actions_1",
+      "bid": "actions_1-0",
+      "name": "actionName",
+      "value": "*",
+      "label": "任意事件",
+      "childrenType": "select",
+      "childrenName": "actions_1-0_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actions_1-0_2",
+          "bid": "actions_1-0_2-0",
+          "name": "operation",
+          "value": "general",
+          "label": "总次数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-0_2",
+          "bid": "actions_1-0_2-1",
+          "name": "operation",
+          "value": "unique",
+          "label": "触发用户数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-0_2",
+          "bid": "actions_1-0_2-2",
+          "name": "operation",
+          "value": "average",
+          "label": "人均次数"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actions_1",
+      "bid": "actions_1-1",
+      "name": "actionName",
+      "value": "Transmit",
+      "label": "转发",
+      "childrenType": "select",
+      "childrenName": "actions_1-1_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actions_1-1_2",
+          "bid": "actions_1-1_2-0",
+          "name": "operation",
+          "value": "general",
+          "label": "总次数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-1_2",
+          "bid": "actions_1-1_2-1",
+          "name": "operation",
+          "value": "unique",
+          "label": "触发用户数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-1_2",
+          "bid": "actions_1-1_2-2",
+          "name": "operation",
+          "value": "average",
+          "label": "人均次数"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actions_1",
+      "bid": "actions_1-2",
+      "name": "actionName",
+      "value": "View",
+      "label": "浏览",
+      "childrenType": "select",
+      "childrenName": "actions_1-2_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actions_1-2_2",
+          "bid": "actions_1-2_2-0",
+          "name": "operation",
+          "value": "general",
+          "label": "总次数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-2_2",
+          "bid": "actions_1-2_2-1",
+          "name": "operation",
+          "value": "unique",
+          "label": "触发用户数"
+        },
+        {
+          "level": 2,
+          "bname": "actions_1-2_2",
+          "bid": "actions_1-2_2-2",
+          "name": "operation",
+          "value": "average",
+          "label": "人均次数"
+        }
+      ]
+    }
+  ],
+  "actionAttrs": [
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-0",
+      "name": "field",
+      "value": "event.transmitview_count",
+      "label": "转发浏览量",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-0_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-0_2",
+          "bid": "actionAttrs_1-0_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-0_2",
+          "bid": "actionAttrs_1-0_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-0_2",
+          "bid": "actionAttrs_1-0_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-0_2",
+          "bid": "actionAttrs_1-0_2-3",
+          "name": "expression",
+          "value": "range",
+          "label": "区间",
+          "childrenDataType": "STRING",
+          "childrenType": "number-range",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-1",
+      "name": "field",
+      "value": "event.second_transmit",
+      "label": "二次转发量",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-1_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-1_2",
+          "bid": "actionAttrs_1-1_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-1_2",
+          "bid": "actionAttrs_1-1_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-1_2",
+          "bid": "actionAttrs_1-1_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-1_2",
+          "bid": "actionAttrs_1-1_2-3",
+          "name": "expression",
+          "value": "range",
+          "label": "区间",
+          "childrenDataType": "STRING",
+          "childrenType": "number-range",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-2",
+      "name": "field",
+      "value": "event.transmit_content",
+      "label": "传播内容",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-2_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-2_2",
+          "bid": "actionAttrs_1-2_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-2_2",
+          "bid": "actionAttrs_1-2_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-2_2",
+          "bid": "actionAttrs_1-2_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-2_2",
+          "bid": "actionAttrs_1-2_2-3",
+          "name": "expression",
+          "value": "range",
+          "label": "区间",
+          "childrenDataType": "STRING",
+          "childrenType": "number-range",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-3",
+      "name": "field",
+      "value": "event.screen_width",
+      "label": "屏幕宽度",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-3_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-3_2",
+          "bid": "actionAttrs_1-3_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-3_2",
+          "bid": "actionAttrs_1-3_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-3_2",
+          "bid": "actionAttrs_1-3_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-3_2",
+          "bid": "actionAttrs_1-3_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "区间",
+          "childrenDataType": "number",
+          "childrenType": "number-range",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-4",
+      "name": "field",
+      "value": "event.screen_height",
+      "label": "屏幕高度",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-4_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-4_2",
+          "bid": "actionAttrs_1-4_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-4_2",
+          "bid": "actionAttrs_1-4_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-4_2",
+          "bid": "actionAttrs_1-4_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-4_2",
+          "bid": "actionAttrs_1-4_2-3",
+          "name": "expression",
+          "value": "range",
+          "label": "区间",
+          "childrenDataType": "STRING",
+          "childrenType": "number-range",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-5",
+      "name": "field",
+      "value": "event.app_version",
+      "label": "应用版本",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-5_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "1.1", "1.2", "1.3", "1.4" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "1.1", "1.2", "1.3", "1.4" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "1.1", "1.2", "1.3", "1.4" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "1.1", "1.2", "1.3", "1.4" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-5_2",
+          "bid": "actionAttrs_1-5_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-6",
+      "name": "field",
+      "value": "event.os",
+      "label": "操作系统",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-6_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "Windows", "IOS" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "Windows", "IOS" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "Windows", "IOS" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "Windows", "IOS" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-6_2",
+          "bid": "actionAttrs_1-6_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-7",
+      "name": "field",
+      "value": "event.osversion",
+      "label": "操作系统版本",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-7_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "7.0", "7.1", "8.0", "8.1" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "7.0", "7.1", "8.0", "8.1" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "7.0", "7.1", "8.0", "8.1" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "7.0", "7.1", "8.0", "8.1" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-7_2",
+          "bid": "actionAttrs_1-7_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-8",
+      "name": "field",
+      "value": "event.iswifi",
+      "label": "是否wifi",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-8_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-8_2",
+          "bid": "actionAttrs_1-8_2-0",
+          "name": "expression",
+          "value": "true",
+          "label": "为真"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-8_2",
+          "bid": "actionAttrs_1-8_2-1",
+          "name": "expression",
+          "value": "false",
+          "label": "为假"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-9",
+      "name": "field",
+      "value": "event.city",
+      "label": "城市",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-9_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-9_2",
+          "bid": "actionAttrs_1-9_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-10",
+      "name": "field",
+      "value": "event.province",
+      "label": "省份",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-10_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-10_2",
+          "bid": "actionAttrs_1-10_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-11",
+      "name": "field",
+      "value": "event.machine_brand",
+      "label": "设备制造商",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-11_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "华为", "apple", "小米", "魅族", "三星" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "华为", "apple", "小米", "魅族", "三星" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "华为", "apple", "小米", "魅族", "三星" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "华为", "apple", "小米", "魅族", "三星" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-11_2",
+          "bid": "actionAttrs_1-11_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "actionAttrs_1",
+      "bid": "actionAttrs_1-12",
+      "name": "field",
+      "value": "event.machine_version",
+      "label": "设备型号",
+      "childrenType": "select",
+      "childrenName": "actionAttrs_1-12_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "iPhone4", "iPhone4s", "iPhone5", "iPhone5s" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "iPhone4", "iPhone4s", "iPhone5", "iPhone5s" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "iPhone4", "iPhone4s", "iPhone5", "iPhone5s" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input",
+          "children": [ "iPhone4", "iPhone4s", "iPhone5", "iPhone5s" ]
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "actionAttrs_1-12_2",
+          "bid": "actionAttrs_1-12_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    }
+  ],
+  "userAttrs": [
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-0",
+      "name": "field",
+      "value": "user.name",
+      "label": "姓名",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-0_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-0_2",
+          "bid": "userAttrs_1-0_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-1",
+      "name": "field",
+      "value": "user.age",
+      "label": "年龄",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-1_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-1_2",
+          "bid": "userAttrs_1-1_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "20", "30", "40" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-1_2",
+          "bid": "userAttrs_1-1_2-1",
+          "name": "expression",
+          "value": "lessthan",
+          "label": "小于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "20", "30", "40" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-1_2",
+          "bid": "userAttrs_1-1_2-2",
+          "name": "expression",
+          "value": "morethan",
+          "label": "大于",
+          "childrenDataType": "number",
+          "childrenType": "STRING",
+          "children": [ "20", "30", "40" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-1_2",
+          "bid": "userAttrs_1-1_2-3",
+          "name": "expression",
+          "value": "range",
+          "label": "区间",
+          "childrenDataType": "number-range",
+          "childrenType": "STRING",
+          "children": [ "20", "30", "40" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-2",
+      "name": "field",
+      "value": "user.sex",
+      "label": "性别",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-2_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "男", "女", "未知" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "男", "女", "未知" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "男", "女", "未知" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "男", "女", "未知" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-2_2",
+          "bid": "userAttrs_1-2_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-3",
+      "name": "field",
+      "value": "user.regist_time",
+      "label": "注册时间",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-3_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-0",
+          "name": "expression",
+          "value": "absolute",
+          "label": "绝对时间",
+          "childrenDataType": "date",
+          "childrenType": "input",
+          "children": [ "" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-1",
+          "name": "expression",
+          "value": "relative",
+          "label": "相对时间",
+          "childrenDataType": "date",
+          "childrenType": "input",
+          "children": [ "" ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-3",
+      "name": "field",
+      "value": "user.regist_channel",
+      "label": "注册渠道",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-3_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "微信", "百度", "微博", "官网" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "微信", "百度", "微博", "官网" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "微信", "百度", "微博", "官网" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "微信", "百度", "微博", "官网" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-3_2",
+          "bid": "userAttrs_1-3_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-4",
+      "name": "field",
+      "value": "user.ucity",
+      "label": "城市",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-4_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "北京", "上海", "广州", "杭州", "石家庄" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "北京", "上海", "广州", "杭州", "石家庄" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "北京", "上海", "广州", "杭州", "石家庄" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "北京", "上海", "广州", "杭州", "石家庄" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-4_2",
+          "bid": "userAttrs_1-4_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "bname": "userAttrs_1",
+      "bid": "userAttrs_1-5",
+      "name": "field",
+      "value": "user.uprovince",
+      "label": "省份",
+      "childrenType": "select",
+      "childrenName": "userAttrs_1-5_2",
+      "children": [
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-0",
+          "name": "expression",
+          "value": "equal",
+          "label": "等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "山东","河北","山西","河南","山西" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-1",
+          "name": "expression",
+          "value": "notequal",
+          "label": "不等于",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "山东","河北","山西","河南","山西" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-2",
+          "name": "expression",
+          "value": "contain",
+          "label": "包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "山东","河北","山西","河南","山西" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-3",
+          "name": "expression",
+          "value": "notcontain",
+          "label": "不包含",
+          "childrenDataType": "STRING",
+          "childrenType": "input-select",
+          "children": [ "山东","河北","山西","河南","山西" ]
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-4",
+          "name": "expression",
+          "value": "isset",
+          "label": "有值"
+        },
+        {
+          "level": 2,
+          "bname": "userAttrs_1-5_2",
+          "bid": "userAttrs_1-5_2-5",
+          "name": "expression",
+          "value": "notset",
+          "label": "没有值"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+
+///* 
+//'<div class="mask"><div class="mask-layer"></div><div class="loading loading-bounce-circle">' + 
+//		'123456'.split('').map(function(i){ return '<i class="l-' + i + '"></i>' }).join('') + 
+//		'</div></div>'
+// */
+.loading-bounce-circle{ @include absmiddle(150px, 40px); z-index:2;
+	i{ float:left; margin-left:9px; width:16px; height:16px; background-color:#fff; border-radius:50%; @include opacity(0); @include animation(loading-bounce-circle 3s linear 0s infinite alternate); @include animation-duration(3s); }
+	.l-1{ @include animation-delay(0.6s); }
+	.l-2{ @include animation-delay(1.4s); }
+	.l-3{ @include animation-delay(1.8s); }
+	.l-4{ @include animation-delay(2.2s); }
+	.l-5{ @include animation-delay(2.6s); }
+	.l-6{ @include animation-delay(3.0s); }
+}
+@mixin prefixer-content($prefixes:$prefixes){
+	0%{ @include opacity(0, $prefixes); }
+	50%{ @include opacity(1, $prefixes); }
+	100%{ @include opacity(0, $prefixes); }
+}
+@include keyframes-prefixer-content(loading-bounce-circle);
+
+
+

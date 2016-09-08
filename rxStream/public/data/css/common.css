@@ -1,0 +1,26 @@
+/* CSS Document */
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,p,form,fieldset{margin:0;padding:0}
+body,input,textarea,select,button,table{font-size:14px;}
+body{-webkit-text-size-adjust:none;}
+img{border:0;vertical-align:top}
+fieldset{border:0}
+ul,ol{list-style:none}
+em,address{font-style:normal}
+table{border-collapse:collapse}
+input[type="text"]{-webkit-tap-highlight-color: rgba(255,0,0,0); -webkit-appearance: none;}
+a{ -webkit-appearance:none;-webkit-tap-highlight-color:rgba(255,0,0,0);}
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0)}
+*, *:before, *:after { box-sizing: border-box; }
+
+/**/
+body{ padding:0px;}
+h1{ margin:20px auto; text-align:center; }
+.table-wrapper{ float:left; padding:10px; width:50%; }
+table{ table-layout:fixed; border:0; border-collapse:collapse; width:100%; font-size:14px; }
+thead th{ background-color:#eee; }
+thead th:nth-child(1){ width:20%; }
+thead th:nth-child(2){ width:15%; }
+tbody td{ text-align: center; }
+
+.data-wrapper{ overflow:hidden; }
+.data-code{ display:block; margin:10px auto; border:1px solid #000; min-height:200px; }

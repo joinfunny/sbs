@@ -1,0 +1,1 @@
+[{"label":"任意事件","name":"actionName","value":"*"},{"label":"取消订单","name":"actionName","value":"CancelOrder"},{"label":"创建订单","name":"actionName","value":"CreateOrder"},{"label":"确认收货","name":"actionName","value":"FinishOrder"},{"label":"支付订单","name":"actionName","value":"PayOrder"},{"label":"商家发货","name":"actionName","value":"SendGoods"}]

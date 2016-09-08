@@ -1,0 +1,8 @@
+.book-summary .summary>li:first-child{
+	background: rgba(255, 255, 255, 0) url('imgs/tip_logo.png') 10px 3px no-repeat;
+	background-size: 28px;
+	padding-left:25px;
+}
+.book-summary .summary>li:last-child{
+	display: none;
+}

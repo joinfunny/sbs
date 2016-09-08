@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>回访频率-数据概览</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/css/main/overview-list.css">
+    <% include ../../inc/base-script.html %>
+</head>
+<body>
+<div class="overviews-wrapper user-analysis">
+  <ul class="overview-list" data-role="Revisit">
+    <li class="overview overview-new"><a href="/main/user-analysis/Revisit/analysis?new" class="overview-link"> </a></li>
+</ul>
+</div> 
+    <script id="overview-temp" type="text/x-dot-template">
+    {{if(it && it.length>0) { for(var i=0;i<it.length;i++){var curOverView=it[i],file=curOverView.Config.requestZhData;}}
+        <li class="overview" data-overview-id="{{= curOverView.UniqueID }}">
+            <% include ../../inc/overview-remove.html %>
+            <a href="/main/user-analysis/Revisit/analysis?id={{= curOverView.UniqueID }}" class="overview-link">
+               <div class="icons-analysis">
+                  <ul>
+                    <li class="icon-revisit"></li>
+                  </ul>
+                </div>
+                <div class="overview-content">
+                  <div class="overview-header">
+                    <h2 class="overview-h" title="{{= curOverView.Title}}">{{= curOverView.Title}}</h2>
+                  </div>
+                  <div class="overview-body">
+                    <p class="description"><span>显示用户在：</span>{{= file.unit_zh}}</p>
+                    <p class="description"><span>用户操作：</span>{{= file.actions_zh.join(',')}}{{= file.type_zh}}</p>
+                    <p class="count">{{= curOverView.Remark}}</p>
+                  </div>
+                  <div class="overview-footer">
+                    <p class="last-update"><span class="date">更新时间：{{= curOverView.LastTime}}</span></p>
+                  </div>
+                </div>
+            </a>
+        </li>
+        {{ } } }}
+    </script>
+    <script src="/js/main/user-analysis/Revisit/index.js"></script>
+</body>
+</html>

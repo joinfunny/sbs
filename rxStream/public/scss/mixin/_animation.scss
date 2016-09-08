@@ -1,0 +1,45 @@
+//@import "prefixer";
+
+///* http://www.w3cplus.com/content/css3-animation
+//
+//    animation: [<animation-name> || <animation-duration> || <animation-timing-function> || <animation-delay> || <animation-iteration-count> || <animation-direction>] [, [<animation-name> || <animation-duration> || <animation-timing-function> || <animation-delay> || <animation-iteration-count> || <animation-direction>] ]* 
+//	
+//    animation-name: none | IDENT[,none | IDENT]*
+//	
+//    animation-duration: <time>[,<time>]*
+//	
+//    animation-timing-function:ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>) [, ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>)]* 
+// 
+//    animation-delay: <time>[,<time>]*
+//	
+//	animation-iteration-count: infinite | <number> [, infinite | <number>]* 
+//	
+//	animation-direction: normal | alternate [, normal | alternate]* 
+//	
+//	animation-play-state:running | paused [, running | paused]* 
+//	
+//  */
+@mixin animation($value:animation-name 1s ease-in 0s infinite alternate running, $prefixes:$prefixes){
+	@include prefixer(animation, $value, $prefixes);
+}
+@mixin animation-name($value:animation-name, $prefixes:$prefixes){
+	@include prefixer(animation-name, $value, $prefixes);
+}
+@mixin animation-duration($value:1s, $prefixes:$prefixes){
+	@include prefixer(animation-duration, $value, $prefixes);
+}
+@mixin animation-timing-function($value:ease-in, $prefixes:$prefixes){
+	@include prefixer(animation-timing-function, $value, $prefixes);
+}
+@mixin animation-delay($value:0s, $prefixes:$prefixes){
+	@include prefixer(animation-delay, $value, $prefixes);
+}
+@mixin animation-iteration-count($value:infinite, $prefixes:$prefixes){
+	@include prefixer(animation-iteration-count, $value, $prefixes);
+}
+@mixin animation-direction($value:alternate, $prefixes:$prefixes){
+	@include prefixer(animation-direction, $value, $prefixes);
+}
+@mixin animation-play-state($value:running, $prefixes:$prefixes){
+	@include prefixer(animation-play-state, $value, $prefixes);
+}

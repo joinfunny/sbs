@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户属性-漏斗分析</title>
+<link rel="stylesheet" href="../css/common.css">
+<script src="../../bower_components/lodash/lodash.js"></script>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script src="../js/bas.js"></script>
+<script src="../js/createDateTree.js"></script>
+<script>
+$(function() {
+	//console.time('计时器1');
+	var trs = $('tbody>tr').toArray();
+	var tree = bas.UBA.Behavior.userAttrs.dataTree;
+	
+	bas.getTreeByTableRows(trs, tree.children, tree.bname, 1, 0);
+	//console.timeEnd('计时器2');
+	
+	//console.log(tree);
+	console.log(JSON.stringify(tree.children, null));
+	$('.data-code').html(JSON.stringify(tree.children, null, 4));
+
+//equal ：等于
+//notequal:不等于
+//less:小于
+//greater:大于
+//between:小于大于
+//contain:包含
+//notcontain:不包含
+//isset：有值
+//notset：没有值
+//relativebefore：在N天之前
+//relativewithin：在N天之内
+//absolutebetween：日期范围
+
+//cust_type	用户来源平台
+//cust_code	平台用户名
+//sex	性别
+//birth_day	出生日期
+
+	
+	var h = {
+		expression: {
+			'text': [
+				{
+					name: 'expression',
+					label: '等于',
+					value: 'equal'
+				},
+				{
+					name: 'expression',
+					label: '不等于',
+					value: 'notequal'
+				},
+				{
+					name: 'expression',
+					label: '包含',
+					value: 'contain'
+				},
+				{
+					name: 'expression',
+					label: '不包含',
+					value: 'notcontain'
+				},
+				{
+					name: 'expression',
+					label: '有值',
+					value: 'isset'
+				},
+				{
+					name: 'expression',
+					label: '没有值',
+					value: 'notset'
+				}
+			],
+			'number': [
+				{
+					name: 'expression',
+					label: '等于',
+					value: 'equal'
+				},
+				{
+					name: 'expression',
+					label: '小于',
+					value: 'less'
+				},
+				{
+					name: 'expression',
+					label: '大于',
+					value: 'greater'
+				},
+				{
+					name: 'expression',
+					label: '区间',
+					value: 'between'
+				}
+			],
+			'gender': [
+				{
+					name: 'expression',
+					label: '男',
+					value: '0'
+				},
+				{
+					name: 'expression',
+					label: '女',
+					value: '1'
+				},
+				{
+					name: 'expression',
+					label: '数值最小值',
+					value: '2'
+				}
+			]
+		}
+	};
+	
+ var actions = [
+   {
+     name: 'actionName',
+     label: '任意事件',
+     value: '*'
+   },
+   {
+     name: 'actionName',
+     label: '取消订单',
+     value: 'CancelOrder',
+   }
+ ];
+	
+});
+</script>
+</head>
+
+<body>
+<h1>用户属性-漏斗分析</h1>
+
+<div class="table-wrapper">
+  <table border="1" cellspacing="1" cellpadding="2">
+    <thead>
+      <tr>
+        <th>用户属性</th>
+        <th>条件表达</th>
+        <th>值（可选可填）</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td data-name="field" data-value="user.cust_type" data-btype="STRING" rowspan="6">用户来源平台</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">淘宝</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2" data-type="boolean">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="user.cust_code" data-btype="STRING" rowspan="6">平台用户名</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">淘宝</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2" data-type="boolean">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="user.sex" data-btype="STRING" rowspan="6">性别</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING" data-children-type="select-one">男,女,未知</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2" data-type="boolean">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="user.birth_day" data-btype="data" rowspan="9">出生日期</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="date"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2" data-type="boolean">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="relativebefore">在N天之前</td>
+        <td data-type="number"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="relativewithin">在N天之内</td>
+        <td data-type="number"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="absolutebetween">日期范围</td>
+        <td data-type="date-range"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="data-wrapper">
+  <pre class="data-code"></pre>
+</div>
+</body>
+</html>

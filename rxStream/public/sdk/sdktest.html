@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试</title>
+	<script>
+
+(function(para) {
+	var p = para.sdkUrl,
+		n = para.name,
+		w = this,
+		d = w.document,
+		s = 'script',
+		x = null,
+		y = null;
+	w['RXSTREAM201607'] = n;
+	//w[n]=w[n]||{};
+	w[n] = w[n] || function(a) {
+		return function() {
+			(w[n]._q = w[n]._q || []).push([a, arguments]);
+		}
+	};
+	/*window.rxStream=function(a){
+		return function(){
+			if(!window.rxStream._q){
+				window.rxStream._q=[];
+			}
+			window.rxStream._q.push([a,arguments]);
+		}
+	}*/
+	// var ifs = ['track', 'quick', 'register', 'registerOnce', 'registerSession', 'registerSessionOnce', 'trackSignup' , 'trackAbtest', 'setProfile', 'setOnceProfile', 'appendProfile', 'incrementProfile', 'deleteProfile', 'unsetProfile', 'identify'];
+	/*for (var i = 0; i < ifs.length; i++) {
+		w[n][ifs[i]] = w[n].call(null, ifs[i]);
+		//window.rxStream.track=window.rxStream.call(null,'track');
+		//window.rxStream.track=window.rxStream('track');
+		// window.rxStream.track=function(){
+		// 	if(!window.rxStream._q){
+		// 		window.rxStream._q=[];
+		// 	}
+		// 	window.rxStream._q.push(['track',['track']]);
+		// }
+	}*/
+	if (!w[n].lt) {
+		x = d.createElement(s), y = d.getElementsByTagName(s)[0];
+		x.async = 1;
+		x.src = p;
+		y.parentNode.insertBefore(x, y);
+		w[n].lt = 1 * new Date();
+		w[n].para = para;
+	}
+	
+})({
+	sdkUrl: '/sdk/src/rxStream-build.js',
+	sendLimit:2,
+	name: 'rxStream1',
+	serverUrl: 'http://basauthorize.rc.dataengine.com/bassass/app/64204ca7f28e7dab2f6e781165b4d91c20160713192549445/authorize'
+});
+
+</script>
+</head>
+
+<body>
+	
+</body>
+</html>

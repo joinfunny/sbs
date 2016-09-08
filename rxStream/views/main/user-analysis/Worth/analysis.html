@@ -1,0 +1,388 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>价值分析</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/css/main/user-analysis/common.css">
+    <% include ../../inc/base-script.html %>
+</head>
+
+<body>
+
+<div id="Worth_analysis" data-analysis-type="Worth" class="panel-analysis-wrapper">
+<!-- 左侧面板 -->
+<div class="panel-left">
+
+    <!-- 左侧面板头部 -->
+    <!--<div class="panel-left-top">
+        <ul class="handle-list">
+            <li><a href="index" class="icon-back" title="返回">返回</a></li>
+            <li><a href="analysis" class="icon-reset" title="重置">重置</a></li>
+            <li><a href="javascript:void(0);" class="icon-save" role="saveAnalysisBtn" title="保存">保存</a></li>
+        </ul>
+    </div>-->
+
+    <!-- 用户事件 -->
+    <div id="" class="panel-user-events">
+        <h2 class="panel-h">用户行为</h2>
+
+        <div class="panel-body">
+            <ul class="drag-btn-list" role="btnItemList">
+                <script type="text/x-dot-template" role="btnItemTmpl">
+                    {{for(var l = it.length, i = 0, o; i < l; i++ ){
+                    o = it[i];
+                    }}
+                    <li class="li-btn-item">
+                        <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn"
+                                data-bname="{{=o.bname}}" data-bid="{{=o.bid}}" name="{{=o.name}}"
+                                value="{{=o.value}}"><span>{{=o.label}}</span></button>
+                    </li>
+                    {{}}}
+                </script>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 右侧面板 -->
+<div class="panel-right">
+
+    <!-- 右侧面板头部 -->
+    <!--<div class="panel-right-top">
+        <div class="handle-menu"><a href="javascript:void(0);" class="btn btn-toggle-analysis"
+                                    data-e-click="AppPage.toggleAnalysisListPanel"><i class="icon-toggle-show"></i>
+            我的分析列表</a></div>
+    </div>-->
+
+    
+
+        <!-- 事件属性（条件筛选） -->
+        <div id="" class="panel-attrs-conditions panel-attrs-event">
+            <h2 class="panel-h" data-toggle="tooltip" data-placement="bottom" title="事件属性" role="panelH">事件属性<i class="icon-fold"></i></h2>
+
+            <div class="panel-body">
+                <ul class="drag-btn-list" role="btnItemList">
+                    <script type="text/x-dot-template" role="btnItemTmpl">
+                        {{for(var l = it.length, i = 0, o; i < l; i++ ){
+                        o = it[i];
+                        }}
+                        <li class="li-btn-item">
+                            <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn"
+                                    data-bname="{{=o.bname}}" data-bid="{{=o.bid}}" name="{{=o.name}}"
+                                    value="{{=o.value}}"><span>{{=o.label}}</span></button>
+                        </li>
+                        {{}}}
+                    </script>
+                    <!-- 可通过设置<button/>样式类（'dom-dragdisabled'）来禁用或启用拖拽
+                    <li class="li-btn-item">
+                      <button type="button" class="condition-btn dom-dragable b-btn" name="dimension_1" value="dimension_1-0"><span>屏幕宽度</span></button>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!-- 主体属性（条件筛选） -->
+        <div id="" class="panel-attrs-conditions panel-attrs-subject">
+            <h2 class="panel-h" data-toggle="tooltip" data-placement="bottom" title="主体属性" role="panelH">主体属性<i class="icon-fold"></i></h2>
+
+            <div class="panel-body">
+                <ul class="drag-btn-list" role="btnItemList">
+                    <script type="text/x-dot-template" role="btnItemTmpl">
+                        {{for(var l = it.length, i = 0, o; i < l; i++ ){
+                        o = it[i];
+                        }}
+                        <li class="li-btn-item">
+                            <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn"
+                                    data-bname="{{=o.bname}}" data-bid="{{=o.bid}}" name="{{=o.name}}"
+                                    value="{{=o.value}}"><span>{{=o.label}}</span></button>
+                        </li>
+                        {{}}}
+                    </script>
+                    <!-- 可通过设置<button/>样式类（'dom-dragdisabled'）来禁用或启用拖拽
+                    <li class="li-btn-item">
+                      <button type="button" class="condition-btn dom-dragable b-btn" name="dimension_1" value="dimension_1-0"><span>屏幕宽度</span></button>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!-- 客体属性（条件筛选） -->
+        <div id="" class="panel-attrs-conditions panel-attrs-object">
+            <h2 class="panel-h" data-toggle="tooltip" data-placement="bottom" title="客体属性" role="panelH">客体属性<i class="icon-fold"></i></h2>
+
+            <div class="panel-body">
+                <ul class="drag-btn-list" role="btnItemList">
+                    <script type="text/x-dot-template" role="btnItemTmpl">
+                        {{for(var l = it.length, i = 0, o; i < l; i++ ){
+                        o = it[i];
+                        }}
+                        <li class="li-btn-item">
+                            <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn"
+                                    data-bname="{{=o.bname}}" data-bid="{{=o.bid}}" name="{{=o.name}}"
+                                    value="{{=o.value}}"><span>{{=o.label}}</span></button>
+                        </li>
+                        {{}}}
+                    </script>
+                    <!-- 可通过设置<button/>样式类（'dom-dragdisabled'）来禁用或启用拖拽
+                    <li class="li-btn-item">
+                      <button type="button" class="condition-btn dom-dragable b-btn" name="dimension_1" value="dimension_1-0"><span>屏幕宽度</span></button>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+</div>
+
+<!-- 分析列表面板 -->
+<% include ../../inc/analysis-list-panel.html %>
+
+<!-- 主面板 -->
+<div class="panel-main">
+
+    <!-- 主面板头部 -->
+    <div id="" class="panel-main-header" role="headerPanel">
+        <div class="analysis-title">
+            <label>
+            	<span></span>
+                <input type="text" name="inputAnalysisTitle" placeholder="请输入价值分析模型名称" role="inputAnalysisTitle">
+                <ul class="analysis-menu">
+                	<li><a href="javascript:void(0);" class="icon-save" data-toggle="tooltip" data-placement="bottom" role="saveAnalysisBtn"  title="保存"></a></li>
+                    <!--<li><a href="" class="icon-reset fa fa-undo" role="resetAnalysisBtn" data-toggle="tooltip" data-placement="bottom" title="重置"></a></li>-->
+                    <li><a href="javascript:void(0);" class="icon-list fa fa-list-alt" data-toggle="tooltip" data-placement="bottom"  data-e-click="AppPage.toggleAnalysisListPanel" title="我的分析列表"></a></li>
+		            
+                </ul>
+            </label>
+                <input type="hidden" name="autoAnalysisTitle" role="autoAnalysisTitle">
+                <input type="hidden" name="originalAnalysisTitle" role="originalAnalysisTitle">
+        </div>
+        <div class="panel-charts-toolbar">
+
+            <!-- 图表类型切换按钮 -->
+            <div class="charts-type-menu" role="chartsTypeMenu">
+                    <a href="javascript:void(0);" data-type="radar" class="icon-echarts icon-histogram fa fa-bullseye"
+                       role="switchHistogramBtn" data-toggle="tooltip" data-placement="bottom" title="雷达图"></a>
+                <a href="javascript:void(0);" data-type="grid" data-toggle="tooltip" data-placement="bottom" class="icon-table fa fa-table" role="switchTableBtn" title="表格"></a>
+            </div>
+
+            <!-- 时间跨度对比 show-compare -->
+            <!-- 时间跨度对比 show-compare -->
+            <div class="date-range-compare">
+                <button style="display: none" type="button" name="toggleDateRangeCompareBtn" role="toggleDateRangeCompareBtn"
+                        class="btn btn-toggle-compare" title="时间段对比"><i class="icon icon-toggle-show"></i>
+                    <span>对比</span></button>
+
+                <label class="label-date-range label-date-range-1"><i class="icon-date-picker"></i>
+                    <!-- data-range-type="range" | range-only | range-custom | custom  -->
+                    <input name="dateRange1" role="inputDateRange1" class="input-date-range input-date-range-1"
+                           data-type="date-range" data-format="yyyy-MM-dd" data-range-hyphen="至"
+                           data-range="thisWeek" data-range-text="本周"
+                           value="" readonly>
+                </label>
+                <label class="label-date-range label-date-range-2"><i class="icon-date-picker"></i>
+                    <input name="dateRange2" role="inputDateRange2" class="input-date-range input-date-range-2"
+                           data-type="date-range-start" data-format="yyyy-MM-dd" data-range-hyphen="至" value=""
+                           readonly>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="panel-charts charts-widget-wrapper" role="chartsPanel">
+        <!-- echarts 容器 -->
+        <div class="panel-echarts echarts-container" role="echartsPanel">
+            <div class="echarts-none"></div>
+            <div class="main-echarts-warp">
+                <div class="echarts-main" role="echartsMain"></div>
+            </div>
+        </div>
+        <!-- 表格容器 -->
+        <div id="" class="panel-table table-container" role="tablePanel">
+            <div class="table-main" style="height: 100%;">
+                <div class="table-main-header">
+                    <div class="date-range-tabs"><a class="date-range-tab date-range-tab-1"
+                                                    role="dateRangeTab1"><!--2015-10-20至2015-10-26--></a> <a
+                            class="date-range-tab date-range-tab-2 actived"
+                            role="dateRangeTab2"><!--2015-10-20至2015-10-26--></a></div>
+                    <form class="condition-filter">
+                        <label class="label-checkbox-total" style="display: block;">
+                            <input type="checkbox" name="checkboxTotal" role="checkboxScore" class="checkbox-total">
+                            评分 </label>
+                        <label class="label-search" title="按分组筛选"> <i class="icon icon-search"></i>
+                            <input type="search" name="inputGroupingFilter" role="inputGroupingFilter"
+                                   placeholder="搜索分组" class="input-search">
+                        </label>
+                    </form>
+                </div>
+                <div class="table-main-body">
+                    <div class="table-wrapper" role="tableWrapper">
+                        <!-- 数据表格 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部面板 -->
+<div class="panel-bottom">
+
+    <!-- 用户事件 -->
+    <div id="" class="panel-filter-events"><i class="thumbtack" role="thumbtack" title="复位"></i>
+        <h2 class="panel-h" title="用户行为">用户行为</h2>
+
+        <div class="panel-body" role="panelBody">
+            <ul class="filter-option-list" role="optionList">
+                <script type="text/x-dot-template" role="optionItemTmpl">
+                    <li class="li-btn-item">
+                        <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn" 
+								data-bname="{{=it.bname}}" data-bid="{{=it.bid}}" 
+								name="{{=it.name}}" value="{{=it.value}}"><span>{{=it.label}}</span></button>
+                        <i class="icon-remove" title="删除条件" role="removeOptionBtn"></i>
+                    </li>
+                </script>
+                <script type="text/x-dot-template" role="selectTmpl">
+                    <button type="button" class="dropdown-select" data-bname="{{=it.bname}}" data-bid="{{=it.bid}}"
+                            name="{{=it.name}}" value="{{=it.value}}" data-type="select-one" data-structure="tree" 
+                            data-list-init="{{=it.dropdownInitList}}" data-list-click="{{=it.dropdownListClick}}"><span>{{=it.label}}</span>
+                    </button>
+                </script>
+                <script type="text/x-dot-template" role="subitemTmpl">
+                    <button type="button" class="dropdown-subitem" data-bname="{{=it.bname}}" data-bid="{{=it.bid}}"
+                            name="{{=it.name}}" value="{{=it.value}}">{{=it.label}}
+                    </button>
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 事件属性 -->
+    <div id="" class="panel-filter-attrs"><i class="thumbtack" role="thumbtack" title="复位"></i>
+        <h2 class="panel-h" title="属性">属性</h2>
+
+        <div class="panel-body" role="panelBody">
+            <ul class="filter-option-list" role="optionList">
+                <script type="text/x-dot-template" role="optionItemTmpl">
+                    <li class="li-btn-item">
+                        <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn" data-bid="{{=it.bid}}" 
+								name="{{=it.name}}" value="{{=it.value}}"><span>{{=it.label}}</span></button>
+                        <i class="icon-remove" title="删除条件" role="removeOptionBtn"></i>
+                    </li>
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 用户属性 -->
+    <div id="" class="panel-filter-conditions"><i class="thumbtack" role="thumbtack" title="复位"></i>
+        <h2 class="panel-h" title="筛选条件">筛选条件</h2>
+
+        <button class="options-relation-btn" role="optionsRelationBtn" name="relation" value="and">且</button>
+
+        <div class="panel-body" role="panelBody">
+            <ul class="filter-option-list" role="optionList">
+                    <script type="text/x-dot-template" role="optionItemTmpl">
+                        <li class="li-btn-item">
+                            <button type="button" class="condition-btn dom-dragable {{=it._initial}}-btn"
+                                    data-bid="{{=it.bid}}"
+                                    name="{{=it.name}}" value="{{=it.value}}"><span>{{=it.label}}</span></button>
+                            <i class="icon-remove" title="删除条件" role="removeOptionBtn"></i>
+                        </li>
+                    </script>
+                    <script type="text/x-dot-template" role="selectTmpl">
+                        <button class="dropdown-select" data-bname="{{=it.bname}}" data-bid="{{=it.bid}}"
+                                name="{{=it.name}}" value="{{=it.value}}" data-type="select-one"
+                                data-list-init="{{=it.dropdownInitList}}" data-list-click="{{=it.dropdownListClick}}">
+                            <span>{{=it.label}}</span>
+                        </button>
+                    </script>
+                    <script type="text/x-dot-template" role="linkageBoxTmpl">
+                        {{var name = it.name, type = it.type, dataType = it.dataType, value = it.value, label = it.label, pattern = it.pattern ? ' pattern="' + it.pattern + '"' : '', datasetList = it.datasetList ? ' data-list="' + it.datasetList + '"' : '', datasetListFetched = it.datasetListFetched ? ' data-list-fetched="' + it.datasetListFetched + '"' : '';
+
+                        switch(dataType){
+
+                        case 'text':
+
+                        switch(type){
+                        case 'select-one':
+                        }}
+
+                        <div class="linkage-box dropdown-wrapper">
+                            <button type="button" class="dropdown-select" name="{{=name}}"
+                                    data-type="select-one" value="{{=value}}" {{=datasetList}}{{=datasetListFetched}}>
+                                <span>{{=label}}</span></button>
+                        </div>
+
+                        {{ break;
+
+                        case 'select-multiple':
+                        case 'input-select-one':
+                        case 'input-select-multiple':
+                        }}
+
+                        <div class="linkage-box dropdown-wrapper">{{=it.selectedOptionsHtml||''}}<input type="text"
+                                                                                                        name="{{=name}}"
+                                                                                                        data-type="{{=type}}"
+                                                                                                        value=""
+                                                                                                        maxlength="20"
+                                                                                                        {{=datasetList}}{{=datasetListFetched}}{{=pattern}}>
+                        </div>
+
+                        {{ break;
+                        default: }}
+                        <div class="linkage-box"><input type="text" name="{{=name}}" value="{{=value}}" {{=pattern}}>
+                        </div>
+                        {{}
+                        break;
+
+                        case 'number': }}
+                        <div class="linkage-box"><input type="number" name="{{=name}}" value="{{=value}}"
+                                                        min="0"
+                                                        max="1000000000" maxlength="10" placeholder="{{=type}}数值"
+                                                        {{=pattern}}>
+                        </div>
+                        {{ break;
+
+                        case 'number-range': }}
+                        <div class="linkage-box"><input type="number" name="{{=name}}" value="{{=it.values[0]||''}}"
+                                                        min="0"
+                                                        max="1000000000" maxlength="10" placeholder="{{=type}}数值"
+                                                        {{=pattern}}>
+                            至 <input name="{{=name}}" value="{{=it.values[1]||''}}" type="number" min="0"
+                                     max="1000000000"
+                                     maxlength="10" placeholder="{{=type}}数值" {{=pattern}}></div>
+                        {{ break;
+
+                        case 'date': }}
+                        <div class="linkage-box"><input type="text" name="{{=name}}" value="{{=value}}" data-type="date"
+                                                        data-format="yyyy-MM-dd" placeholder="yyyy-MM-dd" {{=pattern}}
+                                                        readonly></div>
+                        {{ break;
+
+                        case 'date-range': }}
+                        <div class="linkage-box"><input type="date" name="{{=name}}"
+                                                        value="{{=it.values[0]||''}}"
+                                                        data-type="ndate-range" data-format="yyyy-MM-dd"
+                                                        placeholder="yyyy-MM-dd至yyyy-MM-dd"
+                                                        data-range-hyphen="至" data-range="thisYear"
+                                                        {{=pattern}}>至<input type="date" name="{{=name}}"
+                                                                             value="{{=it.values[1]||''}}"
+                                                                             data-type="ndate-range"
+                                                                             data-format="yyyy-MM-dd"
+                                                                             placeholder="yyyy-MM-dd至yyyy-MM-dd"
+                                                                             data-range-hyphen="至" data-range="thisYear"
+                                                                             {{=pattern}}></div>
+                        {{ break;
+
+                        }}}
+                    </script>
+            </ul>
+        </div>
+    </div>
+</div>
+<%include ../../inc/media-query-warning.html %>
+</div>
+
+<script type="text/javascript" src="/js/main/user-analysis/Worth/analysis.js"></script>
+
+</body>
+</html>

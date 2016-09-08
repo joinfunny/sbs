@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BAS用户追踪埋点</title>
+<style>
+pre{
+	padding:1em;
+	background-color:#eee;
+}
+</style>
+<script>
+(function(para) {
+      var p = para.sdk_url, n = para.name, w = this, d = w.document, s = 'script',x = null,y = null;
+      w['bassdk201603'] = n;
+      w[n] = w[n] || function(a) {return function() {(w[n]._q = w[n]._q || []).push([a, arguments]);}};
+      var ifs = ['track','quick','register','registerOnce','registerSession','registerSessionOnce',/*'trackSignup'*/, 'trackAbtest', 'setProfile','setOnceProfile','appendProfile', 'incrementProfile', 'deleteProfile', 'unsetProfile', 'identify'];
+      for (var i = 0; i < ifs.length; i++) {
+        w[n][ifs[i]] = w[n].call(null, ifs[i]);
+      }
+      if (!w[n]._t) {
+        x = d.createElement(s), y = d.getElementsByTagName(s)[0];
+        //x.async = 1;
+        x.src = p;
+        y.parentNode.insertBefore(x, y);
+        w[n]._t = 1 * new Date();
+        w[n].para = para;
+      }
+    })({
+//		// para_default
+//		cross_subdomain: true,
+//		vtrack: !1,
+//		show_log: true,
+//		debug_mode: false,
+//		debug_mode_upload: false,
+//		debug_mode_url: 'http://bas.com/bas.gif?token=xyz'.replace("bas.gif", "debug"),
+      sdk_url: '/sdk/bas-data.1.0.0.js',
+      name: 'bas',
+      server_url:'http://monitor.ruixuesoft.com/monitor/services/monitor/send'
+    });
+</script>
+<script src="/js/jquery-amd.js"></script>
+<script>alert(bas)</script>
+</head>
+
+<body>
+<h2>1 统计页面访问来源</h2>
+
+当打开BAS 官网首页的时候，我们想知道，用户是从什么地方跳转过来的，或者从哪个渠道过来的。
+
+我们可以通过 document.referrer 来取当前页面是从哪里跳转过来的，也通过自己设定 URL 参数来标记是从哪个渠道过来的，比如是从微信来的 ，例如 ?from=weixin。
+
+综上所述，我们可以记录一个首页访问的事件(index_visit)。带有3个属性，页面地址，referrer 来源，参数解析出来的来源。
+
+上面代码就会在每次打开页面时，把数据发送到服务器，然后在 BAS 里就可以找到index_visit事件来做数据分析。
+<h1 id="javascript-sdk-demo">JavaScript SDK DEMO</h1>
+<p>下面我们通过<a href="http://bas.cn/" target="_blank">BAS 官网</a> 这个案例，来介绍 Javascript SDK 的使用。</p>
+<h2 id="1-%E5%88%86%E6%9E%90%E7%BB%9F%E8%AE%A1%E9%9C%80%E6%B1%82">1. 分析统计需求</h2>
+<p><a href="http://bas.cn/" target="_blank">BAS 官网</a>，是一个企业类网站的展示页，用来展示产品和引导用户使用。对于这种企业类型的网站，我大概列举几个统计需求：</p>
+<ul>
+  <li>页面访问来源</li>
+  <li>页面停留时间</li>
+  <li>在页面上点击了哪些按钮</li>
+</ul>
+<h2 id="2-%E5%BC%80%E5%A7%8B%E5%86%99%E4%BB%A3%E7%A0%81">2. 开始写代码</h2>
+<h3 id="2-1-%E5%BC%95%E5%85%A5-sdk">2.1 引入 SDK</h3>
+<p>首先在<a href="http://bas.cn/" target="_blank">BAS 官网</a> 中引入 SDK 文件，可以参照 <a href="https://www.bas.cn/manual/js_sdk.html">Javascript SDK 文档</a> 。在html的head里引入即可。</p>
+<h3 id="2-2-%E7%BB%9F%E8%AE%A1%E9%A1%B5%E9%9D%A2%E8%AE%BF%E9%97%AE%E6%9D%A5%E6%BA%90">2.2 统计页面访问来源</h3>
+<p>当打开<a href="http://bas.cn/" target="_blank">BAS 官网</a>首页的时候，我们想知道，用户是从什么地方跳转过来的，或者从哪个渠道过来的。</p>
+<p>我们可以通过 document.referrer 来取当前页面是从哪里跳转过来的，也通过自己设定 URL 参数来标记是从哪个渠道过来的，比如是从微信来的 ，例如 ?from=weixin。</p>
+<p>综上所述，我们可以记录一个首页访问的事件(index_visit)。带有3个属性，页面地址，referrer 来源，参数解析出来的来源。</p>
+<pre>
+bas.track('index_visit', {
+    pageUrl: location.href,
+    referrerUrl: document.referrer,
+    fromUrl: from_url
+});
+</pre>
+<script>
+$(function(){
+//var user_id = '987654321';
+//bas.identify(user_id);
+var from_url = 'weixin';
+bas.track('index_visit', {
+    pageUrl: location.href,
+    referrerUrl: document.referrer,
+    fromUrl: from_url
+});
+});
+</script>
+<p>上面代码就会在每次打开页面时，把数据发送到服务器，然后在 BAS 里就可以找到index_visit事件来做数据分析。</p>
+<h3 id="2-3-%E7%BB%9F%E8%AE%A1%E9%A1%B5%E9%9D%A2%E5%81%9C%E7%95%99%E6%97%B6%E9%97%B4">2.3 统计页面停留时间</h3>
+<p>在页面打开时记录一个时间，在页面关闭时，记录一个时间，差值就是页面停留时间<br>
+  下面，我们可以记录一个首页关闭事件　index_leave，同时记录页面地址，页面停留时间，页面当前滚动位置。</p>
+<pre>
+var basStartTime = new Date();
+window.onbeforeunload = function( ) {
+    var end = new Date();
+    var duration = (end.getTime() - basStartTime.getTime()) / 1000;
+    bas.track('index_leave', {
+        pageUrl: location.href,
+        pageStayTime: duration,
+        pagePosition: $(window).scrollTop()
+    });
+};
+</pre>
+<p>上面代码就会在每次关闭页面时，把数据发送到服务器，然后在 BAS 里就可以找到　index_leave事件来做数据分析。</p>
+<h3 id="2-4-%E7%BB%9F%E8%AE%A1%E9%A1%B5%E9%9D%A2%E4%B8%8A%E7%82%B9%E5%87%BB%E4%BA%86%E5%93%AA%E4%BA%9B%E6%8C%89%E9%92%AE%E6%88%96%E8%80%85%E9%93%BE%E6%8E%A5">2.4 统计页面上点击了哪些按钮或者链接</h3>
+<p>如果我们想记录用户在页面上点击了哪些按钮，可以先给这些按钮定义一些标志,同时标记这个按钮的属性。</p>
+<pre>
+&lt;button class="bas-btn" bas-name="点击登录"&gt;登录&lt;/button&gt;  &lt;a class="bas-btn" bas-name="点击注册"&gt;注册&lt;/a&gt;     
+
+$('.bas-btn').click(function(){
+    bas.track('btn_click',{
+      name: $(this).attr('bas-name')
+    })
+})
+</pre>
+<p>上面代码就会在每次点击链接或者按钮时，把数据发送到服务器，然后在 BAS 里就可以找到btn_click 事件来做数据分析。</p>
+<p><lable for="timer">数据模拟器：</lable><input type="button" name="timer" value="打开"></p>
+<script>
+$(function(){
+var user_id = '987654321';
+bas.identify(user_id);
+var from_url = 'weixin';
+bas.trackSignup(user_id, 'signup', {
+    pageUrl: location.href,
+    referrerUrl: document.referrer,
+    fromUrl: from_url
+});
+});
+</script>
+<!--<script src="test.js"></script>-->
+<script>
+// 这段是追踪用户点击页面任一（文本）链接的事件
+$(document).on('click', function(e){
+	var a = $(e.target).is('a') ? e.target : $(e.target).parents('a')[0];
+	if(!a) return;
+	e.preventDefault();
+	bas.track('click_link', {
+		linkUrl: a.href,
+		linkText: $(a).text(),
+		pageUrl: location.href,
+    	referrerUrl: document.referrer
+	});
+});
+$('input[name="timer"]').click(function() {
+  TimerToggle();
+  var val=$(this).val();
+  $(this).val(val=='打开'?'关闭':'打开');
+})
+</script>
+
+</body>
+</html>

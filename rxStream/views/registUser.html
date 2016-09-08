@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <title>用户注册 | RX STREAM</title>
+    <script>
+    top !== window && (top.location.href = location.href)
+    </script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="main/css/login.css">
+    <% include main/inc/base-script.html %>
+    <script src="sdk/bas-setup.js"></script>
+</head>
+
+<body class="login">
+    <div class="login-bg"></div>
+    <div class="login-wrapper">
+        <div class="login-container active">
+            <div class="login-logo" style="margin-bottom: 60px;">
+            </div>
+            <form autocomplete="off">
+                <div class="form-group">
+                    <input type="text" id="companyName" name="companyName" class="form-control" placeholder="企业全称" />
+                    <i class="icon-user"></i>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="userName" name="userName" class="form-control" placeholder="用户名" />
+                    <i class="icon-user"></i>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="pwd" name="pwd" placeholder="密码" type="password" />
+                    <i class="icon-pwd"></i>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="pwd1" name="pwd1" placeholder="重复密码" type="password" />
+                    <i class="icon-pwd"></i>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="tel" name="tel" placeholder="电话号码" type="tel" />
+                    <i class="icon-tel"></i>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="email" name="email" placeholder="邮箱" type="email" />
+                    <i class="icon-email"></i>
+                </div>
+                <div class="social login clearfix">
+                    <button class="btn btn-primary" type="button" id="j_btn_registUser"><i></i>注 册</button>
+                </div>
+                <div class="form-tip">
+                    <ul>
+                    </ul>
+                </div>
+            </form>
+            <div style="position: relative;">
+                <span class="u-icon-arr u-icon-arrD"></span>
+                123123
+            </div>
+            <div class="login-footer">
+                <a class="registUser" href="login">返回登录</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/lib/jquery/js/jquery-2.1.1.min.js"></script>
+    <script src="js/registUser.js"></script>
+<!--     <script>
+    $(function(){
+        $('#companyName').val('z');
+        $('#userName').val('z');
+        $('#pwd').val('z1234');
+        $('#pwd1').val('z1234');
+        $('#tel').val('13500000000');
+        $('#email').val('z@z.cn');
+    });
+</script> -->
+</body>
+
+</html>

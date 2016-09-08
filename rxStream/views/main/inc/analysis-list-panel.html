@@ -1,0 +1,69 @@
+
+<div class="analysis-list-panel">
+  <div class="analysis-list-panel-header">
+    <div class="dropdown pull-left">
+      <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span class="dropdown-selection-label">全部</span> <i class="caret"></i> </button>
+      <ul class="dropdown-menu" role="menu">
+        <!-- <li class="multiselect-item"> <a data-value="rollup">合计</a> </li>
+        <li role="separator" class="divider"></li>-->
+        <li data-value="" class="active"> <a role="dropdownMenuItem">全部</a> </li>
+        <li data-value="Event"> <a role="dropdownMenuItem" >行为事件分析</a> </li>
+        <li data-value="Funnel"> <a role="dropdownMenuItem" >漏斗分析</a> </li>
+        <!-- <li data-value="retained"> <a role="dropdownMenuItem" >留存分析</a> </li>
+        <li data-value="revisit"> <a role="dropdownMenuItem" >回访频率</a> </li>
+        <li data-value="spread"> <a role="dropdownMenuItem" >传播分析</a> </li> -->
+      </ul>
+    </div>
+    <div class="search pull-right"> <i class="icon icon-search"></i>
+      <input type="text" class="search-int" role="inputAnalysisFilter" placeholder="请输入关键词" >
+    </div>
+  </div>
+
+    <div class="analysis-list-panel-body">
+      <ul>
+        
+      </ul>
+    </div>
+    <div class="analysis-list-panel-handle">
+      <label class="label-checkbox_analysis_all" title="全选"> <i class="icon-checkbox"></i>
+        <input type="checkbox" name="checkbox_analysis_all"  role="labelCheckAllBox">
+        <!-- data-checked-for="checkbox_analysis" -->
+        全选 </label>
+      <button type="button" class="btn btn-sm btn-confirm" role="hideAnalysisListPanel">确定</button> </div>
+      <!-- data-e-click="AppPage.hideAnalysisListPanel" -->
+  
+  <script type="text/x-dot-template" id="analysis-list-temp">
+    {{var i=0,len=it.data.length,opts=it.options,imgs={'Event': 'line_chart.jpg','Funnel':'taper_icon.jpg','Retained':'lump.png','Revisit':'histogram.jpg','Worth':'worth_icon.jpg'};
+    if(len>0){
+      for(;i<len;i++){
+         var item=it.data[i];
+         if(opts.mutiSelect){ }}
+          <li data-type="{{=item.AnalysisType}}" data-uniqueid="{{=item.UniqueID}}">
+              <label>
+                  <img src="/main/data-overview/img/{{= imgs[item.AnalysisType] || 'lump.png' }}">
+                  <div class="description">{{=item.Title}}&nbsp;{{=item.Remark}}</div>
+                  <i class="icon-checkbox"></i>
+                  <input type="checkbox" name="checkbox_analysis" role="labelCheckBox">
+              </label>
+          </li>
+         {{ } else { }}
+            <li data-uniqueid="{{=item.UniqueID}}"><a href="javascript:void(0);" role="singleAnalysisData">{{=item.Title}}</a></li>
+      {{ }
+      }
+    } }}
+  </script>
+    <script type="text/x-dot-template" id="analysis-single-temp">
+        <li data-uniqueid="{{=it.UniqueID}}"><a href="javascript:void(0);" role="singleAnalysisData">{{=it.Title}}</a></li>
+    </script>
+
+    <script type="text/x-dot-template" id="analysis-muti-temp">
+        <li data-type="{{=it.AnalysisType}}" data-uniqueid="{{=it.UniqueID}}">
+            <label>
+                <img src="/main/data-overview/img/{{= imgs[it.AnalysisType] || 'lump.png' }}">
+                <div class="description">{{=it.Title}}&nbsp;{{=it.Remark}}</div>
+                <i class="icon-checkbox"></i>
+                <input type="checkbox" name="checkbox_analysis" role="labelCheckBox">
+            </label>
+        </li>
+    </script>
+</div>

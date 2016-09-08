@@ -1,0 +1,27 @@
+﻿<div class="left">
+	<h1 class="left-logo"></h1>
+    <ul class="left-menu">
+        <li class="branch-actived"> <a id="data_overview" class="tree-a" href="main/data-overview/overview-list" target="mainFrame" title="我的数据概览"><i class="icon fa fa-tachometer" aria-hidden="true"></i> <span>我的数据概览</span></a> </li>
+        <li>
+            <a id="user_analysis" class="tree-a" href="javascript:void(0);" title="用户行为分析"><i class="icon fa fa-user" aria-hidden="true"></i> <span>用户行为分析</span></a>
+            <ul id="user-analysis-menu-warp">
+            </ul>
+        </li>
+        <li>
+            <a id="user_data" class="tree-a" href="javascript:void(0);" title="数据接入"><i class="icon fa fa-database" aria-hidden="true"></i> <span>数据接入</span></a>
+            <ul id="user-data-menu-warp">
+                <li> <a class="tree-a" href="main/data-access/custom-event" target="mainFrame" title="自定义事件">
+                    <i class="icon fa fa-pencil" aria-hidden="true"></i><span>自定义事件</span></a> </li>
+                <li> <a class="tree-a" href="main/data-access/event-object" target="mainFrame" title="事件对像">
+                    <i class="icon fa fa-book" aria-hidden="true"></i><span>事件对象</span></a> </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<script type="text/x-dot-template" id="submenuListTmpl">
+    {{for(var i = 0;i<it.length;i++) {
+    if(it[i].status){ }}
+    <li> <a class="tree-a" href="main/user-analysis/{{=it[i].type}}/index?templateId={{=it[i].id}}&type={{=it[i].type}}" target="mainFrame" title="{{=it[i].name}}">
+    	<i class="icon fa icon-{{=it[i].type}}" aria-hidden="true"></i><span>{{=it[i].name}}</span></a> </li>
+    {{ } } }}
+</script>

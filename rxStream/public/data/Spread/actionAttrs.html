@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>事件属性-行为事件分析</title>
+<link rel="stylesheet" href="../css/common.css">
+<script src="../../bower_components/lodash/lodash.js"></script>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script src="../js/bas.js"></script>
+<script src="../js/createDateTree.js"></script>
+<script>
+$(function() {
+	//console.time('计时器1');
+	var trs = $('tbody>tr').toArray();
+	var tree = bas.UBA.Behavior.actionAttrs.dataTree;
+	
+	bas.getTreeByTableRows(trs, tree.children, tree.bname, 1, 0);
+	//console.timeEnd('计时器2');
+	
+	//console.log(tree);
+	console.log(JSON.stringify(tree.children, null));
+	$('.data-code').html(JSON.stringify(tree.children, null, 4));
+
+//equal ：等于
+//notequal:不等于
+//less:小于
+//greater:大于
+//between:小于大于
+//contain:包含
+//notcontain:不包含
+//isset：有值
+//notset：没有值
+//relativebefore：在N天之前
+//relativewithin：在N天之内
+//absolutebetween：日期范围
+
+//order_sour	订单来源
+//order_type	订单类型
+//pay_mode	支付方式
+//lgst_name	快递名称
+//lgst_fee	快递费
+//stor_name	发货库房
+//cons	收货人姓名
+//provice	收货人省份
+//city	收货人城市
+//district	收货人市区
+//order_money	订单金额
+//paid_fee	支付金额
+	
+	var h = {
+		expression: {
+			'text': [
+				{
+					name: 'expression',
+					label: '等于',
+					value: 'equal'
+				},
+				{
+					name: 'expression',
+					label: '不等于',
+					value: 'notequal'
+				},
+				{
+					name: 'expression',
+					label: '包含',
+					value: 'contain'
+				},
+				{
+					name: 'expression',
+					label: '不包含',
+					value: 'notcontain'
+				},
+				{
+					name: 'expression',
+					label: '有值',
+					value: 'isset'
+				},
+				{
+					name: 'expression',
+					label: '没有值',
+					value: 'notset'
+				}
+			],
+			'number': [
+				{
+					name: 'expression',
+					label: '等于',
+					value: 'equal'
+				},
+				{
+					name: 'expression',
+					label: '小于',
+					value: 'less'
+				},
+				{
+					name: 'expression',
+					label: '大于',
+					value: 'greater'
+				},
+				{
+					name: 'expression',
+					label: '区间',
+					value: 'between'
+				}
+			],
+			'gender': [
+				{
+					name: 'expression',
+					label: '男',
+					value: '0'
+				},
+				{
+					name: 'expression',
+					label: '女',
+					value: '1'
+				},
+				{
+					name: 'expression',
+					label: '数值最小值',
+					value: '2'
+				}
+			]
+		}
+	};
+	
+ var actions = [
+   {
+     name: 'actionName',
+     label: '任意事件',
+     value: '*'
+   },
+   {
+     name: 'actionName',
+     label: '取消订单',
+     value: 'CancelOrder',
+   }
+ ];
+	
+});
+</script>
+</head>
+
+<body>
+<h1>事件属性-行为事件分析</h1>
+
+<div class="table-wrapper">
+  <table border="1" cellspacing="1" cellpadding="2">
+    <thead>
+      <tr>
+        <th>事件属性</th>
+        <th>条件表达</th>
+        <th>值（可选可填）</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td data-name="field" data-value="event.order_sour" data-btype="STRING" rowspan="6">订单来源</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">淘宝</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.order_type" data-btype="STRING" rowspan="6">订单类型</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">担保交易,预售</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.pay_mode" data-btype="STRING" rowspan="6">支付方式</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">支付宝</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.lgst_name" data-btype="STRING" rowspan="6">快递名称</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">申通E物流,EMS,顺丰速运,圆通速递,百世汇通,中通速递,EMS经济快递,韵达快运,申通快递,韵达快递,汇通快运,优速</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.lgst_fee" data-btype="number" rowspan="4">快递费</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="3" data-type="number"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="less">小于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="greater">大于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="between">区间</td>
+        <td data-type="number-range"></td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.stor_name" data-btype="STRING" rowspan="6">发货库房</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">默认库房</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.cons" data-btype="STRING" rowspan="6">收货人姓名</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.provice" data-btype="STRING" rowspan="6">收货人省份</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">山东、河北、山西、河南、山西</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.city" data-btype="STRING" rowspan="6">收货人城市</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING">北京、上海、广州、杭州、石家庄</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.district" data-btype="STRING" rowspan="6">收货人市区</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="4" data-type="STRING"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notequal">不等于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="contain">包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notcontain">不包含</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="isset">有值</td>
+        <td rowspan="2">无</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="notset">没有值</td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.order_money" data-btype="number" rowspan="4">订单金额</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="3" data-type="number"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="less">小于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="greater">大于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="between">区间</td>
+        <td data-type="number-range"></td>
+      </tr>
+      <tr>
+        <td data-name="field" data-value="event.paid_fee" data-btype="number" rowspan="4">支付金额</td>
+        <td data-name="expression" data-value="equal">等于</td>
+        <td rowspan="3" data-type="number"></td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="less">小于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="greater">大于</td>
+      </tr>
+      <tr>
+        <td data-name="expression" data-value="between">区间</td>
+        <td data-type="number-range"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="data-wrapper">
+  <pre class="data-code"></pre>
+</div>
+</body>
+</html>

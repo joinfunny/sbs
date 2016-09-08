@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户行为分析</title>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/css/materialize/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/main/data-access/common.css" media="screen,projection" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <% include ../inc/base-script.html %>
+</head>
+
+<body>
+    <div id="main">
+        <div class="header">
+            <div class="title" data-position="bottom" data-delay="50" data-tooltip="">事件自定义</div>
+            <!--<div class="right">
+                <a class="waves-effect waves-light btn" id="btn_saveSchema" data-position="bottom" data-delay="50" data-tooltip="点击启用当前的自定义事件配置">应用设置</a>
+            </div>-->
+        </div>
+        <div id="event-type" class="s-table">
+
+        </div>
+    </div>
+    <script type="text/x-dot-template" id="tpl_eventType_grid_operate_col">
+      {{if(it.edit){}}
+      <div role="gridOperate" class="grid-operate">
+          <ul class="operate-menu">
+              <li role="deleteGridRow">删除</li>
+          </ul>
+      </div>
+      {{ }else{ }}
+      &nbsp;
+      {{ } }}
+    </script>
+    <script type="text/x-dot-template" id="tpl_property_grid_operate_col">
+        {{if(it.edit){}}
+        <div role="gridOperate" class="grid-operate">
+            <ul class="operate-menu">
+                <li role="editGridRow">编辑</li>
+                <li role="deleteGridRow">删除</li>
+            </ul>
+        </div>
+        {{ }else{ }}
+        &nbsp;
+        {{ } }}
+    </script>
+    <script type="text/x-dot-template" id="tpl_eventType_grid_button">
+      <a class="btn-floating waves-effect waves-light top-menu"><i href="javascript:;" data-role="createNewEventType" aria-hidden="true"></i><span class="st st-add"></span></a><!-- <a class="btn-floating waves-effect waves-light top-menu"><i data-role="saveEvetTypeConfig" aria-hidden="true"></i><span class="st st-save"></span></a> -->
+    </script>
+    <script type="text/x-dot-template" id="tpl_property_slide_button">
+        <a class="btn-floating waves-effect waves-light top-menu"><i href="javascript:;" role="addRow" aria-hidden="true"></i><span class="st st-add"></span></a><!-- <a class="btn-floating waves-effect waves-light top-menu"><i data-role="saveEvetTypeConfig" aria-hidden="true"></i><span class="st st-save"></span></a> -->
+    </script>
+    <script type="text/x-dot-template" id="tpl_eventTypeProperties">
+      {{for(var i=0;i<it.length;i++){ if(it[i].disabled)continue;}}
+      <li class="{{if(it[i].disabled){}}disabled{{}}}"><a href="#!" data-id="{{=it[i].id}}" data-name="{{=it[i].name}}">{{=it[i].name}}</a></li>
+      {{}}}
+    </script>
+    <script type="text/x-dot-template" id="tpl_eventProperties_slide">
+            <div class="property-header">
+                <div class="property-header-operate">
+                    <span role="closeProperty" class="back-bt"></span>
+                    <span role="saveProperty" class="save-property"></span>
+                </div>
+                {{if(it.status === 'edit' || it.type === 'event') { }}
+                <div class="event-title">
+                    <p class="main-title">{{=it.typeData.text || it.typeData.label}}</p>
+                    <p class="sub-title">{{if(it.type === 'object'){ }}对象属性{{}else{}}事件属性{{ } }}</p>
+                </div>
+                {{ } }}
+                {{if(it.status === 'add' && it.type === 'object') {}}
+                <div class="event-slide-input">
+                    <p class="main-title">新建对象</p>
+                    <div class="slide-input-warp">
+                        <div class="warp-for-tip">
+                            <input type="text" name="label" class="obj-label" placeholder="请输入显示名称"/>
+                        </div>
+                        <div class="warp-for-tip">
+                            <input type="text" name="name" class="obj-name" placeholder="请输入事件名称"/>
+                        </div>
+                    </div>
+                </div>
+                {{ } }}
+            </div>
+            <div id="property-table" class="s-table">
+
+            </div>
+    </script>
+    <script type="text/x-dot-template" id="event-create-tpl">
+        <div class="event-add-edit-warp">
+            <div class="left-warp">
+                <div class="event-content">
+                    <h3 class="event-title"><span>{{if(it.type === 'add'){}}新建事件{{}else{}}编辑事件{{}}}<ins>事件名称新建后不可修改</ins></span></h3>
+                    <ul class="event-input-warp">
+                        <li><label>显示名称：</label><input autocomplete="off" type="text" name="label" class="event-label" placeholder="请输入显示名称" value="{{=it.data.label}}"/></li><li><label>事件名称：</label><input autocomplete="off" type="text" name="name" class="event-name" {{if(it.data.name){}}readonly {{}}}value="{{=it.data.name}}" placeholder="请输入事件名称"/></li>
+                    </ul>
+                    <h3 class="event-title"><span>事件关系视图<ins>点击对应图标编辑属性</ins></span></h3>
+                    <div class="event-relations">
+                        <ul class="event-relations-text">
+                            <li><input class="select-st main-obj-select" role="objectListSelect" data-value="{{=it.data.object.id}}" value="{{=it.data.object.label}}" readonly type="text"/></li>
+                            <li class="event-name-warp"><input readonly class="event-name-clone" data-value="{{=it.data.id}}" value="{{=it.data.label}}" placeholder="事件显示名称" type="text"/></li>
+                            <li class="event-fu-name"><input class="select-st sub-obj-select" role="objectListSelect" data-value="{{=it.data.subject.id}}" value="{{=it.data.subject.label}}" readonly type="text"/></li>
+                        </ul>
+                        <ul class="event-relations-img">
+                            <li class="obj-st event-main-obj" data-for="main-obj-select" role="editMainObjectProperty"><span>主体对象</span></li>
+                            <li class="obj-line"></li>
+                            <li class="obj-st event-obj" data-type="{{=it.type}}" data-for="event-name-clone" role="editEventProperty"><span>触发</span></li>
+                            <li class="obj-line"></li>
+                            <li class="obj-st event-fu-obj" data-for="sub-obj-select" role="editSubObjectProperty"><span>客体对象</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="event-button-area">
+                    <a href="javascript:;" role="cancelEventOperate">取消</a>
+                    <a href="javascript:;" role="saveEventOperate">保存</a>
+                </div>
+            </div>
+            <div class="right-warp">
+
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript" src="/js/main/data-access/customEvent/index.js"></script>
+
+</body>
+</html>
