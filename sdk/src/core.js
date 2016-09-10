@@ -56,7 +56,9 @@ module.exports = {
         return true;
       }
     },
-    //
+    /**
+     * 事件属性字段验证
+     */
     properties: function (p) {
       _.validateProperties(p);
       if (p) {
@@ -69,6 +71,48 @@ module.exports = {
           }
         } else {
           _.log('properties可以没有，但有的话必须是对象');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+    /**
+     * 主体对象属性字段验证
+     */
+    subject: function (p) {
+      _.validateProperties(p);
+      if (p) {
+        if (_.isObject(p)) {
+          if (this.checkPropertiesKey(p)) {
+            return true;
+          } else {
+            _.log('subject里的key必须是由字符串数字_组成');
+            return false;
+          }
+        } else {
+          _.log('subject可以没有，但有的话必须是对象');
+          return false;
+        }
+      } else {
+        return true;
+      }
+    },
+    /**
+     * 客体对象属性字段验证
+     */
+    object: function (p) {
+      _.validateProperties(p);
+      if (p) {
+        if (_.isObject(p)) {
+          if (this.checkPropertiesKey(p)) {
+            return true;
+          } else {
+            _.log('object里的key必须是由字符串数字_组成');
+            return false;
+          }
+        } else {
+          _.log('object可以没有，但有的话必须是对象');
           return false;
         }
       } else {
@@ -126,24 +170,24 @@ module.exports = {
       this.state[key] = value;
     },
     getEventPool: function () {
-      var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool' + store.get('appId'), []);
+      var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool' + config.appId, []);
       return pool;
     },
     getTempEventPool: function () {
-      var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool_temp', []);
+      var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool_temp_' + config.appId, []);
       return pool;
     },
     setEventPool: function (eventPool) {
-      _.localStorage.set(config.LIB_KEY + 'EventPool' + store.get('appId'), JSON.stringify(eventPool));
+      _.localStorage.set(config.LIB_KEY + 'EventPool' + config.appId, JSON.stringify(eventPool));
     },
     setTempEventPool: function (eventPool) {
-      _.localStorage.set(config.LIB_KEY + 'EventPool_temp', JSON.stringify(eventPool));
+      _.localStorage.set(config.LIB_KEY + 'EventPool_temp_' + config.appId, JSON.stringify(eventPool));
     },
     /**
      * 事件入池
      */
     pushEvent: function (event) {
-      if (store.getSessionProps()[MONITORSTATE.AUTH]) {
+      if (store.getSession(MONITORSTATE.AUTH)) {
         var pool = this.getEventPool();
         pool.push(event);
         this.setEventPool(pool);
@@ -168,32 +212,31 @@ module.exports = {
    * 事件发送
    * @param p 要发送的事件对象
    */
-  send: function (p) {
+  send: function (props) {
     var data = {
-      uniqueId: store.getDeviceId(),
       properties: {},
       subject: {},
       object: {}
     };
-    _.extend(data, p);
-    if (_.isObject(p.properties) && !_.isEmptyObject(p.properties)) {
-      _.extend(data.properties, p.properties);
+    _.extend(data, props);
+    if (_.isObject(props.properties) && !_.isEmptyObject(props.properties)) {
+      _.extend(data.properties, props.properties);
     }
-    if (_.isObject(p.subject) && !_.isEmptyObject(p.subject)) {
-      _.extend(data.subject, p.subject);
+    if (_.isObject(props.subject) && !_.isEmptyObject(props.subject)) {
+      _.extend(data.subject, props.subject);
     }
-    if (_.isObject(p.object) && !_.isEmptyObject(p.object)) {
-      _.extend(data.object, p.object);
+    if (_.isObject(props.object) && !_.isEmptyObject(props.object)) {
+      _.extend(data.object, props.object);
     }
     // profile时不传公用属性
-    if (!p.type || p.type.slice(0, 7) !== 'profile') {
+    if (!props.action || props.action.slice(0, 7) !== 'profile') {
       //优先级：系统默认属性<本页设置的属性<session属性<全局存储属性<事件属性
       _.extend(data.properties, store.getProps(), store.getSessionProps(), _.info.currentProps, _.info.properties());
       _.extend(data.subject, store.getSubject(), store.getSessionSubject(), _.info.currentSubject);
       _.extend(data.object, store.getObject(), store.getSessionObject(), _.info.currentObject);
     }
     data.time = _.formatDate(new Date());
-    data.domain = store.getDomain();
+    //data.domain = store.getDomain();
     _.searchObjDate(data);
 
     _.log(JSON.stringify(data, null, 4));
@@ -221,10 +264,10 @@ module.exports = {
     }
 
     //授权状态
-    var sessionProp = store.getSessionProps(),
-      authState = sessionProp[MONITORSTATE.AUTH],
-      authingState = sessionProp[MONITORSTATE.AUTHING],
-      sendingState = sessionProp[MONITORSTATE.SENDING];
+    var session = store.getSession(),
+      authState = session[MONITORSTATE.AUTH],
+      authingState = session[MONITORSTATE.AUTHING],
+      sendingState = session[MONITORSTATE.SENDING];
 
 
     if (authState) {
@@ -237,18 +280,15 @@ module.exports = {
       }
     }
   },
-
   /**
    * TOKEN验证
    * 异步请求，等待返回。
    */
   auth: function () {
-    var that = this,
-      url = config.apiHost + '/token/' + config.appId + '?randomId=' + store.getSessionId();
 
-    var sessionProp = {};
-    sessionProp[MONITORSTATE.AUTHING] = true;
-    store.setSessionProps(sessionProp);
+    var url = config.apiHost + '/token/' + config.appId + '?randomId=' + store.getSessionId() + '&domain=' + store.getDomain();
+
+    store.setSession(MONITORSTATE.AUTHING, true);
 
     _.ajax({
       url: url,
@@ -261,25 +301,20 @@ module.exports = {
         var result = data,
           authed = result.code === 200;
 
-        sessionProp = {};
-        sessionProp[MONITORSTATE.AUTH] = authed;
+        store.setSession(MONITORSTATE.AUTH, authed);
 
         if (authed) {
-          sessionProp.token = result.token;
+          store.setSession('token', result.token);
         } else {
           _.log(result.msg || result.message);
         }
-
-        store.setSessionProps(sessionProp);
       },
       error: function (xhr) {
         _.log(xhr.status);
         _.log(xhr.statusText);
       },
       complete: function (xhr) {
-        sessionProp = {};
-        sessionProp[MONITORSTATE.AUTHING] = false;
-        store.setSessionProps(sessionProp);
+        store.setSession(MONITORSTATE.AUTHING, false);
       }
     });
   },
@@ -288,15 +323,12 @@ module.exports = {
   //2、lately:缓存发送模式，SDK判断缓存数据量，发送数据
   path: function (sendImmediately) {
     var that = this,
-      session = store.getSessionProps(),
+      session = store.getSession(),
       authed = session[MONITORSTATE.AUTH];
     if (!authed) {
       return;
     }
-    var token = session.token,
-      sessionId = store.getSessionId(),
-      deviceId = store.getDeviceId(),
-      url = config.apiHost + '/receive',
+    var url = config.apiHost + '/receive',
       limit = config.sendLimit || 1,
       tempEventPool = that.globalContext.getTempEventPool(),
       eventPool = that.globalContext.getEventPool();
@@ -309,27 +341,35 @@ module.exports = {
       that.globalContext.setTempEventPool(tempEventPool);
       //将事件池的剩下的正在发送的事件清出队列，有一定的概率会丢掉这些尚在发送中的数据。不过这个目前不再考虑了。可以承受范围内的
       that.globalContext.setEventPool(eventPool.splice(0));
-      _.log(JSON.stringify(data));
+      //_.log(JSON.stringify(data));
       var postData = that.getPackingEvents(data);
+      //var index = 2000, flag = false;
       _.ajax({
         url: url,
         type: "POST",
-        //contentType: 'application/json',
+        contentType: 'application/json',
         cors: true,
-        async: false, //同步请求
-        data: postData
+        //async: false, //同步请求
+        data: postData,
+        /*success: function (data) {
+          flag = true;
+        }*/
       });
+      /*while (index > 0 && flag === true) {
+        index -= 1;
+      }*/
       return;
     }
 
 
-    if (eventPool.length < limit) return;
+    if (eventPool.length < limit) {
+      return;
+    }
 
     var data = Array.prototype.slice.call(eventPool, 0);
 
-    var sessionProp = {};
-    var postLength = sessionProp[MONITORSTATE.SENDINGDATALEN] = data.length;
-    store.setSessionProps(sessionProp);
+    var postLength = data.length;
+    store.setSession(MONITORSTATE.SENDINGDATALEN, postLength);
 
     //如果存在临时缓存数据，将临时数据加入发送队列中，并清空临时缓存
     if (tempEventPool.length > 0) {
@@ -338,10 +378,9 @@ module.exports = {
       that.globalContext.setTempEventPool(tempEventPool);
     }
 
-    sessionProp = {};
-    sessionProp[MONITORSTATE.SENDING] = true;
-    store.setSessionProps(sessionProp);
+    store.setSession(MONITORSTATE.SENDING, true);
 
+    var postData = that.getPackingEvents(data);
     /**
      * 200 成功
      * 402 token失效
@@ -349,10 +388,7 @@ module.exports = {
      * 500 系统错误
      */
 
-    var postData = that.getPackingEvents(data);
-
-    console.log(postData);
-
+    //console.log(postData);
     _.ajax({
       url: url,
       type: "POST",
@@ -365,19 +401,15 @@ module.exports = {
           function exec() {
             //将请求体内的事件踢出栈
             var _eventPool = that.globalContext.getEventPool();
-            _.log(JSON.stringify(Array.prototype.splice.call(_eventPool, 0, postLength)));
+            //_.log(JSON.stringify(Array.prototype.splice.call(_eventPool, 0, postLength)));
             that.globalContext.setEventPool(_eventPool);
-            sessionProp = {};
-            sessionProp[MONITORSTATE.SENDINGDATALEN] = 0;
-            store.setSessionProps(sessionProp);
+            store.setSession(MONITORSTATE.SENDINGDATALEN, 0);
           }
           if (_.isEmptyObject(data) || (data.code === 200)) {
             exec();
           } else if (data.code === 402) {
             //授权失效状态，重新发送授权
-            sessionProp = {};
-            sessionProp[MONITORSTATE.AUTH] = false;
-            store.setSessionProps(sessionProp);
+            store.setSession(MONITORSTATE.AUTH, false);
             that.auth();
           }
         } catch (ex) {
@@ -389,28 +421,27 @@ module.exports = {
         _.log(xhr.statusText);
       },
       complete: function () {
-        sessionProp = {};
-        sessionProp[MONITORSTATE.SENDING] = false;
-        store.setSessionProps(sessionProp);
+        store.setSession(MONITORSTATE.SENDING, false);
       }
     });
+
   },
   getPackingEvents: function (events) {
-    var session = store.getSessionProps(),
+    var session = store.getSession(),
       token = session.token,
       sessionId = session.sessionId, deviceId = store.getDeviceId(),
       eventsStr = JSON.stringify(events),
-      props = store.getProps(),
+      cache = store.get(),
       dataStr = JSON.stringify({
         "appId": config.appId,
         "uniqueId": deviceId,
-        "userId": props ? props['userId'] : '',
+        "userId": cache ? cache['userId'] : '',
         "events": eventsStr
       }),
       sign = md5(dataStr + token),
       postData = JSON.stringify({
         "datatime": _.formatDate(new Date()),
-        "domain": store.getDomain(),
+        //"domain": store.getDomain(),
         "lib": 'js',
         "sign": sign,
         "appId": config.appId,

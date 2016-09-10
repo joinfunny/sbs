@@ -2,24 +2,25 @@ var config = require('./config');
 var _ = require('./utils');
 
 var LIB_KEY = config.LIB_KEY;
+
 module.exports = {
   getProps: function () {
     return this._state.props;
   },
   getSessionProps: function () {
-    return this._sessionState;
+    return this._sessionState.props;
   },
-  getSubject:function(){
+  getSubject: function () {
     return this._state.subject;
   },
-  getObject:function(){
+  getObject: function () {
     return this._state.object;
   },
-  getSessionSubject:function(){
-    return this._sessionState.subject;
+  getSessionSubject: function () {
+    return this._sessionState['subject'] || {};
   },
-  getSessionObject:function(){
-    return this._sessionObject.object;
+  getSessionObject: function () {
+    return this._sessionState['object'] || {};
   },
   /**
    * 获取会话的CookieID
@@ -39,7 +40,8 @@ module.exports = {
   getDomain: function () {
     var domain = this._state.domain;
     if (!domain) {
-      this.setOnce('domain', document.domain || window.location.host);
+      domain = document.domain || window.location.host;
+      this.setOnce('domain', domain);
     }
     return domain;
   },
@@ -57,7 +59,10 @@ module.exports = {
     }
   },
   get: function (name) {
-    return this._state[name];
+    return name ? this._state[name] : this._state;
+  },
+  getSession: function (name) {
+    return name ? this._sessionState[name] : this._sessionState;
   },
   set: function (name, value) {
     this._state[name] = value;
@@ -68,46 +73,39 @@ module.exports = {
       this.set(name, value);
     }
   },
+  setSession: function (name, value) {
+    this._sessionState[name] = value;
+    this.sessionSave();
+  },
+  setSessionOnce: function (name, value) {
+    if (!(name in this._sessionState)) {
+      this.setSession(name, value);
+    }
+  },
   // 针对当前页面修改
   change: function (name, value) {
     this._state[name] = value;
   },
   setSessionProps: function (newp) {
-    var props = this._sessionState;
-    _.extend(props, newp);
-    this.sessionSave(props);
+    this._setSessionProps('props', newp);
   },
   setSessionPropsOnce: function (newp) {
-    var props = this._sessionState;
-    _.coverExtend(props, newp);
-    this.sessionSave(props);
+    this._setSessionPropsOnce('props', newp);
   },
   setSessionSubject: function (newp) {
-    var sessionState = this._sessionState,subject=sessionState.subject||{};
-    _.extend(subject, newp);
-    sessionState.subject=subject;
-    this.sessionSave(sessionState);
+    this._setSessionProps('subject', newp);
   },
   setSessionSubjectOnce: function (newp) {
-    var sessionState = this._sessionState,subject=sessionState.subject||{};
-    _.coverExtend(subject, newp);
-    sessionState.subject=subject;
-    this.sessionSave(sessionState);
+    this._setSessionPropsOnce('subject', newp);
   },
   setSessionObject: function (newp) {
-    var sessionState = this._sessionState,object=sessionState.subject||{};
-    _.extend(object, newp);
-    sessionState.object=object;
-    this.sessionSave(sessionState);
+    this._setSessionProps('object', newp);
   },
   setSessionObjectOnce: function (newp) {
-    var sessionState = this._sessionState,object=sessionState.subject||{};
-    _.coverExtend(object, newp);
-    sessionState.object=object;
-    this.sessionSave(sessionState);
+    this._setSessionPropsOnce('object', newp);
   },
   setProps: function (newp) {
-    this._setPropsOnce('props', newp);
+    this._setProps('props', newp);
   },
   setPropsOnce: function (newp) {
     this._setPropsOnce('props', newp);
@@ -134,8 +132,20 @@ module.exports = {
     _.coverExtend(obj, newp);
     this.set(objName, obj);
   },
+  _setSessionProps: function (objName, newp) {
+    var obj = this._sessionState[objName] || {};
+    _.extend(obj, newp);
+    this.setSession(objName, obj);
+  },
+  _setSessionPropsOnce: function (objName, newp) {
+    var obj = this._sessionState[objName] || {};
+    _.coverExtend(obj, newp);
+    this.setSession(objName, obj);
+  },
   sessionSave: function (props) {
-    this._sessionState = props;
+    if (props) {
+      this._sessionState = props;
+    }
     _.cookie.set(LIB_KEY + 'session', JSON.stringify(this._sessionState), 0, config.crossSubDomain);
   },
   save: function () {
@@ -145,8 +155,8 @@ module.exports = {
       _.cookie.set(LIB_KEY + 'jssdk', JSON.stringify(this._state), this._state['expires'] || 730, false);
     }
   },
-  _sessionState: {},
-  _state: {},
+  _sessionState: { props: {}, subject: {}, object: {} },
+  _state: { props: {}, subject: {}, object: {} },
   init: function () {
     var ds = _.cookie.get(LIB_KEY + 'jssdk');
     var cs = _.cookie.get(LIB_KEY + 'jssdkcross');
@@ -180,7 +190,7 @@ module.exports = {
       this.set('uniqueId', _.UUID());
     }
     //生成本次回话的SessionID
-    this.setSessionPropsOnce({ 'sessionId': _.UUID() })
+    this.setSessionOnce('sessionId', _.UUID());
   }
 };
 
