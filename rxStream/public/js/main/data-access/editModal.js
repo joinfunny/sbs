@@ -1,7 +1,7 @@
 /**
  * Created by fisher810 on 2016-8-23.
  */
-define([ 
+define([
     'dot',
     'main/data-access/propertySidebar',
     'main/data-access/eventBaseData',
@@ -24,7 +24,7 @@ define([
             }
         }, {
             field: 'name',
-            title: '字段名称',
+            title: '属性名称',
             editor: {
                 type: 'text',
                 options: {
@@ -38,6 +38,10 @@ define([
                             type: 'reg',
                             regStr: /^(b_)[a-zA-Z0-9_]*$/,
                             errorTips: '必须以b_开头且只能输入英文数字及下划线'
+                        }, {
+                            type: 'ajax',
+                            ajaxFn: BusinessData.checkRepeat,
+                            errorTips: '该值已重复！'
                         }
                     ]
                 }
@@ -47,7 +51,7 @@ define([
             }
         }, {
             field: 'label', //字段名
-            title: "显示名", //字段中文名
+            title: "显示名称", //字段中文名
             editor: { //编辑
                 type: 'text',
                 options: {
@@ -61,6 +65,10 @@ define([
                             type: 'reg',
                             regStr: /^[\u0391-\uFFE5\w]+$/,
                             errorTips: '只允许汉字、英文字母、数字及下划线。'
+                        }, {
+                            type: 'ajax',
+                            ajaxFn: BusinessData.checkRepeat,
+                            errorTips: '该值已重复！'
                         }
                     ]
                 }
@@ -120,6 +128,7 @@ define([
             dataType: 'STRING',
             type: 1,
             edit: true,
+            newItem: true,
             filterMode: 1,
             visible: true
         }
@@ -135,7 +144,7 @@ define([
             }
         }, {
             field: 'name',
-            title: '字段名称',
+            title: '属性名称',
             editor: {
                 type: 'text',
                 options: {
@@ -149,6 +158,10 @@ define([
                             type: 'reg',
                             regStr: /^(o_)[a-zA-Z0-9_]*$/,
                             errorTips: '必须以o_开头且只能输入英文数字及下划线'
+                        }, {
+                            type: 'ajax',
+                            ajaxFn: BusinessData.checkRepeat,
+                            errorTips: '该值已重复！'
                         }
                     ]
                 }
@@ -158,7 +171,7 @@ define([
             }
         }, {
             field: 'label', //字段名
-            title: "显示名", //字段中文名
+            title: "显示名称", //字段中文名
             editor: { //编辑
                 type: 'text',
                 options: {
@@ -172,6 +185,10 @@ define([
                             type: 'reg',
                             regStr: /^[\u0391-\uFFE5\w]+$/,
                             errorTips: '只允许汉字、英文字母、数字及下划线。'
+                        }, {
+                            type: 'ajax',
+                            ajaxFn: BusinessData.checkRepeat,
+                            errorTips: '该值已重复！'
                         }
                     ]
                 }
@@ -226,6 +243,7 @@ define([
             label: '',
             dataType: 'STRING',
             edit: true,
+            newItem: true,
             filterMode: 1,
             visible: true
         }
@@ -464,8 +482,8 @@ define([
             }
             var data = {
                 label: $label.val(),
-                objectId: +$mainObj.attr('data-value'),
-                subjectId: +$subObj.attr('data-value')
+                objectId: +$subObj.attr('data-value'),
+                subjectId: +$mainObj.attr('data-value')
             };
             if (this.options.type === 'add') {
                 data.name = $name.val();
@@ -574,8 +592,8 @@ define([
                 ops.typeData = {
                     "name": $name.val(),
                     "label": $label.val(),
-                    "subjectId": +$subObj.attr('data-value'),
-                    "objectId": +$mainObj.attr('data-value'),
+                    "subjectId": +$mainObj.attr('data-value'),
+                    "objectId": +$subObj.attr('data-value'),
                     "visible": true
                 };
                 ops.gridOptions.gridData = BusinessData.defaultEventProperty || [];

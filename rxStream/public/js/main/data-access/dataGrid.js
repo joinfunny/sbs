@@ -19,6 +19,7 @@ define([
         tbody: null,
         editRow: null,
         editRowClass: 'edit-row',
+
         init: function (ops) {
             this.options = ops;
             this.$root = typeof ops.root === 'string' ? $(ops.root) : ops.root;
@@ -153,6 +154,7 @@ define([
             var role = e.target.getAttribute('role');
             if (this.editRow) {
                 if (this.editRow !== e.relatedTarget && !$.contains(this.editRow, e.relatedTarget) && $('.select-component-warp')[0] !== e.relatedTarget) {
+                    this.setDataById(this.editRow.dataset.id, this.getEditData());
                     this.cancelEdit();
                 }
             }
@@ -256,7 +258,7 @@ define([
                         if (isRepeat) {
                             checkStatus = false;
                             $(inputDom).addClass('error-input');
-                            that.createInputTips($(inputDom), '该值不能重复！');
+                            that.createInputTips($(inputDom), '该值已重复！');
                         }
                         break;
                     default:
@@ -272,6 +274,20 @@ define([
                                 $(inputDom).addClass('error-input');
                                 that.createInputTips($(inputDom), item.errorTips);
                             }
+                        } else if (item.type == 'ajax') {
+                            item.ajaxFn('prop', _name, _value).then(function (res) {
+                                if (res) {
+                                    if (!res.dataObject) {
+                                        checkStatus = false;
+                                        $(inputDom).addClass('error-input');
+                                        that.createInputTips($(inputDom), item.errorTips);
+                                    }
+                                } else {
+                                    checkStatus = false;
+                                    $(inputDom).addClass('error-input');
+                                    that.createInputTips($(inputDom), '验证失败，请重试！');
+                                }
+                            });
                         }
                 }
                 return !checkStatus
@@ -297,13 +313,12 @@ define([
             if (!this.editRow) {
                 var data = $.extend(true, {}, this.options.defaultData);
                 data.dataId = this.generateID();
-                this.sourceData.push(data);
+                this.sourceData.unshift(data);
                 var $tr = $('<tr tabindex="0" class="edit-row" data-id="' + data.dataId + '"></tr>')
                     .html(this.createEditTr(data))
                     .prependTo(this.tbody);
-                $tr.find('input')
-                    .eq(0)
-                    .focus();
+                var __input__ = $tr.find('input').eq(0);
+                __input__.val(__input__.val()).focus();
                 this.editRow = $tr[0];
                 this.emit('afterAddRow', this.editRow, data);
             }
@@ -317,6 +332,7 @@ define([
                 if (this.editRow) {
                     $(this.editRow).removeClass(this.editRowClass)
                 }
+                $tr.removeAttr('role');
                 id = $tr.attr('data-id');
                 rowData = this.getDataById(id);
                 $tr.html(this.createEditTr(rowData))
@@ -329,10 +345,11 @@ define([
             }
         },
         //创建编辑列
-        createEditTr: function (data) {
-            var that = this;
-            return _.map(this.options.column, function (item) {
-                return '<td style="' + that.parseStyle(item) + '">' + that.createEditDom(item, data) + '</td>';
+        createEditTr: function (data, column) {
+            var that = this,
+                __column__ = column || this.options.column;
+            return _.map(__column__, function (item) {
+                return '<td' + (data.id ? ' data-row-id="' + data.id + '"' : '') + ' style="' + that.parseStyle(item) + '">' + that.createEditDom(item, data) + '</td>';
             }).join('');
         },
         //设置修改数据 返回修改后的数据
@@ -351,6 +368,7 @@ define([
                     dataObj.type = this.dataset.group;
                 }
             });
+            $('td', editRow).attr('data-row-id') && (dataObj.id = +$('td', editRow).attr('data-row-id'));
             return dataObj;
         },
         // 取消编辑列并保存数据
@@ -358,12 +376,13 @@ define([
             if (this.editRow && this.checkInput()) {
                 var id = this.editRow.dataset.id,
                     sourceData = $.extend(true, {}, this.getDataById(id)),
-                    editData = this.setDataById(id, this.getEditData());
+                    editData = this.getDataById(id);
                 this.createTrByData(id, editData);
-                $(this.editRow).removeClass(this.editRowClass);
+                $(this.editRow).attr('role', 'clickEditRow').removeClass(this.editRowClass);
                 //添加结束编辑后的事件
                 this.emit('completeEditRow', this.editRow, sourceData, editData);
                 delete this.editRow;
+                this.refreshGrid();
             }
 
         },

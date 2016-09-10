@@ -1,0 +1,13 @@
+{
+    "appenders": [
+        {
+            "type": "console"
+        },
+        {
+            "type": "dateFile",
+            "filename": "logs/rxstream",
+            "pattern": "-yyyy-MM-dd.log",
+            "alwaysIncludePattern": true
+        }
+    ]
+}

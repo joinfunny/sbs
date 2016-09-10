@@ -296,8 +296,8 @@ body {
           }
           .grid-operate {
             background: url("img/operate.png") center center no-repeat;
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             display: inline-block;
             position: relative;
             cursor: pointer;
@@ -759,6 +759,7 @@ body {
   text-align: center;
   color: #ffffff;
   border-radius: 5px;
+  z-index: 9999;
 }
 
 .property-global-mark {
@@ -880,7 +881,7 @@ body {
   padding-left: 75px;
   z-index: 1;
 }
-.select-component-warp{
+.select-component-warp,.select-component-warp-prop{
   position: absolute;
   background-color: #FFFFFF;
   @include box-shadow(0 0 2px rgba(0,0,0,0.3));

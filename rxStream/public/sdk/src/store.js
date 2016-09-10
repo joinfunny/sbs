@@ -40,7 +40,8 @@ module.exports = {
   getDomain: function () {
     var domain = this._state.domain;
     if (!domain) {
-      this.setOnce('domain', document.domain || window.location.host);
+      domain = document.domain || window.location.host;
+      this.setOnce('domain', domain);
     }
     return domain;
   },

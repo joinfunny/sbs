@@ -1,4 +1,4 @@
-// 
+//
 define([
 		'dot',
 		'AppPage',
@@ -8,10 +8,10 @@ define([
 
 		var document = window.document,
 			HTML = document.documentElement;
-			
+
 		$.getAncestor = getAncestor;
 		$.getRectCoord = getRectCoord;
-		
+
 		// 获取匹配的第一个祖先元素
 		function getAncestor(elem, selector, includeSelf){
 			includeSelf || (elem = elem.parentNode);
@@ -20,7 +20,7 @@ define([
 			}
 			return elem;
 		}
-		
+
 		// 获取元素页面坐标位置
 		function getRectCoord(elem){
 			var oy = window.pageYOffset - HTML.clientTop,
@@ -74,19 +74,19 @@ define([
 
             // 初始化各部件
             initParts: function init(root) {
-				// 依据role属性设置成员 
+				// 依据role属性设置成员
 				_.forEach(this.root.querySelectorAll('[role]'), function(elem){
 					var role = elem.getAttribute('role');
 					this[role] = elem;
 				}, this);
             },
-			
+
 			// 创建根元素
 			createRoot: function() {
 				var $root = $(this.rootHTML || DropdownPicker.ROOT_HTML);
 				return this.root = $root[0];
 			},
-			
+
 			// 打开下拉列表
 			open: function(trigger) {
 				this.trigger = trigger;
@@ -95,7 +95,7 @@ define([
                 this.isOpened = EventEmitter.returnTrue;
 				return this;
 			},
-			
+
 			// 绘制渲染
 			initTrigger: function() {
 				var dataset = this.trigger.dataset;
@@ -111,15 +111,15 @@ define([
 			setListType: function(){
 				this.labelActivedClass = DropdownPicker.labelActivedClass;
 				this.labelDisabledClass = DropdownPicker.labelDisabledClass;
-				
+
 				switch(this.listType){
-					
+
 					case 'input-select-one':
 					case 'select-one':
 						this.inputType = 'radio';
 						this.labelCheckedClass = DropdownPicker.labelRadioCheckedClass;
 					break;
-					
+
 					case 'select-multiple':
 					case 'input-select-multiple':
 						this.inputType = 'checkbox';
@@ -130,13 +130,13 @@ define([
 				this.labelCheckedActivedClass = this.labelCheckedClass + ' ' + this.labelActivedClass;
 				this.labelCheckedActived$ = '.' + this.labelCheckedActivedClass.replace(/\s+/g, '.');
 			},
-			
+
 			//多选框的包装元素
 			triggerWrapper: null,
-			
+
 			// 多选框的包装元素选择器
 			triggerWrapper$: '.dropdown-wrapper',
-			
+
 			// 初始化多选框的包装元素
 			initTriggerWrapper: function(){
 				this.triggerWrapper = getAncestor(this.trigger, DropdownPicker._dropdownWrapper$);
@@ -150,10 +150,10 @@ define([
 
 			// 选项列表数据
 			datalist: null,
-			
+
 			// 数据键名
 			dataKeys: { name: 'label', value: 'value' },
-			
+
 			// ajax响应结构的键名
 			ajaxKeys: { success: 'success', data: 'dataObject' },
 
@@ -174,24 +174,24 @@ define([
 					}
 				}.bind(this))
 			},
-			
+
 			// 绘制渲染
 			render: function() {
 				this.renderList();
 				this.renderRoot();
 			},
-			
+
 			// 绘制渲染下拉列表
 			renderList: function() {
 				var trigger = this.trigger,
 					datalistBeforeInit = trigger.getAttribute('data-list-before-init'),
 					datalistInit;
-					
+
 				// 由定义的全局方法，在初始化列表前执行
 				if (datalistBeforeInit && (datalistBeforeInit = Object.ns(datalistBeforeInit))) {
 					datalistBeforeInit(this);
 				}
-				
+
 				// 由定义的全局方法初始化列表
 				datalistInit = trigger.getAttribute('data-list-init');
 				if(datalistInit && (datalistInit = Object.ns(datalistInit))){
@@ -204,11 +204,11 @@ define([
 
 			// 根据数据源的定义，绘制渲染下拉列表
 			initList: function() {
-					
+
 				if(this.datalist){
 					// 判断数据获取方式
 					switch(this.dataGetWay){
-						
+
 						// 通过内联解析数据
 						// 数据选项的名称键
 						// this.optionNameKey: 'label',
@@ -237,17 +237,17 @@ define([
 				else{
 				}
 			},
-			
+
 			ajaxBuildListDefer: null,
-			
+
 			// 通过请求数据源创建下拉列表，并注册事件
 			ajaxBuildList: function(url) {
 				var that = this,
 					trigger = this.trigger;
-					
+
 				this.ajaxBuildListDefer = AppPage.loadApi({
 					url: url,
-					type:'post',
+					type:'get',
                     dataType: 'json',
                     //crossDomain: true,
                     beforeSend: function () {
@@ -259,38 +259,46 @@ define([
 							datalist,
 							dataset,
 							datalistFetched;
-							
+
                         // 去除加载效果
                         $(that.dropdownList).removeClass('data-loading');
-						
+
 						switch(e.statusText.toLowerCase()){
 							case 'ok':
-							
+
+					console.log(that.ajaxKeys.success);
+							if(!e.responseJSON){
+								// 请求数据失败
+								html = $('<li class="request-failure"></li>');
+								html.text(e.responseText);
+								$(that.dropdownList).append(html);
+							}
 							// 请求数据成功
-                        	if (e.responseJSON[that.ajaxKeys.success]) {
-								
+                        	else if (e.responseJSON[that.ajaxKeys.success]) {
+
 								datalist = that.datalist = e.responseJSON[that.ajaxKeys.data];
 								dataset = trigger.dataset;
 								datalistFetched = dataset.listFetched;
 								// 若已定义了已获取数据列表事件
-								if(!(datalistFetched && 
-									(datalistFetched = Object.ns(datalistFetched))) || 
+								if(!(datalistFetched &&
+									(datalistFetched = Object.ns(datalistFetched))) ||
 									datalistFetched(that, datalist, url) !== false){
-										
+
 									dataset.list = 'data(' + JSON.stringify(datalist) + ')';
 								}
 								that.buildList(datalist);
                         	}
                         	else {
 								// 请求数据失败
-								html = '<li class="request-failure">' + e.responseJSON.msg + '</li>';
-								$(that.dropdownList).html(html);
+								html = $('<li class="request-failure"></li>');
+								html.text(e.responseJSON.msg);
+								$(that.dropdownList).append(html);
                         	}
 							break;
-							
+
 							case 'abort':
 							break;
-							
+
 							default:
 							// 请求失败
 							html = '<li class="request-error">' + e.statusText + '</li>';
@@ -305,8 +313,8 @@ define([
 			buildList: function(dataList) {
 				$(this.dropdownList).html(this.buildListHtml(dataList));
 			},
-			
-			// 
+
+			//
 			labelCheckedActivedClass: '',
 			//
 			labelCheckedActived$: '',
@@ -315,7 +323,7 @@ define([
 			getTmplFn: function(tmplName){
 				return DropdownPicker.getTmplFn(tmplName);
 			},
-			
+
 			// 构建下拉列表的HTML
 			buildListHtml: function(dataList) {
 				var trigger = this.trigger,
@@ -326,9 +334,9 @@ define([
 					checked = 'checked',
 					liTmplFn = this.getTmplFn('liTmpl'),
 					html;
-				
+
 				switch(this.listType){
-					
+
 					case 'select-one':
 						triggerValue = trigger.value;
 						break;
@@ -338,9 +346,9 @@ define([
 						selectedValues = this.getSelectedValues();
 					break;
 				}
-				
+
 				html = dataList.map(function(option, i){
-						var value = option[this.dataKeys.value] || option, 
+						var value = option[this.dataKeys.value] || option,
 							label = option[this.dataKeys.name] || value,
 							optionData = {
 								type: this.inputType,
@@ -351,9 +359,9 @@ define([
 								labelClass: ''
 							},
 							index;
-						
+
 						switch(this.listType){
-					
+
 							case 'select-one':
 								// 如：性别 ['男','女','未知']
 //								if(value === label){
@@ -377,20 +385,20 @@ define([
 								}
 							break;
 						}
-						
+
 						return liTmplFn(optionData);
-						
+
 					}, this).join('');
-				
+
 				return html;
 			},
-			
+
 			// 获取多选框已选中项的集合（隐藏域）
 			getSelectedInputs: function(){
 				var selectedInputs = $('input[type=hidden]', this.triggerWrapper).toArray();
 				return selectedInputs;
 			},
-			
+
 			// 获取多选框已选中值的集合
 			getSelectedValues: function(){
 				var selectedValues = this.getSelectedInputs()
@@ -399,20 +407,20 @@ define([
 						});
 				return selectedValues;
 			},
-			
+
 			// 判断是否为选中项的值
 			isSelectedValue: function(value){
 				var index = this.getSelectedValues().indexOf(value);
 				return index > -1;
 			},
-			
+
 			// 绘制渲染
 			renderRoot: function() {
 				$(this.root).addClass(this.listType);
 				document.body.appendChild(this.root);
 				this.setPosition();
 			},
-			
+
 			// 渲染调整下拉列表定位
 			setPosition: function() {
 				var that = this,
@@ -435,32 +443,32 @@ define([
 					dropdownListOffsetHeight = this.dropdownList.offsetHeight,
 					dropdownListMaxHeight = dropdownListScrollHeight + 'px',
 					diffHeight;
-					
+
 				$(this.root).css({
 					minWidth: minWidth
 				});
-				
+
 				rootCoord = getRectCoord(this.root);
 				rootHeight = rootCoord.bottom - rootCoord.top;
 				rootWidth = rootCoord.right - rootCoord.left;
-				
+
 				// 下拉框组件根元素和选项列表的高度差值，
 				diffHeight = rootHeight - dropdownListOffsetHeight + 10;
-				
+
 				rootHeight = rootHeight + (dropdownListScrollHeight - dropdownListClientHeight);
-				
+
 				// 横向定位
 				if (bodyWidth > triggerCoord.left + rootWidth) {
 					left = triggerCoord.left + 'px';
 				} else {
 					left = (triggerCoord.right - rootWidth) + 'px';
 				}
-				
+
 				// 纵向定位
 				// 若下拉框可置于触发框下方
 				if (bodyHeight > triggerCoord.bottom + (rootHeight + offsetHeight)) {//console.log('下方')
 					top = (triggerCoord.bottom + offsetHeight) + 'px';
-				} 
+				}
 				// 否则，若下拉框可置于触发框上方
 				else if(triggerCoord.top > (rootHeight + offsetHeight)) {//console.log('上方')
 					top = (triggerCoord.top - (rootHeight + offsetHeight)) + 'px';
@@ -478,28 +486,28 @@ define([
 						top = (triggerCoord.top - (rootHeight + offsetHeight) + (dropdownListScrollHeight - dropdownListClientHeight)) + 'px';
 					}
 				}
-				
+
 				$(this.root).css({
 					top: top,
 					right: right,
 					bottom: bottom,
 					left: left
 				});
-				
+
 				$(this.dropdownList).css({
 					maxHeight: dropdownListMaxHeight
 				});
-				
+
 				this.isOpened() && $(this.root).addClass(this.openClass);
-				
+
 				this.setPositionTimeoutId = setTimeout((function(){
 					this.setPosition();
 				}).bind(this), 200);
 			},
-			
+
 			// 位置设置定时器标识
 			setPositionTimeoutId: null,
-			
+
 			// 清除位置设置定时器
 			clearSetPositionTimeout: function() {
 				clearTimeout(this.setPositionTimeoutId);
@@ -540,8 +548,8 @@ define([
 					break;
 				}
 			},
-			
-			// 
+
+			//
 			removeSelectedOption: function(e){
 				var $selectedOptions, selectedOption, value;
 				if(e.keyCode === 8 && !e.target.value && ($selectedOptions = $(DropdownPicker._selectedOption$, this.triggerWrapper)).length){
@@ -552,7 +560,7 @@ define([
 				}
 			},
 
-			// 触发器修改值事件 
+			// 触发器修改值事件
 			change: function(e) { //console.log('组件change');
 
 				switch(this.listType){
@@ -564,7 +572,7 @@ define([
 					break;
 				}
 			},
-			
+
 			// 设置选中项
 			// @multiple boolean 是否为多选项
 			changeSelectedOption: function(multiple){
@@ -622,9 +630,9 @@ define([
 			click: function(e) {
 				var target = e.target,
 					dropdownListClick;
-					
+
 				if(this.isOpened() && $.contains(this.dropdownList, target)) {
-					
+
 					dropdownListClick = this.trigger.getAttribute('data-list-click');
 					if(dropdownListClick && (dropdownListClick = Object.ns(dropdownListClick))){
 						if(dropdownListClick(this, e) === false){
@@ -634,17 +642,17 @@ define([
 					this.dropdownListClick(e);
 				}
 			},
-			
+
 			// 点击下拉列表
 			dropdownListClick: function(e) {
-				
+
 				var trigger = this.trigger,
 					target = e.target,
 					targetValue,
 					labelTarget,
 					targetLabel,
 					selectedInputs;
-				
+
 				if($(target).is('.remove')){
 					e.preventDefault();
 					this.clearOptionSelected(target);
@@ -669,7 +677,7 @@ define([
 								case 'input-select-one':
 									if(!this.isSelectedValue(targetValue)){
 										trigger.value = targetLabel;
-											
+
 										$(this.labelCheckedActived$, this.dropdownList).removeClass(this.labelCheckedActivedClass);
 										$(labelTarget).addClass(this.labelCheckedActivedClass);
 
@@ -704,7 +712,7 @@ define([
 				}
 				$(trigger).trigger('focus');
 			},
-			
+
 			// 设置下拉选中项
 			setDropdownListOptionSelected: function(target){
 				var label = getAncestor(target, 'label');
@@ -712,30 +720,30 @@ define([
 				//target.checked = true;
 				//$(label).addClass(this.labelCheckedActivedClass).append('<i class="remove" title="取消选中"></i>');
 			},
-			
+
 			// 删除下拉选中项
 			removeSelectedOptions: function(){
 				$(DropdownPicker._selectedOption$, this.triggerWrapper).remove();
 			},
-			
+
 			// 清除下拉选中项
 			clearOptionSelected: function(target){
 				var label = getAncestor(target, 'label'),
 					input = label.querySelector('input'),
 					hiddenInput = this.triggerWrapper.querySelector('input[type="hidden"][value="' + input.value + '"]');
-				
+
 				//input.checked = false;
 				$(label).removeClass(this.labelCheckedActivedClass);
 				//$(target).remove();
 				$(getAncestor(hiddenInput, DropdownPicker._selectedOption$)).remove();
 			},
-			
+
 			// 清除下拉框选中项
 			clearDropdownListOptionSelected: function(value){
 				var input = value && this.dropdownList.querySelector('input[value="' + value + '"]'),
 					label,
 					removeBtn;
-				
+
 				if(input){
 					input.checked = false;
 					label = getAncestor(input, 'label');
@@ -744,18 +752,18 @@ define([
 					//$(removeBtn).remove();
 				}
 			},
-			
+
 			// 多选框增加选中项（隐藏域）
 			addSelectedOption: function(selectedData){
 				var selectedOptionTmplFn = this.getTmplFn('selectedOptionTmpl'),
 					selectedOptionHtml = selectedOptionTmplFn(selectedData);
-					
+
 				$(this.trigger).before(selectedOptionHtml);
 			},
-			
+
 			// 打开下拉框样式
 			openClass: 'open',
-			
+
 			// 判断实例是否打开
             isOpened: EventEmitter.returnFalse,
 
@@ -778,7 +786,7 @@ define([
 				this.dropdownList.style.cssText = '';
 				this.dropdownList.innerHTML = '';
 				this.off();
-				
+
 				delete this.inputType;
 				delete this.listType;
 				delete this.trigger;
@@ -793,32 +801,32 @@ define([
 
 		// DropdownPicker 静态方法、配置
 		_.extend(DropdownPicker, {
-			
+
 			// 创建实例
 			create: function(root, options) {
 				return new DropdownPicker().init(root, options);
 			},
-			
+
 			// 多选框的包装根元素选择器（存储数组）
 			_arr_dropdownWrapper$: ['.dropdown-wrapper'],
 			_dropdownWrapper$: '',
-			
+
 			// 可选可填控件的已选中项元素选择器（存储数组）
 			_arr_selectedOption$: ['.selected-option'],
 			_selectedOption$: '',
-			
+
 			// 触发器选择器（存储数组）
 			_arr_trigger$: ['button[data-type^="select"]', 'input[data-type^="select"]', 'input[data-type^="input-select"]'],
-			_trigger$: '', 
-			
+			_trigger$: '',
+
 			// 配置一个专用选择器及其存储
 			set_$: function(name){
 				var arr_name$ = '_arr_' + name + '$',
 					name$ = '_' + name + '$';
-				this[arr_name$] || (this[arr_name$] = []); 
+				this[arr_name$] || (this[arr_name$] = []);
 				this[name$] = this[arr_name$].join(',');
 			},
-			
+
 			// 添加一个专用选择器
 			add_$: function(name, $){
 				var arr_name$ = '_arr_' + name + '$',
@@ -828,7 +836,7 @@ define([
 					this.set_$($);
 				}
 			},
-			
+
 			// 删除一个专用选择器
 			remove_$: function(name, $){
 				var arr_name$ = '_arr_' + name + '$',
@@ -852,19 +860,19 @@ define([
 					$(document).on('click mousedown focusin', this.handleEvent);
 				}
 			},
-			
+
 			handleEvent: function(e){
 				this[e.type] && this[e.type](e);
 			},
 
 			// 文档按下事件
 			mousedown: function(e) {
-				var target = e.target, 
+				var target = e.target,
 					trigger$ = this._trigger$,
 					dropdownPicker = this._dropdownPicker,
 					trigger,
 					root;
-					
+
 				// 若为触发器
 				if(target.matches(trigger$)){
 					// 若还未创建实例
@@ -873,7 +881,7 @@ define([
 					}
 					// 若不为当前触发器
 					if(target !== dropdownPicker.trigger){
-						
+
 						if(e.type === 'mousedown'){
 							$(target).trigger('focus');
 						}
@@ -886,9 +894,9 @@ define([
 				}
 				// 若实例已打开
 				else if(dropdownPicker && dropdownPicker.isOpened()){
-					
+
 					if(e.type === 'mousedown'){
-						
+
 						// 若在匹配下拉框的包装元素范围内事件触发
 						if((dropdownWrapper = getAncestor(target, this._dropdownWrapper$, true))
 						&& $.contains(dropdownWrapper, dropdownPicker.trigger)){
@@ -907,7 +915,7 @@ define([
 						//dropdownPicker.close(e);
 					}
 				}
-				
+
 			},
 
 			// 文档聚焦事件
@@ -933,11 +941,11 @@ define([
 					dropdownWrapper,
 					trigger,
 					input;
-				
+
 				// 若在匹配下拉框的包装元素范围内事件触发
 				if((dropdownWrapper = getAncestor(target, this._dropdownWrapper$, true))
 				&& (trigger = dropdownWrapper.querySelector(this._trigger$))){
-					
+
 					// 若为选中项的删除按钮
 					if($(target).is('.remove') && (selectedOption = getAncestor(target, this._selectedOption$))){
 						// 若实例已打开，并且匹配触发器
@@ -955,90 +963,90 @@ define([
 					}
 				}
 			},
-			
-			// 
+
+			//
 			labelRadioCheckedClass: 'label-checked label-radio-checked',
-			
-			// 
+
+			//
 			labelCheckboxCheckedClass: 'label-checked label-checkbox-checked',
-			
-			// 
+
+			//
 			labelActivedClass: 'actived',
-			
+
 			// <label/>元素禁用
 			labelDisabledClass: 'disabled',
-			
+
 			// 列表项的模板字符串
 			liTmpl: '<li><label{{=it.labelClass?\' class="\'+it.labelClass+\'"\':""}}>'
 					+ '<input type="{{=it.type}}" name="{{=it.name}}" value="{{=it.value}}" {{=it.checked?"checked":""}}/>'
 					+ '<span>{{=it.label}}</span></label></li>',
 					//+ '<span>{{=it.label}}</span>{{=it.multiple&&it.checked?\'<i class="remove" title="取消选中"></i>\':""}}</label></li>',
-			
+
 			// 列表项的模板函数
 			liTmplFn: null,
-			
+
 			// 多选框选中项的模板字符串
 			selectedOptionTmpl: '<span class="selected-option"><input type="hidden" name="{{=it.name}}" value="{{=it.value}}"/>{{=it.label}}<i class="remove" title="取消选项"></i></span>',
-			
+
 			// 多选框选中项的模板函数
 			selectedOptionTmplFn: null,
-			
+
 			// data-list-on="init:,click:"
 			// 下拉单选框模板字符串
 			selecteOneTypeTmpl: '<div class="linkage-box"><button class="dropdown-select" name="{{=it.name}}" '
 			+ 'data-list="{{=it.datasetList}}" '
 			+ 'data-list-fetched="{{=it.datasetListFetched}}" '
-			+ 'data-name-key="{{=it.optionNameKey}}" '
-			+ 'data-value-key="{{=it.optionValueKey}}" '
+			//+ 'data-name-key="{{=it.optionNameKey}}" '
+			//+ 'data-value-key="{{=it.optionValueKey}}" '
 			+ 'data-list-before-init="{{=it.dropdownBeforeInitList}}" '
 			+ 'data-list-init="{{=it.dropdownInitList}}" '
 			+ 'data-list-click="{{=it.dropdownListClick}}" '
 			+ 'data-type="select-one" '
 			+ 'value="{{=it.value}}"><span>{{=it.label}}</span></button></div>',
-			
+
 			// 下拉单选框模板函数
 			selecteOneTypeTmplFn: null,
-			
+
 			// 下拉（可填可选框、多选框）模板字符串
 			inputSelectTypeTmpl: '<div class="linkage-box dropdown-wrapper {{=it.dataType}}">'
 			+ '{{=it.selectedOptionsHtml||""}}'
 			+ '<input name="{{=it.name}}" value="" '
 			+ 'data-list="{{=it.datasetList}}" '
 			+ 'data-list-fetched="{{=it.datasetListFetched}}" '
-			+ 'data-name-key="{{=it.optionNameKey}}" '
-			+ 'data-value-key="{{=it.optionValueKey}}" '
+			//+ 'data-name-key="{{=it.optionNameKey}}" '
+			//+ 'data-value-key="{{=it.optionValueKey}}" '
 			+ 'data-list-before-init="{{=it.dropdownBeforeInitList}}" '
 			+ 'data-list-init="{{=it.dropdownInitList}}" '
 			+ 'data-list-click="{{=it.dropdownListClick}}" '
 			+ 'data-type="{{=it.dataType}}" '
 			+ 'type="text" maxlength="20"></div>',
-			
+
 			// 下拉（可填可选框、多选框）模板函数
 			inputSelectTypeTmplFn: null,
-			
+
 			// 通过模板名称获取相应的模板函数
 			getTmplFn: function(tmplName) {
 				var tmplFn = this[tmplName + 'Fn'],
 					tmplStr,
 					settings;
-					
+
 				if (tmplFn) return tmplFn;
-				
+
 				tmplStr = this[tmplName];
 				settings = $.extend({}, dot.templateSettings, { strip: false });
-				
+
 				tmplFn = this[tmplName + 'Fn'] = dot.template(tmplStr, settings);
 				return tmplFn;
 			},
-			
+
 			// 多选框增加选中项（隐藏域）
 			addSelectedOption: function(trigger, selectedData){
 				var selectedOptionTmplFn = this._dropdownPicker.getTmplFn('selectedOptionTmpl'),
 					selectedOptionHtml = selectedOptionTmplFn(selectedData);
-					
+
 				$(trigger).before(selectedOptionHtml);
 			},
-			
+
 			// 多选框增加选中项（隐藏域）
 			addSelectedOption: function(trigger, selectedData){
 				this._dropdownPicker.addSelectedOption(selectedData);
@@ -1048,10 +1056,10 @@ define([
 			stringifyHtml: function(dataList) {
 				return dataList && typeof dataList === 'object' ? HTMLEscape.encodeEntityName(JSON.stringify(dataList)) : '';
 			},
-			
+
 			// 下拉选择器的根元素
 			ROOT_HTML: '<form class="dropdown-picker"><ul class="dropdown-list" role="dropdownList"></ul></form>',
-			
+
 			// 正则捕获触发器的 data-list 属性值
 			RE_DATA_LIST: /^(data|url|ns)\((.+)\)$/,
 
@@ -1071,7 +1079,7 @@ define([
 			// 解析数据和定义
 			parseDatasetList: function(datasetList){
 				var execResult = DropdownPicker.RE_DATA_LIST.exec(datasetList),
-					obj = null;
+					obj = null;console.log(execResult);
 				if(execResult){
 					obj = {};
 					execResult[1] && (obj.dataStructure = execResult[1]);
@@ -1082,11 +1090,11 @@ define([
 				}
 				return obj;
 			},
-			
+
 			parseKeyValue: parseKeyValue
 
 		});
-		
+
 		function parseKeyValue(str){
 				obj || (obj = {});
 

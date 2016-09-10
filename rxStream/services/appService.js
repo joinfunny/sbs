@@ -8,7 +8,7 @@ var config = global.config || require('../runtime/appConfig');
 
 module.exports = ServiceHandler
   /*
-   * 更新APP meta信息--LOSE
+   * 更新APP meta信息
    */
   .callback('/services/app/metaupdate/:appId', 'post', function (req, res, next, callback) {
     var appId = req.params.appId;
@@ -24,8 +24,8 @@ module.exports = ServiceHandler
     var httpClient = new HttpClient({
       req: req,
       res: res,
-      ///bas/services/appmeta/update/+appId---目前此接口丢失
-      urlPath: '/bas/services/appmeta/update/' + appId
+      urlPath: '/stream/sdk/up/' + appId,
+      formData:JSON.parse(req.body.data)
     });
     httpClient.post(function (responseData) {
       callback(responseData);
@@ -56,9 +56,9 @@ module.exports = ServiceHandler
     });
   })
   /*
-   * 检测指定appId下sdk是否收集到了数据--LOSE
+   * 检测指定appId下sdk是否收集到了数据
    */
-  .callback('/services/app/checksdk/:appId', 'post', function (req, res, next, callback) {
+  .callback('/services/app/checksdk/:appId', 'get', function (req, res, next, callback) {
     var appId = req.params.appId;
     if (!appId) {
       callback({
@@ -73,12 +73,9 @@ module.exports = ServiceHandler
       req: req,
       res: res,
       httpHost: config.metricHost,
-      //urlPath: '/bassass/operation/checksdk/' + appId,
-      urlPath: '/bassass/operation/checksdk/' + appId,
-      queryParams: req.query || {},
-      formData: req.body || {}
+      urlPath: '/stream/sdk/' + appId
     });
-    httpClient.post(function (responseData) {
+    httpClient.get(function (responseData) {
       callback(responseData);
     });
   });

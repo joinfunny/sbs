@@ -3317,7 +3317,7 @@ button * {
   .dropdown-picker > .dropdown-list .disabled {
     cursor: not-allowed; }
   .dropdown-picker > .dropdown-list.data-loading {
-    background: url(/img/loading/05043130.gif) 50% no-repeat; }
+    background: url(/css/img/loading/05043130.gif) 50% no-repeat; }
 .dropdown-picker.open {
   visibility: visible; }
   .dropdown-picker.open .dropdown-sublist:hover {

@@ -96,12 +96,12 @@ define([
 								branch.children = operations;
 							}
 							
-							branch.children.concat(branch.subjectProps || [], branch.objectProps || []).forEach(function(b) {
-								// {name:'**'} -> {value:'**'}
-								DataConfig.replaceKey(b, this.b_valueKey, this.valueKey)
-								// .name = field
-								b.name = this.eventAttrFieldKey;
-							}, this);
+//							(branch.subjectProps || []).concat(branch.objectProps || []).forEach(function(b) {
+//								// {name:'**'} -> {value:'**'}
+//								DataConfig.replaceKey(b, this.b_valueKey, this.valueKey)
+//								// .name = field
+//								b.name = this.eventAttrFieldKey;
+//							}, this);
 							
 							
 							branch[this.inputTypeKey] = 'select-one';

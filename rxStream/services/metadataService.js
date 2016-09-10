@@ -11,7 +11,7 @@ require('../runtime/AppPage/MSG');
 module.exports = ServiceHandler
 
   /**
-   *获取事件的配置数据--ERROR
+   *获取事件的配置数据--OK
    */
   .callback('/services/metadata/config', 'get', function (req, res, next, callback) {
     var appId = AppPage.BusinessData.getAppId(req);

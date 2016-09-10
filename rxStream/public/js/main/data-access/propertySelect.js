@@ -25,6 +25,18 @@ define([
         options: null,
         $trigger: null,
         $root: null,
+        selectWarp: '.select-component-warp-prop',
+        /**
+         * 创建select Dom
+         */
+        createSelectDom: function () {
+            var $select = $(this.selectWarp);
+            if (!$select.length) {
+                $select = $('<ul tabindex="0" class="select-component-warp-prop"></ul>');
+            }
+            $select.html(this.createListByData());
+            this.$root.append($select);
+        },
         /**
          * 过滤格式化data
          */
@@ -51,18 +63,43 @@ define([
             });
         },
         /**
+         * 过滤数据
+         * @param val
+         * @return filter data
+         */
+        filterData: function (val) {
+            return _.filter(this.options.data, function (item) {
+                return item.text.indexOf(val) != -1;
+            });
+        },
+        /**
          * 点击事件处理
          */
         click: function (e) {
-           /* var target = e.target;
+            var target = e.target, gridInstance = this.options.grid;
             if ($(target).is('li')) {
                 if ($(target).hasClass('select-list')) {
-                    this.$trigger.val($(target).attr('data-text'));
-                    this.$trigger.attr('data-value', $(target).attr('data-value'));
-                    $(target).attr('data-group') && this.$trigger.attr('data-group', $(target).attr('data-group'));
-                    $(this.selectWarp).hide();
+                    var id = $(target).attr('data-value'),
+                        data = _.filter(this.sourceData, function (item) {
+                            return item.id == id;
+                        })[0];
+                    this.$trigger.parents('tr.edit-row').html(gridInstance.createEditTr(data, gridInstance.options.column)).focus().blur();
+                    this.close();
                 }
-            }*/
+            }
+        },
+        bindEventTrigger: function () {
+            var that = this;
+            this.$trigger.off('focusout').on('focusout', function (e) {
+                if (!$(e.relatedTarget).is(that.selectWarp)) {
+                    that.close();
+                }
+            });
+            this.$trigger.off('keyup').on('keyup', function (e) {
+                var value = $.trim($(this).val());
+                var data = that.filterData(value) || that.options.data;
+                $(that.selectWarp).html(that.createListByData(data));
+            });
         }
     });
 

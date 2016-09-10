@@ -363,6 +363,27 @@ define([
                 }
             });
         },
+        /**
+         * 验证属性是否重复
+         * @param type 类型 event | object | prop
+         * @param name 字段名
+         * @return promise
+         */
+        checkRepeat: function (type, name, value) {
+            var that = this;
+            return AppPage.loadApi({
+                url: __api_path + '/services/customEvent/propRepeat?type=' + type + '&name=' + name + '&value=' + value,
+                method: 'get',
+                async: true
+            }).then(function (data) {
+                if (data.success) {
+                    return data;
+                } else {
+                    Materialize.toast('数据请求失败', 3000, 'warning');
+                    return null;
+                }
+            });
+        },
         defaultUserRows: [{
             name: 'u_dollar_name',
             alias: '用户名',

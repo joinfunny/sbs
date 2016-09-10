@@ -42,7 +42,7 @@ $liHeight:28px;
 	&.data-structure-tree {
 		>.dropdown-list{ overflow: visible; }
 	}
-	>.dropdown-list{ max-height:$liHeight; min-height:$liHeight; 
+	>.dropdown-list{ max-height:$liHeight; min-height:$liHeight;
 		li{ position:relative; margin:1px auto; @include text-ellipsis;
 			&:first-child{ margin-top:0; }
 			&:last-child{ margin-bottom:0; }
@@ -50,13 +50,13 @@ $liHeight:28px;
 				&:before{ content: "x";}
 				&:hover{ background-color: rgba(74,224,142,1.00); background-color:#3DCEBB; }
 			}
-			&:hover{ background-color:#eee; 
+			&:hover{ background-color:#eee;
 				label>.remove{ display:block; }
 			}
 			&.request-failure, &.request-error{ max-width:200px; color:#f00; text-align:center; line-height:28px; font-size:12px; }
 		}
 		.dropdown-sublist{ position:relative;
-			>label{ padding-right:20px; 
+			>label{ padding-right:20px;
 				&:after{ @extend %dropdown-right-triangle; position:absolute; content:" "; top:50%; right:6px; margin-top:-3px; }
 				&.actived{
 					&:after{ border-left-color: #ddd; }
@@ -68,19 +68,19 @@ $liHeight:28px;
 		.dropdown-list{ @extend %dropdown-box; display:none; top:0; left:100%; margin:-1px auto auto -1px; }
 		label{ @extend %transition-bg; display:block; padding:0 6px; height:28px; line-height:28px; font-size:12px; font-weight:normal; white-space:nowrap;
 			input{ position:absolute; opacity:0; }
-			&.disabled{ background-color:#eee; color:#ccc; 
+			&.disabled{ background-color:#eee; color:#ccc;
 				input{ }
 			}
-			&.actived{ background-color:$green-color; color:#fff; 
+			&.actived{ background-color:$green-color; color:#fff;
 				input{ }
 				&:hover{ background-color:#007F57; }
 			}
 		}
 		.disabled{ cursor:not-allowed; }
-		&.data-loading{ background: url(/img/loading/05043130.gif) 50% no-repeat;}
+		&.data-loading{ background: url(/css/img/loading/05043130.gif) 50% no-repeat;}
 	}
-	
-	&.open{ visibility: visible; 
+
+	&.open{ visibility: visible;
 		.dropdown-sublist:hover{ overflow:visible;
 			&>.dropdown-list{ visibility:visible; display:block; }
 		}

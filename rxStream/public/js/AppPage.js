@@ -74,6 +74,8 @@ define([], function() {
       return function ajax(options) {
 
         var newOptions = $.extend({}, preOptions, options),
+          $ajax,
+          $ajaxThen,
           results = {};
 
         presetOptions && presetOptions(newOptions);
@@ -91,11 +93,35 @@ define([], function() {
           }
         });
 
-        return $.ajax(newOptions).then(function(res) {
+        $ajax = $.ajax(newOptions);
+        $ajaxThen = $ajax.then(function(res) {
+          // 只覆盖属性
+          extendBind($ajaxThen, $ajax, true);
           // jquery对原生Promise返回对象不可直接使用
           //return results.success !== false ? res : Promise.reject(res);
           return results.success !== false ? res : $.Deferred().reject(res);
         });
+
+        return extendBind($ajaxThen, $ajax, false);
+
+        // 将原 jQuery ajax 对象的绑定方法和属性，附加到then出的目标对象上
+        // 被附加的绑定方法执行时，scope依然为原对象
+        function extendBind(target, source, nofn) {
+          $.each(source, function(k, v) {
+            if (nofn || !(k in target)) {
+              if (typeof v !== 'function') {
+                target[k] = v;
+              } else if (!nofn) {
+                target[k] = function(v) {
+                  return function() {
+                    v.apply(source, arguments);
+                  }
+                }(v);
+              }
+            }
+          });
+          return target;
+        }
       }
     }
 
@@ -220,8 +246,7 @@ define([], function() {
 
       // 预设的事件处理函数hash集
     }, {
-      beforeSend: function(jqXHR) {
-      },
+      beforeSend: function(jqXHR) {},
       success: function(responseData, textStatus, jqXHR) {
         var data = {};
         try {
@@ -268,7 +293,7 @@ define([], function() {
       }, 1000);
     },
 
-    messageTips: function (text, callback, duration) {
+    messageTips: function(text, callback, duration) {
       var f = $('#mainFrame'),
         frame = f.length > 0 ? f.contents().find('body') : $('body'),
         $tipsBox = $('.message-tips', frame);
@@ -283,10 +308,10 @@ define([], function() {
       $tipsBox.stop().animate({
         'top': 20
       });
-      window.setTimeout(function () {
+      window.setTimeout(function() {
         $tipsBox.stop().animate({
           'top': -80
-        }, function () {
+        }, function() {
           callback && callback();
           $tipsBox.data('tip', false);
         });

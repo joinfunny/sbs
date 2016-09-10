@@ -22,7 +22,7 @@ define([
     $.extend(Overview.prototype, {
         root: null,
         options: null,
-        ajaxUrl: __analysis_api_path + '/services/analysis/getAnalyzeObject',
+        ajaxUrl: __api_path + '/services/analysis/getAnalyzeObject',
         init: function (ops) {
             this.options = $.extend(true, {}, ops);
             this.createRoot();
@@ -128,7 +128,7 @@ define([
             //console.log(JSON.stringify(data, null, 4))
             return AppPage.loadApi({
                 url: that.ajaxUrl + '?type=' + that.options.analysisType,
-                data: dataStr,
+                data:{data: dataStr},
                 crossDomain: true,
                 beforeSend: function () {
                     // 遮罩

@@ -374,10 +374,10 @@ define([
 							fields = filterMapAttrFields(event.dimensions.concat(event.children));
 							break;
 						case 'subjectAttrs':
-							fields = filterMapAttrFields(event.subjectProps);
+							fields = event.subjectProps;
 							break;
 						case 'objectAttrs':
-							fields = filterMapAttrFields(event.objectProps);
+							fields = event.objectProps;
 							break;
 					}
 

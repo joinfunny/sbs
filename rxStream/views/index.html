@@ -107,8 +107,8 @@
         <span>网址</span>
     </li>
     {{for(var i=0;i<it.length;i++){ }}
-    <li class="list-c">
-        <span><input type="text" value="{{=it[i].alias}}"/></span>
+    <li class="list-c" data-id="{{=it[i].id}}">
+        <span><input type="text" value="{{=it[i].label}}"/></span>
         <span class="web-name">{{=it[i].domain}}</span>
     </li>
     {{ } }}

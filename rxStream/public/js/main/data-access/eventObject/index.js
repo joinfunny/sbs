@@ -19,6 +19,7 @@ require([
                 label: '',
                 dataType: 'STRING',
                 edit: true,
+                newItem: true,
                 filterMode: 1,
                 visible: true
             },
@@ -31,7 +32,7 @@ require([
                 }
             }, {
                 field: 'name',
-                title: '字段名称',
+                title: '属性名称',
                 editor: {
                     type: 'text',
                     options: {
@@ -45,6 +46,10 @@ require([
                                 type: 'reg',
                                 regStr: /^(o_)[a-zA-Z0-9_]*$/,
                                 errorTips: '必须以o_开头且只能输入英文数字及下划线'
+                            }, {
+                                type: 'ajax',
+                                ajaxFn: BusinessData.checkRepeat,
+                                errorTips: '该值已重复！'
                             }
                         ]
                     }
@@ -54,7 +59,7 @@ require([
                 }
             }, {
                 field: 'label', //字段名
-                title: "显示名", //字段中文名
+                title: "显示名称", //字段中文名
                 editor: { //编辑
                     type: 'text',
                     options: {
@@ -68,6 +73,10 @@ require([
                                 type: 'reg',
                                 regStr: /^[\u0391-\uFFE5\w]+$/,
                                 errorTips: '只允许汉字、英文字母、数字及下划线。'
+                            }, {
+                                type: 'ajax',
+                                ajaxFn: BusinessData.checkRepeat,
+                                errorTips: '该值已重复！'
                             }
                         ]
                     }
@@ -224,6 +233,7 @@ require([
             var ops = {
                 type: 'object',
                 status: 'add',
+                typeData: {edit: true},
                 objectData: that.grid.getGridData(),
                 gridOptions: $.extend(that.objPropertyDefaultOps, {
                     buttonTem: [that.$tpl_property_slide_button.text()],
@@ -249,7 +259,7 @@ require([
                     var ops = {
                         type: 'object',
                         status: 'edit',
-                        typeData: {text: text, value: value, name: name,edit:edit},
+                        typeData: {text: text, value: value, name: name, edit: edit},
                         objectData: that.grid.getGridData(),
                         gridOptions: $.extend(that.objPropertyDefaultOps, {
                             buttonTem: [that.$tpl_property_slide_button.text()],

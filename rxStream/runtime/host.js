@@ -5,7 +5,7 @@ module.exports = {
     dev: {
         rootUrl: 'http://localhost',
         appPort: '9090',
-        dbAddress: '127.0.0.1',
+        dbAddress: '172.16.13.219',
         dbPort: 6379,
         //客户端请求地址
         apiHost: '',

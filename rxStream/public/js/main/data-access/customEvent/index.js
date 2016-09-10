@@ -168,10 +168,10 @@ require([
                     "label": "",
                     "id": '',
                     "object": _.filter(BusinessData.defaultObject, function (item) {
-                        return item.name === 'visitor'
+                        return item.name === 'web'
                     })[0],
                     "subject": _.filter(BusinessData.defaultObject, function (item) {
-                        return item.name === 'web'
+                        return item.name === 'visitor'
                     })[0]
                 },
                 gridData: that.grid.getSourceData()

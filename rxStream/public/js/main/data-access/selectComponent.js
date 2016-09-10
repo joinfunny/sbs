@@ -86,6 +86,7 @@ define([
                 $(this.selectWarp).hide();
                 return;
             }
+            $(this.selectWarp).show();
             str += this.options.headerTemp || '';
             if (this.options.data[0].groupName) {
                 str += _.map(selectData, function (item) {
@@ -144,7 +145,7 @@ define([
             $(this.selectWarp).on('focusout', function (e) {
                 if (!$(e.relatedTarget).is(that.$trigger) && $(that.selectWarp).find($(e.relatedTarget)).length === 0) {
                     that.close();
-                    //that.$trigger.focus();
+                    that.$trigger.focus();
                 }
             });
         },

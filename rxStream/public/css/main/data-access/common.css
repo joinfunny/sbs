@@ -216,8 +216,8 @@ body {
           border-bottom: solid #f4f4f4 5px; }
         .s-table table tbody tr td .grid-operate {
           background: url("img/operate.png") center center no-repeat;
-          width: 40px;
-          height: 40px;
+          width: 25px;
+          height: 25px;
           display: inline-block;
           position: relative;
           cursor: pointer; }
@@ -561,7 +561,8 @@ body {
   font-size: 16px;
   text-align: center;
   color: #ffffff;
-  border-radius: 5px; }
+  border-radius: 5px;
+  z-index: 9999; }
 
 .property-global-mark {
   background-color: #000000;
@@ -667,7 +668,7 @@ body {
   padding-left: 75px;
   z-index: 1; }
 
-.select-component-warp {
+.select-component-warp, .select-component-warp-prop {
   position: absolute;
   background-color: #FFFFFF;
   -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
@@ -681,31 +682,31 @@ body {
   z-index: 9999;
   margin: 0;
   outline: none; }
-  .select-component-warp li {
+  .select-component-warp li, .select-component-warp-prop li {
     height: 35px;
     line-height: 35px;
     padding: 0 15px;
     font-size: 12px;
     cursor: pointer; }
-    .select-component-warp li.select-group-name {
+    .select-component-warp li.select-group-name, .select-component-warp-prop li.select-group-name {
       cursor: default;
       background-color: #f4f4f4;
       font-size: 14px;
       font-weight: bold; }
-      .select-component-warp li.select-group-name:hover {
+      .select-component-warp li.select-group-name:hover, .select-component-warp-prop li.select-group-name:hover {
         background-color: #f4f4f4; }
-    .select-component-warp li:hover {
+    .select-component-warp li:hover, .select-component-warp-prop li:hover {
       background-color: #f2f2f2; }
-    .select-component-warp li.active {
+    .select-component-warp li.active, .select-component-warp-prop li.active {
       background-color: #76b746;
       color: #FFFFFF; }
-      .select-component-warp li.active:hover {
+      .select-component-warp li.active:hover, .select-component-warp-prop li.active:hover {
         background-color: #6fac42; }
-    .select-component-warp li.add-new-object {
+    .select-component-warp li.add-new-object, .select-component-warp-prop li.add-new-object {
       padding-top: 9px;
       height: 50px;
       border-bottom: solid #e4e4e4 1px; }
-      .select-component-warp li.add-new-object:hover {
+      .select-component-warp li.add-new-object:hover, .select-component-warp-prop li.add-new-object:hover {
         background-color: #f4f4f4; }
 
 @media screen and (max-width: 1100px) {

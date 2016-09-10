@@ -101,7 +101,7 @@ define([
         },
         //转换数据模板
         initSlideButton: function() {
-            var data = localStorage['bas_userId'] == 'demo' ? this.slideButton[0] : this.slideButton[1];
+            var data = localStorage['bas_userId'] == 1 ? this.slideButton[0] : this.slideButton[1];
             var interText = dot.template($("#slide-button-temp").text());
             $('.header-left').html(interText(data));
         },
@@ -175,7 +175,7 @@ define([
                 data = {},
                 appId = localStorage['bas_appId'],
                 url = __api_path + '/services/app/checksdk/' + appId;
-            var ajaxDefer = that.createAjaxDefer(data, url);
+            var ajaxDefer = that.createAjaxDefer(data, url,'get');
             ajaxDefer.then(function(res) {
                     if (res.success) {
                         if (res.dataObject && res.dataObject.length > 0) {
@@ -232,7 +232,7 @@ define([
         //完成操作
         complete: function() {
             var that = this,
-                data = that.getWebList(),
+                data = { data: JSON.stringify(that.getWebList()) },
                 appId = localStorage['bas_appId'],
                 url = __api_path + '/services/app/metaupdate/' + appId;
             var ajaxDefer = this.createAjaxDefer(data, url);
@@ -249,7 +249,8 @@ define([
             var data = [];
             $('.app-list .list-c').each(function() {
                 var obj = {};
-                obj.alias = $(this).find('input').val();
+                obj.id = $(this).data('id');
+                obj.label = $(this).find('input').val();
                 obj.domain = $(this).find('.web-name').html();
                 data.push(obj);
             });
@@ -323,13 +324,14 @@ define([
         },
         // @requestData 请求数据（见API）
         // return defer
-        createAjaxDefer: function(requestData, url) {
+        createAjaxDefer: function(requestData, url,method) {
             var that = this;
-            var dataStr = JSON.stringify(requestData);
+            //var dataStr = JSON.stringify(requestData);
             //console.log(JSON.stringify(data, null, 4))
             return AppPage.loadApi({
                 url: url,
-                data: dataStr,
+                data: method === 'get' ? '':requestData,
+                method:method||'post',
                 crossDomain: true,
                 beforeSend: function() {
                     // 遮罩

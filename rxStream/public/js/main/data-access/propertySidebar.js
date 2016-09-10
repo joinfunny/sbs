@@ -129,7 +129,13 @@ define([
                                 });
                             } else {
                                 BusinessData.loadObjectProperties().then(function (data) {
-
+                                    if (data) {
+                                        propertySelect.create({
+                                            trigger: $target,
+                                            data: data,
+                                            grid: that.propertyGrid
+                                        });
+                                    }
                                 });
                             }
                         }
@@ -179,6 +185,9 @@ define([
                 }
             }
             var that = this, ops = this.options, type = ops.type, status = ops.status;
+            if (that.propertyGrid.editRow) {
+                return;
+            }
             switch (type) {
                 case 'event':
                     if (status === 'add') {
@@ -223,7 +232,7 @@ define([
                             {
                                 data: {
                                     id: ops.typeData.value,
-                                    label: ops.typeData.text
+                                    label: $(that.objectLabelInput).val()
                                 },
                                 props: that.propertyGrid.getGridData()
                             }

@@ -38,7 +38,9 @@
         {{if(it.edit){}}
         <div role="gridOperate" class="grid-operate">
             <ul class="operate-menu">
+                {{if(it.newItem && !it.id){}}
                 <li role="editGridRow">编辑</li>
+                {{ } }}
                 <li role="deleteGridRow">删除</li>
             </ul>
         </div>
@@ -98,9 +100,9 @@
                     <h3 class="event-title"><span>事件关系视图<ins>点击对应图标编辑属性</ins></span></h3>
                     <div class="event-relations">
                         <ul class="event-relations-text">
-                            <li><input class="select-st main-obj-select" role="objectListSelect" data-value="{{=it.data.object.id}}" value="{{=it.data.object.label}}" readonly type="text"/></li>
+                            <li><input class="select-st main-obj-select" role="objectListSelect" data-value="{{=it.data.subject.id}}" value="{{=it.data.subject.label}}" readonly type="text"/></li>
                             <li class="event-name-warp"><input readonly class="event-name-clone" data-value="{{=it.data.id}}" value="{{=it.data.label}}" placeholder="事件显示名称" type="text"/></li>
-                            <li class="event-fu-name"><input class="select-st sub-obj-select" role="objectListSelect" data-value="{{=it.data.subject.id}}" value="{{=it.data.subject.label}}" readonly type="text"/></li>
+                            <li class="event-fu-name"><input class="select-st sub-obj-select" role="objectListSelect" data-value="{{=it.data.object.id}}" value="{{=it.data.object.label}}" readonly type="text"/></li>
                         </ul>
                         <ul class="event-relations-img">
                             <li class="obj-st event-main-obj" data-for="main-obj-select" role="editMainObjectProperty"><span>主体对象</span></li>

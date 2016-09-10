@@ -982,6 +982,14 @@ define([
 
 						return dimensionId;
 					}
+					function getDimensionId() {
+						var input = dropdownWrapper.querySelector('input[type=text][name="' + inputName + '"]'),
+							dataListAttr = input && input.dataset.list,
+							execResult = dataListAttr && DropdownPicker.parseDatasetList(dataListAttr),
+							dimensionId = execResult && execResult.datalist;
+
+						return dimensionId;
+					}
 				}
 
 				// 查找和筛选条件
@@ -1324,7 +1332,7 @@ define([
 
 			// 获取维度字典url（加入字段id）
 			getDimensionDataUrl: function(id) {
-				var dimensionDataUrl = this.dimensionDataUrl + '?fieldName=' + id + '&showCount = ' + this.dimensionShowCount;
+				var dimensionDataUrl = this.dimensionDataUrl + '?fieldName=' + id + '&showCount=' + this.dimensionShowCount;
 				return dimensionDataUrl;
 			},
 			// 维度字典数据的值键
@@ -1438,6 +1446,7 @@ define([
 					}
 
 					datasetList = that.definedDropdownDatalistNS(id);
+					console.log(datasetList);
 					//dimensionDataUrl = '/data/dimensionData.json';
 					//branch.datasetList = DropdownPicker.stringifyHtml(linkageBoxBranch.children);
 

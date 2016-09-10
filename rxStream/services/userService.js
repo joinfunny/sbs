@@ -70,15 +70,25 @@ module.exports = ServiceHandler
   })
   .callback('/services/user/logout', 'post', function (req, res, next, callback) {
     var actionResult = {};
-    res.cookie(config.session.__USER_ID__, 'null', { maxAge: 0 });
-    res.cookie(config.session.__USER_NAME__, 'null', { maxAge: 0 });
+    //res.cookie(config.session.__USER_ID__, 'null');
+    /*res.cookie(config.session.__USER_NAME__, 'null', { maxAge: 0 });
     for (var param in req.session) {
       if (req.session.hasOwnProperty(param)) {
         delete req.session[param];
       }
-    }
+    }*/
+    req.session.cookie.maxAge = 0;
+    //req.session = null;
     actionResult.success = true;
     actionResult.msg = "";
+    callback(actionResult);
+  })
+  .callback('services/user/status', 'get', function (req, res, next, callback) {
+    var actionResult = { success: false, dataObject: false, msg: '' };
+    if (req.session != null && req.session[config.session.__USER_ID__] != null) {
+      actionResult.dataObject = true;
+      actionResult.success = true;
+    }
     callback(actionResult);
   })
   /*

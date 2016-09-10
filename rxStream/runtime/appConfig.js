@@ -69,7 +69,8 @@ var config = {
    */
   outAuthServices: [
     '/services/user/login',
-    '/services/user/signup'
+    '/services/user/signup',
+    '/services/user/status'
   ]
 };
 module.exports = config;

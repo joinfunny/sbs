@@ -33,7 +33,9 @@
         {{if(it.edit){}}
         <div role="gridOperate" class="grid-operate">
             <ul class="operate-menu">
+                {{if(it.newItem && !it.id){}}
                 <li role="editGridRow">编辑</li>
+                {{ } }}
                 <li role="deleteGridRow">删除</li>
             </ul>
         </div>

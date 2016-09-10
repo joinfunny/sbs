@@ -2,6 +2,8 @@ var request = require('request');
 var _ = require('lodash');
 var config = global.config || require('./appConfig');
 var AppPage = require('./AppPage');
+var log = require("./log").logger("httpClient"); // logger中的参数随便起
+var BusinessData = require('./AppPage/BusinessData');
 
 var MSG = {
   NOT_EXPECTED_PARAMS: '不符合预期的传参'
@@ -98,12 +100,7 @@ HttpClient.prototype = {
     var onResponse = function (error, response, body) {
       var dataObject;
       if (!error && response && response.statusCode === 200) {
-
-        dataObject = Object.prototype.toString.call(response.body) === '[object Object]' ? response.body : (JSON.parse(response.body) || {});
-
-        dataObject.success = dataObject.success || dataObject.code === 0;
-
-        dataObject.dataObject = dataObject.dataObject || dataObject.data;
+        dataObject = BusinessData.HttpClientResponseDataFormatter(response);
 
         console.log('remote call success, url:' + url + ', request body :" ' + JSON.stringify(response.body, null, 2) + ' "');
 
@@ -125,9 +122,11 @@ HttpClient.prototype = {
         dataObject.success = false;
         dataObject.msg = error || '服务请求失败，请联系系统管理员！';
         dataObject.statusCode = response && response.statusCode || '';
+
         if (process.env.ENV === 'dev') {
+          dataObject.url = url;
           dataObject.responseBody = response && response.body ? JSON.stringify(response.body) : '';
-          console.log(dataObject);
+          log.error(dataObject);
         }
         if (options.onFiald) {
           options.onFiald.call(that, dataObject);
