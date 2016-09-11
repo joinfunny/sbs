@@ -79,7 +79,7 @@ var commonWays = {
       pageH1 = dom.innerText(h1s[0]);
     }
 
-    that.track("e_view_page", {
+    that.track("view_page", {
       properties: _.extend({
         b_page_referrer: document.referrer,
         b_page_referrer_host: _.info.referringDomain(document.referrer),
@@ -115,7 +115,7 @@ var commonWays = {
         b_page_stay_time: pageStayTime//页面停留时间
       }, scrollPos);
       //_.log('页面离开：' + JSON.stringify(properties));
-      that.track('e_leave_page', {
+      that.track('leave_page', {
         properties: properties,
         subject: {},
         object: {}
@@ -302,7 +302,7 @@ rxStream.identify = function (id, isSave) {
  * @param e 事件名
  * @param p 事件的属性
  */
-rxStream.trackSignup = function (id, e, p) {
+/*rxStream.trackSignup = function (id, e, p) {
   if (core.check({
     uniqueId: id,
     event: e,
@@ -316,6 +316,31 @@ rxStream.trackSignup = function (id, e, p) {
       properties: p
     });
     store.set('uniqueId', id);
+  }
+};*/
+/**
+ * 追踪注册事件
+ * param id 注册的用户ID
+ * param event 注册事件名称
+ * param props 注册时可收集的用户属性，主体对象，客体对象
+ */
+rxStream.trackSignup = function (id, event, props) {
+  if (core.check({
+    userId: id,
+    event: event,
+    properties: props.properties || {},
+    subject: props.subject || {},
+    object: props.object || {}
+  })) {
+    store.set('userId', id);
+    store.setObject(props.subject || {});
+    core.send({
+      action: 'trackSignup',
+      event: event,
+      properties: props.properties || {},
+      subject: props.subject || {},
+      object: props.object || {}
+    });
   }
 };
 /*

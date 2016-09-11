@@ -167,6 +167,14 @@ module.exports = {
         _.log('uniqueId必须是不能为空，且小于255位的字符串');
         return false;
       }
+    },
+    userId: function (id) {
+      if (_.isString(id) || _.isNumber(id) && /^.{1,255}$/.test(id)) {
+        return true;
+      } else {
+        _.log('userId必须是不能为空，且小于255位的字符串');
+        return false;
+      }
     }
   },
   /**
@@ -205,6 +213,7 @@ module.exports = {
     pushEvent: function (event) {
       if (store.getSession(MONITORSTATE.AUTH)) {
         var pool = this.getEventPool();
+        event.__UUID__ = _.UUID();
         pool.push(event);
         this.setEventPool(pool);
       } else {
@@ -359,7 +368,7 @@ module.exports = {
       that.globalContext.setEventPool(eventPool.splice(0));
       //_.log(JSON.stringify(data));
       var postData = that.getPackingEvents(data);
-      //var index = 2000, flag = false;
+      var index = 5000, flag = false;
       _.ajax({
         url: url,
         type: "POST",
@@ -367,13 +376,16 @@ module.exports = {
         cors: true,
         //async: false, //同步请求
         data: postData,
-        /*success: function (data) {
+        success: function (data) {
           flag = true;
-        }*/
+        },
+        complete: function (data) {
+          flag = true;
+        }
       });
-      /*while (index > 0 && flag === true) {
+      while (index > 0 && flag === true) {
         index -= 1;
-      }*/
+      }
       return;
     }
 
@@ -385,7 +397,12 @@ module.exports = {
     var data = Array.prototype.slice.call(eventPool, 0);
 
     var postLength = data.length;
-    store.setSession(MONITORSTATE.SENDINGDATALEN, postLength);
+    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+    store.setSession(MONITORSTATE.SENDINGDATALEN, len + postLength);
+
+
+
+
 
     //如果存在临时缓存数据，将临时数据加入发送队列中，并清空临时缓存
     if (tempEventPool.length > 0) {
@@ -393,6 +410,12 @@ module.exports = {
       data = Array.prototype.concat.call(tempData, data);
       that.globalContext.setTempEventPool(tempEventPool);
     }
+
+    /*var postIds = [];
+    _.each(data, function (item) {
+      postIds.push(item.___UUID__);
+    });*/
+
 
     store.setSession(MONITORSTATE.SENDING, true);
 
@@ -405,6 +428,13 @@ module.exports = {
      */
 
     //console.log(postData);
+    var _eventPool = that.globalContext.getEventPool();
+    Array.prototype.splice.call(_eventPool, 0, postLength);
+    //_.log(JSON.stringify());
+    that.globalContext.setEventPool(_eventPool);
+    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+    store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);
+
     _.ajax({
       url: url,
       type: "POST",
@@ -416,10 +446,12 @@ module.exports = {
           //返回空值：将请求体内的事件踢出栈
           function exec() {
             //将请求体内的事件踢出栈
-            var _eventPool = that.globalContext.getEventPool();
-            //_.log(JSON.stringify(Array.prototype.splice.call(_eventPool, 0, postLength)));
+            /*var _eventPool = that.globalContext.getEventPool();
+            Array.prototype.splice.call(_eventPool, 0, postLength);
+            //_.log(JSON.stringify());
             that.globalContext.setEventPool(_eventPool);
-            store.setSession(MONITORSTATE.SENDINGDATALEN, 0);
+            var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+            store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);*/
           }
           if (_.isEmptyObject(data) || (data.code === 200)) {
             exec();
@@ -526,7 +558,7 @@ var dom = {
         type = target.type;
         if (dom.BUTTON_TYPE[type]) {
           preset = {
-            event: 'e_click_btn',
+            event: 'btn_click',
             properties: {
               b_btn_type: type,//类型
               b_btn_text: target.value,//按钮文字
@@ -543,7 +575,7 @@ var dom = {
             case 'BUTTON':
               text = _.trim(dom.innerText(aTarget));
               preset = {
-                event: 'e_click_btn',
+                event: 'btn_click',
                 properties: {
                   b_btn_type: aTarget.type,//类型
                   b_btn_text: text,//按钮文字
@@ -556,7 +588,7 @@ var dom = {
               text = _.trim(dom.innerText(aTarget));
               href = aTarget.href;
               preset = {
-                event: 'e_click_link',
+                event: 'link_click',
                 properties: {
                   b_link_url: href,//链接地址
                   b_link_text: text//链接文字
@@ -957,7 +989,7 @@ var commonWays = {
       pageH1 = dom.innerText(h1s[0]);
     }
 
-    that.track("e_view_page", {
+    that.track("view_page", {
       properties: _.extend({
         b_page_referrer: document.referrer,
         b_page_referrer_host: _.info.referringDomain(document.referrer),
@@ -993,7 +1025,7 @@ var commonWays = {
         b_page_stay_time: pageStayTime//页面停留时间
       }, scrollPos);
       //_.log('页面离开：' + JSON.stringify(properties));
-      that.track('e_leave_page', {
+      that.track('leave_page', {
         properties: properties,
         subject: {},
         object: {}
@@ -1180,7 +1212,7 @@ rxStream.identify = function (id, isSave) {
  * @param e 事件名
  * @param p 事件的属性
  */
-rxStream.trackSignup = function (id, e, p) {
+/*rxStream.trackSignup = function (id, e, p) {
   if (core.check({
     uniqueId: id,
     event: e,
@@ -1194,6 +1226,31 @@ rxStream.trackSignup = function (id, e, p) {
       properties: p
     });
     store.set('uniqueId', id);
+  }
+};*/
+/**
+ * 追踪注册事件
+ * param id 注册的用户ID
+ * param event 注册事件名称
+ * param props 注册时可收集的用户属性，主体对象，客体对象
+ */
+rxStream.trackSignup = function (id, event, props) {
+  if (core.check({
+    userId: id,
+    event: event,
+    properties: props.properties || {},
+    subject: props.subject || {},
+    object: props.object || {}
+  })) {
+    store.set('userId', id);
+    store.setObject(props.subject || {});
+    core.send({
+      action: 'trackSignup',
+      event: event,
+      properties: props.properties || {},
+      subject: props.subject || {},
+      object: props.object || {}
+    });
   }
 };
 /*
@@ -1381,11 +1438,19 @@ module.exports = {
   setSessionSubjectOnce: function (newp) {
     this._setSessionPropsOnce('subject', newp);
   },
+  clearSessionSubject: function () {
+    this._sessionState.subject = {};
+    this.sessionSave();
+  },
   setSessionObject: function (newp) {
     this._setSessionProps('object', newp);
   },
   setSessionObjectOnce: function (newp) {
     this._setSessionPropsOnce('object', newp);
+  },
+  clearSessionObject: function () {
+    this._sessionState.object = {};
+    this.sessionSave();
   },
   setProps: function (newp) {
     this._setProps('props', newp);
@@ -1399,11 +1464,19 @@ module.exports = {
   setSubjectOnce: function (newp) {
     this._setPropsOnce('subject', newp);
   },
+  clearSubject: function () {
+    this._state.subject = {};
+    this.save();
+  },
   setObject: function (newp) {
     this._setProps('subject', newp);
   },
   setObjectOnce: function (newp) {
     this._setPropsOnce('subject', newp);
+  },
+  clearObject: function () {
+    this._state.object = {};
+    this.save();
   },
   _setProps: function (objName, newp) {
     var obj = this._state[objName] || {};
