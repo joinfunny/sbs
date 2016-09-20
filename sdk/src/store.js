@@ -98,11 +98,19 @@ module.exports = {
   setSessionSubjectOnce: function (newp) {
     this._setSessionPropsOnce('subject', newp);
   },
+  clearSessionSubject: function () {
+    this._sessionState.subject = {};
+    this.sessionSave();
+  },
   setSessionObject: function (newp) {
     this._setSessionProps('object', newp);
   },
   setSessionObjectOnce: function (newp) {
     this._setSessionPropsOnce('object', newp);
+  },
+  clearSessionObject: function () {
+    this._sessionState.object = {};
+    this.sessionSave();
   },
   setProps: function (newp) {
     this._setProps('props', newp);
@@ -116,11 +124,19 @@ module.exports = {
   setSubjectOnce: function (newp) {
     this._setPropsOnce('subject', newp);
   },
+  clearSubject: function () {
+    this._state.subject = {};
+    this.save();
+  },
   setObject: function (newp) {
     this._setProps('subject', newp);
   },
   setObjectOnce: function (newp) {
     this._setPropsOnce('subject', newp);
+  },
+  clearObject: function () {
+    this._state.object = {};
+    this.save();
   },
   _setProps: function (objName, newp) {
     var obj = this._state[objName] || {};

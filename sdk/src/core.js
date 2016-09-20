@@ -151,6 +151,14 @@ module.exports = {
         _.log('uniqueId必须是不能为空，且小于255位的字符串');
         return false;
       }
+    },
+    userId: function (id) {
+      if (_.isString(id) || _.isNumber(id) && /^.{1,255}$/.test(id)) {
+        return true;
+      } else {
+        _.log('userId必须是不能为空，且小于255位的字符串');
+        return false;
+      }
     }
   },
   /**
@@ -189,6 +197,7 @@ module.exports = {
     pushEvent: function (event) {
       if (store.getSession(MONITORSTATE.AUTH)) {
         var pool = this.getEventPool();
+        event.__UUID__ = _.UUID();
         pool.push(event);
         this.setEventPool(pool);
       } else {
@@ -343,7 +352,7 @@ module.exports = {
       that.globalContext.setEventPool(eventPool.splice(0));
       //_.log(JSON.stringify(data));
       var postData = that.getPackingEvents(data);
-      //var index = 2000, flag = false;
+      var index = 5000, flag = false;
       _.ajax({
         url: url,
         type: "POST",
@@ -351,13 +360,16 @@ module.exports = {
         cors: true,
         //async: false, //同步请求
         data: postData,
-        /*success: function (data) {
+        success: function (data) {
           flag = true;
-        }*/
+        },
+        complete: function (data) {
+          flag = true;
+        }
       });
-      /*while (index > 0 && flag === true) {
+      while (index > 0 && flag === true) {
         index -= 1;
-      }*/
+      }
       return;
     }
 
@@ -369,7 +381,12 @@ module.exports = {
     var data = Array.prototype.slice.call(eventPool, 0);
 
     var postLength = data.length;
-    store.setSession(MONITORSTATE.SENDINGDATALEN, postLength);
+    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+    store.setSession(MONITORSTATE.SENDINGDATALEN, len + postLength);
+
+
+
+
 
     //如果存在临时缓存数据，将临时数据加入发送队列中，并清空临时缓存
     if (tempEventPool.length > 0) {
@@ -377,6 +394,12 @@ module.exports = {
       data = Array.prototype.concat.call(tempData, data);
       that.globalContext.setTempEventPool(tempEventPool);
     }
+
+    /*var postIds = [];
+    _.each(data, function (item) {
+      postIds.push(item.___UUID__);
+    });*/
+
 
     store.setSession(MONITORSTATE.SENDING, true);
 
@@ -389,6 +412,13 @@ module.exports = {
      */
 
     //console.log(postData);
+    var _eventPool = that.globalContext.getEventPool();
+    Array.prototype.splice.call(_eventPool, 0, postLength);
+    //_.log(JSON.stringify());
+    that.globalContext.setEventPool(_eventPool);
+    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+    store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);
+
     _.ajax({
       url: url,
       type: "POST",
@@ -400,10 +430,12 @@ module.exports = {
           //返回空值：将请求体内的事件踢出栈
           function exec() {
             //将请求体内的事件踢出栈
-            var _eventPool = that.globalContext.getEventPool();
-            //_.log(JSON.stringify(Array.prototype.splice.call(_eventPool, 0, postLength)));
+            /*var _eventPool = that.globalContext.getEventPool();
+            Array.prototype.splice.call(_eventPool, 0, postLength);
+            //_.log(JSON.stringify());
             that.globalContext.setEventPool(_eventPool);
-            store.setSession(MONITORSTATE.SENDINGDATALEN, 0);
+            var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
+            store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);*/
           }
           if (_.isEmptyObject(data) || (data.code === 200)) {
             exec();

@@ -55,7 +55,7 @@ var dom = {
         type = target.type;
         if (dom.BUTTON_TYPE[type]) {
           preset = {
-            event: 'e_click_btn',
+            event: 'btn_click',
             properties: {
               b_btn_type: type,//类型
               b_btn_text: target.value,//按钮文字
@@ -72,7 +72,7 @@ var dom = {
             case 'BUTTON':
               text = _.trim(dom.innerText(aTarget));
               preset = {
-                event: 'e_click_btn',
+                event: 'btn_click',
                 properties: {
                   b_btn_type: aTarget.type,//类型
                   b_btn_text: text,//按钮文字
@@ -85,7 +85,7 @@ var dom = {
               text = _.trim(dom.innerText(aTarget));
               href = aTarget.href;
               preset = {
-                event: 'e_click_link',
+                event: 'link_click',
                 properties: {
                   b_link_url: href,//链接地址
                   b_link_text: text//链接文字
