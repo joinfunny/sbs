@@ -1040,6 +1040,14 @@ rxStream.track = function (event, props, sendImmediately) {
   }
 };
 
+rxStream.setSubject = function (p) {
+  if (core.check({
+    propertiesMust: p
+  })) {
+    store.setSubject(p);
+  }
+};
+
 /*
  * @param {object} properties
  * */
@@ -1157,6 +1165,7 @@ rxStream.unsetProfile = function (p) {
 };
 /*
  * @param {string} uniqueId
+ * @param isSave 是否全局保存，true:更新全局的Cookie，false:仅限于当页更新
  * */
 rxStream.identify = function (id, isSave) {
   if (typeof id === 'undefined') {

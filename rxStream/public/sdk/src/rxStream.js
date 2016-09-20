@@ -162,6 +162,22 @@ rxStream.track = function (event, props, sendImmediately) {
   }
 };
 
+rxStream.setSubject = function (p) {
+  if (core.check({
+    propertiesMust: p
+  })) {
+    store.setSubject(p);
+  }
+};
+
+rxStream.setOnceSubject = function (p) {
+  if (core.check({
+    propertiesMust: p
+  })) {
+   store.setSubjectOnce(p);
+  }
+};
+
 /*
  * @param {object} properties
  * */
@@ -184,6 +200,32 @@ rxStream.setOnceProfile = function (p) {
       action: 'profile_set_once',
       properties: p
     });
+  }
+};
+
+/*
+ * @param {object} properties
+ * */
+rxStream.appendSubject = function (p) {
+  if (core.check({
+    propertiesMust: p
+  })) {
+    _.each(p, function (value, key) {
+      if (_.isString(value)) {
+        p[key] = [value];
+      } else if (_.isArray(value)) {
+
+      } else {
+        delete p[key];
+        _.log('appendSubject属性的值必须是字符串或者数组');
+      }
+    });
+    if (!_.isEmptyObject(p)) {
+      core.send({
+        action: 'profile_append',
+        properties: p
+      });
+    }
   }
 };
 
@@ -279,6 +321,7 @@ rxStream.unsetProfile = function (p) {
 };
 /*
  * @param {string} uniqueId
+ * @param isSave 是否全局保存，true:更新全局的Cookie，false:仅限于当页更新
  * */
 rxStream.identify = function (id, isSave) {
   if (typeof id === 'undefined') {

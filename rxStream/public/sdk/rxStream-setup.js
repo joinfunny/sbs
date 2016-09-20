@@ -33,7 +33,7 @@
   name: 'rxStream',//外部系统调用时的全局变量名，客户可灵活调整。
   autoTrack: true,//是否开启自动事件收集，如果为true,则系统会自动收集浏览页面、点击按钮、点击链接、离开页面这四项基础事件。如果觉得没用的话，可以写为false.
   serverUrl: window.$$rx.sdkServerUrl,//服务地址，不可更改。每个客户的serverUrl都不相同。
-  appId:window.$$rx.appId
+  appId: window.$$rx.appId
 });
 
 
@@ -46,9 +46,9 @@
     /**
      * 浏览滚屏
      * 一些滚屏插件中需要调用此方法
-     * 调用方式:开始滚屏时调用：
-     * sdk.__events.ViewScreenPage.begin(1);
-     * 滚屏结束事件中调用：sdk.__events.ViewScreenPage.end();
+     * 调用方式:
+     * 开始滚屏时调用：     sdk.__events.ViewScreenPage.begin(1);
+     * 滚屏结束事件中调用： sdk.__events.ViewScreenPage.end();
      */
     ViewScreenPage: {
       begin: function (index) {
@@ -59,12 +59,22 @@
         this.endDate = new Date();
         this.stayposition = this.stayposition || 0;
         this.stayTime = (this.endDate.getTime() - this.beginDate.getTime()) / 1000;
-
+        /**
+         * track命令说明
+         * track命令需要传递两个参数
+         * @param eventName 自定义的事件名称，和系统中定义的事件名称保持一致
+         * @param eventData 对应的事件数据，必须为一个JSON对象，对象内包含三个属性可覆盖：
+         *  properties 事件属性对象，可为空
+         *  subject 主体对象，可为空
+         *  object 客体对象，可为空
+         */
         sdk.track('viewIntroducePage', {
           properties: {
             stayTime: this.stayTime,
             stayPosition: this.stayposition
-          }
+          },
+          subject: {},
+          object: {}
         });
       }
     },
