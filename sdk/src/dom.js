@@ -1,4 +1,5 @@
 var _ = require('./utils');
+var JSON = require('./JSON');
 
 var HTML = document.documentElement,
   rLinkButton = /^(A|BUTTON)$/;

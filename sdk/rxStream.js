@@ -1,4 +1,108 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// JSON polyfill
+var toString = Object.prototype.toString;
+module.exports = ("object" === typeof JSON && toString.call(JSON) === '[object JSON]') ? JSON
+: (function(JSON) {
+		"use strict";
+
+		function f(e) {
+			return 10 > e ? "0" + e : e
+		}
+
+//		function this_value() {
+//			return this.valueOf()
+//		}
+
+		function quote(e) {
+			return rx_escapable.lastIndex = 0, rx_escapable.test(e) ? '"' + e.replace(rx_escapable, function(e) {
+				var t = meta[e];
+				return "string" == typeof t ? t : "\\u" + ("0000" + e.charCodeAt(0).toString(16)).slice(-4)
+			}) + '"' : '"' + e + '"'
+		}
+
+		function objectToJSON(e) {
+			switch(toString.call(e)){
+				case '[object Date]':
+					return isFinite(e.valueOf()) ? e.getUTCFullYear() + "-" + f(e.getUTCMonth() + 1) + "-" + f(e.getUTCDate()) + "T" + f(e.getUTCHours()) + ":" + f(e.getUTCMinutes()) + ":" + f(e.getUTCSeconds()) + "Z" : null;
+				case '[object Boolean]':
+				case '[object String]':
+				case '[object Number]':
+					return e.valueOf();
+			}
+			return e;
+		}
+		
+		function str(e, t) {
+			var r, n, i, o, s, a = gap,
+				u = t[e];
+			switch (u && "object" == typeof u && (u = objectToJSON(u)), "function" == typeof rep && (u = rep.call(t, e, u)), typeof u) {
+				case "string":
+					return quote(u);
+				case "number":
+					return isFinite(u) ? String(u) : "null";
+				case "boolean":
+				case "null":
+					return String(u);
+				case "object":
+					if (!u) return "null";
+					if (gap += indent, s = [], "[object Array]" === toString.call(u)) {
+						for (o = u.length, r = 0; o > r; r += 1) s[r] = str(r, u) || "null";
+						return i = 0 === s.length ? "[]" : gap ? "[\n" + gap + s.join(",\n" + gap) + "\n" + a + "]" : "[" + s.join(",") + "]", gap = a, i
+					}
+					if (rep && "object" == typeof rep)
+						for (o = rep.length, r = 0; o > r; r += 1) "string" == typeof rep[r] && (n = rep[r], i = str(n, u), i && s.push(quote(n) + (gap ? ": " : ":") + i));
+					else
+						for (n in u) Object.prototype.hasOwnProperty.call(u, n) && (i = str(n, u), i && s.push(quote(n) + (gap ? ": " : ":") + i));
+					return i = 0 === s.length ? "{}" : gap ? "{\n" + gap + s.join(",\n" + gap) + "\n" + a + "}" : "{" + s.join(",") + "}", gap = a, i
+			}
+		}
+		var rx_one = /^[\],:{}\s]*$/,
+			rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
+			rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+			rx_four = /(?:^|:|,)(?:\s*\[)+/g,
+			rx_escapable = /[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+			rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
+//		"function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function() {
+//			return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null
+//		}, Boolean.prototype.toJSON = this_value, Number.prototype.toJSON = this_value, String.prototype.toJSON = this_value);
+		var gap, indent, meta, rep;
+		"function" != typeof JSON.stringify && (meta = {
+			"\b": "\\b",
+			"	": "\\t",
+			"\n": "\\n",
+			"\f": "\\f",
+			"\r": "\\r",
+			'"': '\\"',
+			"\\": "\\\\"
+		}, JSON.stringify = function(e, t, r) {
+			var n;
+			if (gap = "", indent = "", "number" == typeof r)
+				for (n = 0; r > n; n += 1) indent += " ";
+			else "string" == typeof r && (indent = r);
+			if (rep = t, t && "function" != typeof t && ("object" != typeof t || "number" != typeof t.length)) throw new Error("JSON.stringify");
+			return str("", {
+				"": e
+			})
+		}), "function" != typeof JSON.parse && (JSON.parse = function(text, reviver) {
+			function walk(e, t) {
+				var r, n, i = e[t];
+				if (i && "object" == typeof i)
+					for (r in i) Object.prototype.hasOwnProperty.call(i, r) && (n = walk(i, r), void 0 !== n ? i[r] = n : delete i[r]);
+				return reviver.call(e, t, i)
+			}
+			var j;
+			if (text = String(text), rx_dangerous.lastIndex = 0, rx_dangerous.test(text) && (text = text.replace(rx_dangerous, function(e) {
+					return "\\u" + ("0000" + e.charCodeAt(0).toString(16)).slice(-4)
+				})), rx_one.test(text.replace(rx_two, "@").replace(rx_three, "]").replace(rx_four, ""))) return j = eval("(" + text + ")"), "function" == typeof reviver ? walk({
+				"": j
+			}, "") : j;
+			throw new SyntaxError("JSON.parse")
+		});
+		return JSON;
+	})({});
+
+
+},{}],2:[function(require,module,exports){
 /**
  * @author jiangfeng
  * @summary SDK基础配置
@@ -9,15 +113,16 @@ module.exports = {
     sendLimit: 10,//发送限制，多于当前设置条数，就会发送事件
     crossSubDomain: true,//是否跨域
     loadTime: new Date(),//SDK加载时间
-    apiHost: 'http://streamcollector.cssrv.dataengine.com',
+    apiHost: 'https://fenxi.ruixuesoft.com',
     appId: 35
 };
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var config = require('./config');
 var _ = require('./utils');
 var store = require('./store');
 var md5 = require('./jMd5');
+var JSON=require('./JSON');
 
 /**
  * 监听器状态
@@ -294,8 +399,9 @@ module.exports = {
       authingState = session[MONITORSTATE.AUTHING],
       sendingState = session[MONITORSTATE.SENDING];
 
-
+    //如果授权通过
     if (authState) {
+      //是否处于发送事件状态，如果没有在发送，则发送
       if (!sendingState) {
         this.path();
       }
@@ -500,8 +606,9 @@ module.exports = {
   }
 };
 
-},{"./config":1,"./jMd5":4,"./store":7,"./utils":9}],3:[function(require,module,exports){
+},{"./JSON":1,"./config":2,"./jMd5":5,"./store":8,"./utils":10}],4:[function(require,module,exports){
 var _ = require('./utils');
+var JSON = require('./JSON');
 
 var HTML = document.documentElement,
   rLinkButton = /^(A|BUTTON)$/;
@@ -672,7 +779,7 @@ var dom = {
 };
 
 module.exports = dom;
-},{"./utils":9}],4:[function(require,module,exports){
+},{"./JSON":1,"./utils":10}],5:[function(require,module,exports){
 
 var rotateLeft = function (lValue, iShiftBits) {
   return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
@@ -882,9 +989,10 @@ module.exports = function (string) {
   return tempValue.toLowerCase();
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var _ = require('./utils');
 var rxStream = require('./rxStream');
+var JSON = require('./JSON');
 
 var defaultConfig = {
   sendLimit: 10,
@@ -902,18 +1010,20 @@ if (rx.para) {
   _.extend(defaultConfig, rx.para);
 }
 
+defaultConfig.loadTime = rx.lt || 1 * new Date;
+
 _.extend(rx, rxStream);
 
 rx.init(defaultConfig);
 
 
-},{"./rxStream":6,"./utils":9}],6:[function(require,module,exports){
+},{"./JSON":1,"./rxStream":7,"./utils":10}],7:[function(require,module,exports){
 var _ = require('./utils');
 var store = require('./store');
 var core = require('./core');
 var dom = require('./dom');
 var config = require('./config');
-
+var JSON = require('./JSON');
 
 var rxStream = {};
 rxStream._ = _;
@@ -982,36 +1092,40 @@ var commonWays = {
         b_dollar_domain: _.info.referringDomain(location.href)
     }, compaignParams));*/
 
-    var h1s = document.body && document.body.getElementsByTagName('h1') || [],
+    var h1s = document.body && document.body.getElementsByTagName('h1'),
       pageH1 = '';
 
-    if (_.isArray(h1s) && h1s.length > 0) {
+    if (h1s && h1s.length && h1s.length > 0) {
       pageH1 = dom.innerText(h1s[0]);
     }
 
-    that.track("view_page", {
-      properties: _.extend({
-        b_page_referrer: document.referrer,
-        b_page_referrer_host: _.info.referringDomain(document.referrer),
-        b_page_url: location.href,
-        b_page_url_path: location.pathname,
-        b_page_title: document.title,
-        b_page_h1: pageH1,
-        b_browser_language: navigator.language
-      }, compaignParams),
-      subject: {},
-      object: {}
-    });
     //注册load事件是为了获取到页面资源加载完成时间
     dom.addEvent(window, 'load', function () {
       var pageLoadTime = commonWays.getStayTime();
       core.globalContext.set('pageLoadTime', pageLoadTime);
       _.log('页面加载时间：' + pageLoadTime);
+      that.track("view_page", {
+        properties: _.extend({
+          //b_page_referrer: document.referrer,
+          b_page_referrer_host: _.info.referringDomain(document.referrer),
+          b_page_url: location.href,
+          b_page_url_path: location.pathname,
+          b_page_load_time: pageLoadTime,
+          //b_page_title: document.title,
+          //b_page_h1: pageH1,
+          //b_browser_language: navigator.language
+        }, compaignParams),
+        subject: {},
+        object: {}
+      });
     });
     dom.addEvent(document, 'click', function (e) {
       var preset = dom.getClickPreset(e);
       preset && that.track(preset.event, {
-        properties: preset.properties,
+        properties: _.extend({
+          //b_page_title: document.title,
+          //b_page_h1: pageH1
+        }, preset.properties),
         subject: {},
         object: {}
       });
@@ -1020,9 +1134,14 @@ var commonWays = {
       var pageLoadTime = core.globalContext.get('pageLoadTime');
       var pageStayTime = commonWays.getStayTime();
       var scrollPos = dom.getPageScroll();
+      var pageSize = dom.getPageSize();
       var properties = _.extend({
         b_page_load_time: pageLoadTime,//页面加载时间
-        b_page_stay_time: pageStayTime//页面停留时间
+        b_page_stay_time: pageStayTime,//页面停留时间
+        b_page_height: pageSize.PageHeight,
+        b_page_width: pageSize.PageWidth,
+        //b_page_title: document.title,
+        //b_page_h1: pageH1
       }, scrollPos);
       //_.log('页面离开：' + JSON.stringify(properties));
       that.track('leave_page', {
@@ -1337,9 +1456,10 @@ rxStream.init = function (config) {
 };
 module.exports = rxStream;
 
-},{"./config":1,"./core":2,"./dom":3,"./store":7,"./utils":9}],7:[function(require,module,exports){
+},{"./JSON":1,"./config":2,"./core":3,"./dom":4,"./store":8,"./utils":10}],8:[function(require,module,exports){
 var config = require('./config');
 var _ = require('./utils');
+var JSON=require('./JSON');
 
 var LIB_KEY = config.LIB_KEY;
 
@@ -1551,9 +1671,9 @@ module.exports = {
 };
 
 
-},{"./config":1,"./utils":9}],8:[function(require,module,exports){
+},{"./JSON":1,"./config":2,"./utils":10}],9:[function(require,module,exports){
 
-
+var JSON=require('./JSON');
 var detector = {};
 
 var NA_VERSION = "-1";
@@ -2102,760 +2222,775 @@ detector = parse(userAgent + " " + appVersion + " " + vendor);
 module.exports = detector;
 
 
-},{}],9:[function(require,module,exports){
+},{"./JSON":1}],10:[function(require,module,exports){
 var config = require('./config');
+var JSON = require('./JSON');
 var detector = require('./uaDetector');
 
 var ArrayProto = Array.prototype,
-    FuncProto = Function.prototype,
-    ObjProto = Object.prototype,
-    slice = ArrayProto.slice,
-    toString = ObjProto.toString,
-    hasOwnProperty = ObjProto.hasOwnProperty,
-    navigator = window.navigator,
-    document = window.document,
-    userAgent = navigator.userAgent,
-    LIB_VERSION = config.LIB_VERSION,
-    LIB_KEY = config.LIB_KEY,
-    nativeBind = FuncProto.bind,
-    nativeForEach = ArrayProto.forEach,
-    nativeIndexOf = ArrayProto.indexOf,
-    nativeIsArray = Array.isArray,
-    emptyObj = {};
+  FuncProto = Function.prototype,
+  ObjProto = Object.prototype,
+  slice = ArrayProto.slice,
+  toString = ObjProto.toString,
+  hasOwnProperty = ObjProto.hasOwnProperty,
+  navigator = window.navigator,
+  document = window.document,
+  userAgent = navigator.userAgent,
+  LIB_VERSION = config.LIB_VERSION,
+  LIB_KEY = config.LIB_KEY,
+  nativeBind = FuncProto.bind,
+  nativeForEach = ArrayProto.forEach,
+  nativeIndexOf = ArrayProto.indexOf,
+  nativeIsArray = Array.isArray,
+  emptyObj = {};
 var _ = {};
 var each = _.each = function (obj, iterator, context) {
-    if (obj == null) {
+  if (obj == null) {
+    return false;
+  }
+  if (nativeForEach && obj.forEach === nativeForEach) {
+    obj.forEach(iterator, context);
+  } else if (obj.length === +obj.length) {
+    for (var i = 0, l = obj.length; i < l; i++) {
+      if (i in obj && iterator.call(context, obj[i], i, obj) === emptyObj) {
         return false;
+      }
     }
-    if (nativeForEach && obj.forEach === nativeForEach) {
-        obj.forEach(iterator, context);
-    } else if (obj.length === +obj.length) {
-        for (var i = 0, l = obj.length; i < l; i++) {
-            if (i in obj && iterator.call(context, obj[i], i, obj) === emptyObj) {
-                return false;
-            }
+  } else {
+    for (var key in obj) {
+      if (hasOwnProperty.call(obj, key)) {
+        if (iterator.call(context, obj[key], key, obj) === emptyObj) {
+          return false;
         }
-    } else {
-        for (var key in obj) {
-            if (hasOwnProperty.call(obj, key)) {
-                if (iterator.call(context, obj[key], key, obj) === emptyObj) {
-                    return false;
-                }
-            }
-        }
+      }
     }
+  }
 };
 
 _.extend = function (obj) {
-    each(slice.call(arguments, 1), function (source) {
-        for (var prop in source) {
-            if (source[prop] !== void 0) {
-                obj[prop] = source[prop];
-            }
-        }
-    });
-    return obj;
+  each(slice.call(arguments, 1), function (source) {
+    for (var prop in source) {
+      if (source[prop] !== void 0) {
+        obj[prop] = source[prop];
+      }
+    }
+  });
+  return obj;
 };
 
 // 如果已经有的属性不覆盖,如果没有的属性加进来
 _.coverExtend = function (obj) {
-    each(slice.call(arguments, 1), function (source) {
-        for (var prop in source) {
-            if (source[prop] !== void 0 && obj[prop] === void 0) {
-                obj[prop] = source[prop];
-            }
-        }
-    });
-    return obj;
+  each(slice.call(arguments, 1), function (source) {
+    for (var prop in source) {
+      if (source[prop] !== void 0 && obj[prop] === void 0) {
+        obj[prop] = source[prop];
+      }
+    }
+  });
+  return obj;
 };
 
 _.isArray = nativeIsArray || function (obj) {
-    return toString.call(obj) === '[object Array]';
+  return toString.call(obj) === '[object Array]';
 };
 
 _.isFunction = function (f) {
-    try {
-        return /^\s*\bfunction\b/.test(f);
-    } catch (x) {
-        return false;
-    }
+  try {
+    return /^\s*\bfunction\b/.test(f);
+  } catch (x) {
+    return false;
+  }
 };
 
 _.isArguments = function (obj) {
-    return !!(obj && hasOwnProperty.call(obj, 'callee'));
+  return !!(obj && hasOwnProperty.call(obj, 'callee'));
 };
 
 _.toArray = function (iterable) {
-    if (!iterable) {
-        return [];
-    }
-    if (iterable.toArray) {
-        return iterable.toArray();
-    }
-    if (_.isArray(iterable)) {
-        return slice.call(iterable);
-    }
-    if (_.isArguments(iterable)) {
-        return slice.call(iterable);
-    }
-    return _.values(iterable);
+  if (!iterable) {
+    return [];
+  }
+  if (iterable.toArray) {
+    return iterable.toArray();
+  }
+  if (_.isArray(iterable)) {
+    return slice.call(iterable);
+  }
+  if (_.isArguments(iterable)) {
+    return slice.call(iterable);
+  }
+  return _.values(iterable);
 };
 
 _.values = function (obj) {
-    var results = [];
-    if (obj == null) {
-        return results;
-    }
-    each(obj, function (value) {
-        results[results.length] = value;
-    });
+  var results = [];
+  if (obj == null) {
     return results;
+  }
+  each(obj, function (value) {
+    results[results.length] = value;
+  });
+  return results;
 };
 
 _.include = function (obj, target) {
-    var found = false;
-    if (obj == null) {
-        return found;
-    }
-    if (nativeIndexOf && obj.indexOf === nativeIndexOf) {
-        return obj.indexOf(target) != -1;
-    }
-    each(obj, function (value) {
-        if (found || (found = (value === target))) {
-            return emptyObj;
-        }
-    });
+  var found = false;
+  if (obj == null) {
     return found;
+  }
+  if (nativeIndexOf && obj.indexOf === nativeIndexOf) {
+    return obj.indexOf(target) != -1;
+  }
+  each(obj, function (value) {
+    if (found || (found = (value === target))) {
+      return emptyObj;
+    }
+  });
+  return found;
 };
 
 _.includes = function (str, needle) {
-    return str.indexOf(needle) !== -1;
+  return str.indexOf(needle) !== -1;
 };
 
 _.inherit = function (subclass, superclass) {
-    subclass.prototype = new superclass();
-    subclass.prototype.constructor = subclass;
-    subclass.superclass = superclass.prototype;
-    return subclass;
+  subclass.prototype = new superclass();
+  subclass.prototype.constructor = subclass;
+  subclass.superclass = superclass.prototype;
+  return subclass;
 };
 
 _.isObject = function (obj) {
-    return toString.call(obj) == '[object Object]';
+  return toString.call(obj) == '[object Object]';
 };
 
 _.isEmptyObject = function (obj) {
-    if (_.isObject(obj)) {
-        for (var key in obj) {
-            if (hasOwnProperty.call(obj, key)) {
-                return false;
-            }
-        }
-        return true;
+  if (_.isObject(obj)) {
+    for (var key in obj) {
+      if (hasOwnProperty.call(obj, key)) {
+        return false;
+      }
     }
-    return false;
+    return true;
+  }
+  return false;
 };
 
 var rTrim = /^\s+|\s+$/;
 _.trim = ''.trim ? function (s) {
-    return s.trim()
+  return s.trim()
 } : function (s) {
-    return s.replace(rTrim);
+  return s.replace(rTrim);
 }
 
 _.isUndefined = function (obj) {
-    return obj === void 0;
+  return obj === void 0;
 };
 
 _.isString = function (obj) {
-    return toString.call(obj) == '[object String]';
+  return toString.call(obj) == '[object String]';
 };
 
 _.isDate = function (obj) {
-    return toString.call(obj) == '[object Date]';
+  return toString.call(obj) == '[object Date]';
 };
 
 _.isBoolean = function (obj) {
-    return toString.call(obj) == '[object Boolean]';
+  return toString.call(obj) == '[object Boolean]';
 };
 
 _.isNumber = function (obj) {
-    return (toString.call(obj) == '[object Number]' && /[\d\.]+/.test(String(obj)));
+  return (toString.call(obj) == '[object Number]' && /[\d\.]+/.test(String(obj)));
 };
 
 _.encodeDates = function (obj) {
-    _.each(obj, function (v, k) {
-        if (_.isDate(v)) {
-            obj[k] = _.formatDate(v);
-        } else if (_.isObject(v)) {
-            obj[k] = _.encodeDates(v); // recurse
-        }
-    });
-    return obj;
+  _.each(obj, function (v, k) {
+    if (_.isDate(v)) {
+      obj[k] = _.formatDate(v);
+    } else if (_.isObject(v)) {
+      obj[k] = _.encodeDates(v); // recurse
+    }
+  });
+  return obj;
 };
 
 _.formatDate = function (date) {
-    function pad(n) {
-        return n < 10 ? '0' + n : n;
-    }
-    return [
-        date.getFullYear(),
-        '-',
-        pad(date.getMonth() + 1),
-        '-',
-        pad(date.getDate()),
-        'T',
-        pad(date.getHours()),
-        ':',
-        pad(date.getMinutes()),
-        ':',
-        pad(date.getSeconds()),
-        '.',
-        pad(date.getMilliseconds()),
-        '+08:00'
-    ].join('');
+  function pad(n) {
+    return n < 10 ? '0' + n : n;
+  }
+  return [
+    date.getFullYear(),
+    '-',
+    pad(date.getMonth() + 1),
+    '-',
+    pad(date.getDate()),
+    'T',
+    pad(date.getHours()),
+    ':',
+    pad(date.getMinutes()),
+    ':',
+    pad(date.getSeconds()),
+    '.',
+    pad(date.getMilliseconds()),
+    '+08:00'
+  ].join('');
 };
 
 _.searchObjDate = function (o) {
-    if (_.isObject(o)) {
-        _.each(o, function (a, b) {
-            if (_.isObject(a)) {
-                _.searchObjDate(o[b]);
-            } else {
-                if (_.isDate(a)) {
-                    o[b] = _.formatDate(a);
-                }
-            }
-        });
-    }
+  if (_.isObject(o)) {
+    _.each(o, function (a, b) {
+      if (_.isObject(a)) {
+        _.searchObjDate(o[b]);
+      } else {
+        if (_.isDate(a)) {
+          o[b] = _.formatDate(a);
+        }
+      }
+    });
+  }
 };
 
 // 验证Properties格式
 _.validateProperties = function (p) {
-    if (!_.isObject(p)) {
-        return p;
-    }
-    _.each(p, function (v, k) {
-        // 如果是数组，把值自动转换成string
-        if (_.isArray(v)) {
-            var temp = [];
-            _.each(v, function (arrv) {
-                if (_.isString(arrv)) {
-                    temp.push(arrv);
-                } else {
-                    _.log('您的数据-', v, '的数组里的值必须是字符串,已经将其删除');
-                }
-            });
-            if (temp.length !== 0) {
-                p[k] = temp;
-            } else {
-                delete p[k];
-                _.log('已经删除空的数组');
-            }
-        }
-        // 只能是字符串，数字，日期,布尔，数组
-        if (!(_.isString(v) || _.isNumber(v) || _.isDate(v) || _.isBoolean(v) || _.isArray(v))) {
-            _.log('您的数据-', v, '-格式不满足要求，我们已经将其删除');
-            delete p[k];
-        }
-    });
+  if (!_.isObject(p)) {
     return p;
+  }
+  _.each(p, function (v, k) {
+    // 如果是数组，把值自动转换成string
+    if (_.isArray(v)) {
+      var temp = [];
+      _.each(v, function (arrv) {
+        if (_.isString(arrv)) {
+          temp.push(arrv);
+        } else {
+          _.log('您的数据-', v, '的数组里的值必须是字符串,已经将其删除');
+        }
+      });
+      if (temp.length !== 0) {
+        p[k] = temp;
+      } else {
+        delete p[k];
+        _.log('已经删除空的数组');
+      }
+    }
+    // 只能是字符串，数字，日期,布尔，数组
+    if (!(_.isString(v) || _.isNumber(v) || _.isDate(v) || _.isBoolean(v) || _.isArray(v))) {
+      _.log('您的数据-', v, '-格式不满足要求，我们已经将其删除');
+      delete p[k];
+    }
+  });
+  return p;
 };
 
 _.generateNewProperties = function (p) {
-    var ret = {};
-    _.each(p, function (v, k) {
-        if (_.isString(v) && v.length > 0) {
-            ret[k] = v;
-        }
-    });
-    return ret;
+  var ret = {};
+  _.each(p, function (v, k) {
+    if (_.isString(v) && v.length > 0) {
+      ret[k] = v;
+    }
+  });
+  return ret;
 };
 
 _.utf8Encode = function (string) {
-    string = (string + '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  string = (string + '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-    var utftext = '',
-        start, end;
-    var stringl = 0,
-        n;
+  var utftext = '',
+    start, end;
+  var stringl = 0,
+    n;
 
-    start = end = 0;
-    stringl = string.length;
+  start = end = 0;
+  stringl = string.length;
 
-    for (n = 0; n < stringl; n++) {
-        var c1 = string.charCodeAt(n);
-        var enc = null;
+  for (n = 0; n < stringl; n++) {
+    var c1 = string.charCodeAt(n);
+    var enc = null;
 
-        if (c1 < 128) {
-            end++;
-        } else if ((c1 > 127) && (c1 < 2048)) {
-            enc = String.fromCharCode((c1 >> 6) | 192, (c1 & 63) | 128);
-        } else {
-            enc = String.fromCharCode((c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128);
-        }
-        if (enc !== null) {
-            if (end > start) {
-                utftext += string.substring(start, end);
-            }
-            utftext += enc;
-            start = end = n + 1;
-        }
+    if (c1 < 128) {
+      end++;
+    } else if ((c1 > 127) && (c1 < 2048)) {
+      enc = String.fromCharCode((c1 >> 6) | 192, (c1 & 63) | 128);
+    } else {
+      enc = String.fromCharCode((c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128);
     }
-
-    if (end > start) {
-        utftext += string.substring(start, string.length);
+    if (enc !== null) {
+      if (end > start) {
+        utftext += string.substring(start, end);
+      }
+      utftext += enc;
+      start = end = n + 1;
     }
+  }
 
-    return utftext;
+  if (end > start) {
+    utftext += string.substring(start, string.length);
+  }
+
+  return utftext;
 };
 
 
 _.detector = detector;
 
 _.base64Encode = function (data) {
-    var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
-        ac = 0,
-        enc = '',
-        tmp_arr = [];
-    if (!data) {
-        return data;
-    }
-    data = _.utf8Encode(data);
-    do {
-        o1 = data.charCodeAt(i++);
-        o2 = data.charCodeAt(i++);
-        o3 = data.charCodeAt(i++);
+  var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+    ac = 0,
+    enc = '',
+    tmp_arr = [];
+  if (!data) {
+    return data;
+  }
+  data = _.utf8Encode(data);
+  do {
+    o1 = data.charCodeAt(i++);
+    o2 = data.charCodeAt(i++);
+    o3 = data.charCodeAt(i++);
 
-        bits = o1 << 16 | o2 << 8 | o3;
+    bits = o1 << 16 | o2 << 8 | o3;
 
-        h1 = bits >> 18 & 0x3f;
-        h2 = bits >> 12 & 0x3f;
-        h3 = bits >> 6 & 0x3f;
-        h4 = bits & 0x3f;
-        tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
-    } while (i < data.length);
+    h1 = bits >> 18 & 0x3f;
+    h2 = bits >> 12 & 0x3f;
+    h3 = bits >> 6 & 0x3f;
+    h4 = bits & 0x3f;
+    tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+  } while (i < data.length);
 
-    enc = tmp_arr.join('');
+  enc = tmp_arr.join('');
 
-    switch (data.length % 3) {
-        case 1:
-            enc = enc.slice(0, -2) + '==';
-            break;
-        case 2:
-            enc = enc.slice(0, -1) + '=';
-            break;
-    }
+  switch (data.length % 3) {
+    case 1:
+      enc = enc.slice(0, -2) + '==';
+      break;
+    case 2:
+      enc = enc.slice(0, -1) + '=';
+      break;
+  }
 
-    return enc;
+  return enc;
 };
 
 _.UUID = (function () {
-    var T = function () {
-        var d = 1 * new Date(),
-            i = 0;
-        while (d == 1 * new Date()) {
-            i++;
-        }
-        return d.toString(16) + i.toString(16);
-    };
-    var R = function () {
-        return Math.random().toString(16).replace('.', '');
-    };
-    var UA = function (n) {
-        var ua = userAgent,
-            i, ch, buffer = [],
-            ret = 0;
+  var T = function () {
+    var d = 1 * new Date(),
+      i = 0;
+    while (d == 1 * new Date()) {
+      i++;
+    }
+    return d.toString(16) + i.toString(16);
+  };
+  var R = function () {
+    return Math.random().toString(16).replace('.', '');
+  };
+  var UA = function (n) {
+    var ua = userAgent,
+      i, ch, buffer = [],
+      ret = 0;
 
-        function xor(result, byte_array) {
-            var j, tmp = 0;
-            for (j = 0; j < byte_array.length; j++) {
-                tmp |= (buffer[j] << j * 8);
-            }
-            return result ^ tmp;
-        }
+    function xor(result, byte_array) {
+      var j, tmp = 0;
+      for (j = 0; j < byte_array.length; j++) {
+        tmp |= (buffer[j] << j * 8);
+      }
+      return result ^ tmp;
+    }
 
-        for (i = 0; i < ua.length; i++) {
-            ch = ua.charCodeAt(i);
-            buffer.unshift(ch & 0xFF);
-            if (buffer.length >= 4) {
-                ret = xor(ret, buffer);
-                buffer = [];
-            }
-        }
+    for (i = 0; i < ua.length; i++) {
+      ch = ua.charCodeAt(i);
+      buffer.unshift(ch & 0xFF);
+      if (buffer.length >= 4) {
+        ret = xor(ret, buffer);
+        buffer = [];
+      }
+    }
 
-        if (buffer.length > 0) {
-            ret = xor(ret, buffer);
-        }
+    if (buffer.length > 0) {
+      ret = xor(ret, buffer);
+    }
 
-        return ret.toString(16);
-    };
+    return ret.toString(16);
+  };
 
-    return function () {
-        var se = (screen.height * screen.width).toString(16);
-        return (T() + '-' + R() + '-' + UA() + '-' + se + '-' + T());
-    };
+  return function () {
+    var se = (screen.height * screen.width).toString(16);
+    return (T() + '-' + R() + '-' + UA() + '-' + se + '-' + T());
+  };
 })();
 
 _.getQueryParam = function (url, param) {
-    param = param.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
-    var regexS = '[\\?&]' + param + '=([^&#]*)',
-        regex = new RegExp(regexS),
-        results = regex.exec(url);
-    if (results === null || (results && typeof (results[1]) !== 'string' && results[1].length)) {
-        return '';
-    } else {
-        return decodeURIComponent(results[1]).replace(/\+/g, ' ');
-    }
+  param = param.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
+  var regexS = '[\\?&]' + param + '=([^&#]*)',
+    regex = new RegExp(regexS),
+    results = regex.exec(url);
+  if (results === null || (results && typeof (results[1]) !== 'string' && results[1].length)) {
+    return '';
+  } else {
+    return decodeURIComponent(results[1]).replace(/\+/g, ' ');
+  }
 };
 
 _.xhr = function (cors) {
-    if (cors) {
-        var xhr = new XMLHttpRequest;
-        return "withCredentials" in xhr ? xhr : "undefined" != typeof XDomainRequest ? new XDomainRequest : t
-    }
-    if (XMLHttpRequest) return new XMLHttpRequest;
-    if (window.ActiveXObject) try {
-        return new ActiveXObject("Msxml2.XMLHTTP")
-    } catch (ex) {
-        try {
-            return new ActiveXObject("Microsoft.XMLHTTP")
-        } catch (ex) { }
-    }
+  var xhr;
+  if (cors) {
+    xhr = new XMLHttpRequest;
+    xhr = "withCredentials" in xhr ? xhr : "undefined" != typeof XDomainRequest ? new XDomainRequest : t
+  }
+  if (XMLHttpRequest) xhr = new XMLHttpRequest;
+  if (window.ActiveXObject) try {
+    xhr = new ActiveXObject("Msxml2.XMLHTTP")
+  } catch (ex) {
+    try {
+      xhr = new ActiveXObject("Microsoft.XMLHTTP")
+    } catch (ex) { }
+  }
+  return !("setRequestHeader" in xhr) && (xhr.setRequestHeader = function () { }), xhr;
 };
 _.ajax = function (params) {
-    function parseJson(params) {
-        try {
-            return JSON.parse(params)
-        } catch (t) {
-            return {}
-        }
+  function parseJson(params) {
+    try {
+      return JSON.parse(params)
+    } catch (t) {
+      return {}
     }
-    var xhr = _.xhr(params.cors);
+  }
+  var xhr = _.xhr(params.cors);
 
-    if (!params.type) {
-        params.type = params.data ? "POST" : "GET"
-    }
+  if (!params.type) {
+    params.type = params.data ? "POST" : "GET"
+  }
 
-    params = _.extend({
-        success: function () { },
-        error: function (xhr, textStatus, errorThrown) {
-            _.log(xhr.status);
-            _.log(xhr.readyState);
-            _.log(textStatus);
-        },
-        complete: function (xhr) { }
-    }, params);
+  params = _.extend({
+    success: function () { },
+    error: function (xhr, textStatus, errorThrown) {
+      _.log(xhr.status);
+      _.log(xhr.readyState);
+      _.log(textStatus);
+    },
+    complete: function (xhr) { }
+  }, params);
 
-    xhr.onreadystatechange = function () {
-        if (4 == xhr.readyState) {
-            xhr.status >= 200 && xhr.status < 300 || 304 == xhr.status ? params.success(parseJson(xhr.responseText)) : params.error(xhr);
-            params.complete(xhr);
-            xhr.onreadystatechange = null;
-            xhr.onload = null;
-        }
+  xhr.onreadystatechange = function () {
+    if (4 == xhr.readyState) {
+      xhr.status >= 200 && xhr.status < 300 || 304 == xhr.status ? params.success(parseJson(xhr.responseText)) : params.error(xhr);
+      params.complete(xhr);
+      xhr.onreadystatechange && (xhr.onreadystatechange = null);
+      xhr.onload && (xhr.onload = null);
     }
-    xhr.open(params.type, params.url, params.async === void 0 ? !0 : params.async);
-    /*xhr.withCredentials = true;*/
-    if (_.isObject(params.header))
-        for (var i in params.header) {
-            xhr.setRequestHeader(i, params.header[i]);
-        }
-    if (params.data) {
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        "application/json" === params.contentType ? xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8") : xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  }
+  xhr.open(params.type, params.url, params.async === void 0 ? !0 : params.async);
+  /*xhr.withCredentials = true;*/
+  if (_.isObject(params.header))
+    for (var i in params.header) {
+      xhr.setRequestHeader(i, params.header[i]);
     }
-    xhr.send(params.data || null);
+  if (params.data) {
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    "application/json" === params.contentType ? xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8") : xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  }
+  xhr.send(params.data || null);
 };
 _.log = function () {
-    if (!config.showLog) return;
-    if (typeof console === 'object' && console.log) {
-        try {
-            console.log.apply(console, arguments);
-        } catch (e) {
-            console.log(arguments[0]);
-        }
+  if (!config.showLog) return;
+  if (typeof console === 'object' && console.log) {
+    try {
+      console.log.apply(console, arguments);
+    } catch (e) {
+      console.log(arguments[0]);
     }
+  }
 };
 
 _.cookie = {
-    get: function (name) {
-        var nameEQ = name + '=';
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1, c.length);
-            }
-            if (c.indexOf(nameEQ) == 0) {
-                return decodeURIComponent(c.substring(nameEQ.length, c.length));
-            }
-        }
-        return null;
-    },
-    set: function (name, value, days, crossSubDomain, is_secure) {
-        //crossSubDomain = typeof crossSubDomain === 'undefined' ? RX.para.crossSubDomain : crossSubDomain;
-        var cdomain = '',
-            expires = '',
-            secure = '';
-        days = typeof days === 'undefined' ? 730 : days;
-
-        if (crossSubDomain) {
-            var matches = document.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i),
-                domain = matches ? matches[0] : '';
-
-            cdomain = ((domain) ? '; domain=.' + domain : '');
-        }
-
-        if (days !== 0) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = '; expires=' + date.toGMTString();
-        }
-
-        if (is_secure) {
-            secure = '; secure';
-        }
-
-        document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/' + cdomain + secure;
-    },
-
-    remove: function (name, crossSubDomain) {
-        //crossSubDomain = typeof crossSubDomain === 'undefined' ? RX.para.crossSubDomain : crossSubDomain;
-        _.cookie.set(name, '', -1, crossSubDomain);
-
+  get: function (name) {
+    var nameEQ = name + '=';
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) == 0) {
+        return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      }
     }
+    return null;
+  },
+  set: function (name, value, days, crossSubDomain, is_secure) {
+    //crossSubDomain = typeof crossSubDomain === 'undefined' ? RX.para.crossSubDomain : crossSubDomain;
+    var cdomain = '',
+      expires = '',
+      secure = '';
+    days = typeof days === 'undefined' ? 730 : days;
+
+    if (crossSubDomain) {
+      var matches = document.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i),
+        domain = matches ? matches[0] : '';
+
+      cdomain = ((domain) ? '; domain=.' + domain : '');
+    }
+
+    if (days !== 0) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toGMTString();
+    }
+
+    if (is_secure) {
+      secure = '; secure';
+    }
+
+    document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/' + cdomain + secure;
+  },
+
+  remove: function (name, crossSubDomain) {
+    //crossSubDomain = typeof crossSubDomain === 'undefined' ? RX.para.crossSubDomain : crossSubDomain;
+    _.cookie.set(name, '', -1, crossSubDomain);
+
+  }
 };
 
 // _.localStorage
 _.localStorage = {
-    get: function (name) {
-        return window.localStorage.getItem(name);
-    },
+  get: function (name) {
+    return window.localStorage.getItem(name);
+  },
 
-    parse: function (name, defaultValue) {
-        var storedValue;
-        try {
-            storedValue = JSON.parse(_.localStorage.get(name)) || defaultValue || {};
-        } catch (err) { }
-        return storedValue;
-    },
+  parse: function (name, defaultValue) {
+    var storedValue;
+    try {
+      var value = _.localStorage.get(name);
+      storedValue = JSON.parse(value) || defaultValue || {};
+    } catch (err) { }
+    return storedValue;
+  },
 
-    set: function (name, value) {
-        _.isArray(value) || _.isObject(value) && (value = JSON.stringify(value));
-        window.localStorage.setItem(name, value);
-    },
-
-    remove: function (name) {
-        window.localStorage.removeItem(name);
+  set: function (name, value) {
+    if (_.isArray(value) || _.isObject(value)) {
+      value = JSON.stringify(value);
     }
+    window.localStorage.setItem(name, value);
+  },
+
+  remove: function (name) {
+    window.localStorage.removeItem(name);
+  }
 };
 
 _.info = {
-    campaignParams: function () {
-        var campaign_keywords = 'utm_source utm_medium utm_campaign utm_content utm_term'.split(' '),
-            kw = '',
-            params = {};
-        _.each(campaign_keywords, function (kwkey) {
-            kw = _.getQueryParam(location.href, kwkey);
-            if (kw.length) {
-                params[kwkey] = kw;
-            }
-        });
+  campaignParams: function () {
+    var campaign_keywords = 'utm_source utm_medium utm_campaign utm_content utm_term'.split(' '),
+      kw = '',
+      params = {};
+    _.each(campaign_keywords, function (kwkey) {
+      kw = _.getQueryParam(location.href, kwkey);
+      if (kw.length) {
+        params[kwkey] = kw;
+      }
+    });
 
-        return params;
-    },
-    searchEngine: function (referrer) {
-        if (referrer.search('https?://(.*)google.([^/?]*)') === 0) {
-            return 'google';
-        } else if (referrer.search('https?://(.*)bing.com') === 0) {
-            return 'bing';
-        } else if (referrer.search('https?://(.*)yahoo.com') === 0) {
-            return 'yahoo';
-        } else if (referrer.search('https?://(.*)duckduckgo.com') === 0) {
-            return 'duckduckgo';
-        } else if (referrer.search('https?://(.*)sogou.com') === 0) {
-            return 'sogou';
-        } else if (referrer.search('https?://(.*)so.com') === 0) {
-            return '360so';
-        } else {
-            return null;
-        }
-    },
-    browser: function (user_agent, vendor, opera) {
-        var vendor = vendor || ''; // vendor is undefined for at least IE9
-        if (opera || _.includes(user_agent, " OPR/")) {
-            if (_.includes(user_agent, "Mini")) {
-                return "Opera Mini";
-            }
-            return "Opera";
-        } else if (/(BlackBerry|PlayBook|BB10)/i.test(user_agent)) {
-            return 'BlackBerry';
-        } else if (_.includes(user_agent, "IEMobile") || _.includes(user_agent, "WPDesktop")) {
-            return "Internet Explorer Mobile";
-        } else if (_.includes(user_agent, "Edge")) {
-            return "Microsoft Edge";
-        } else if (_.includes(user_agent, "FBIOS")) {
-            return "Facebook Mobile";
-        } else if (_.includes(user_agent, "Chrome")) {
-            return "Chrome";
-        } else if (_.includes(user_agent, "CriOS")) {
-            return "Chrome iOS";
-        } else if (_.includes(vendor, "Apple")) {
-            if (_.includes(user_agent, "Mobile")) {
-                return "Mobile Safari";
-            }
-            return "Safari";
-        } else if (_.includes(user_agent, "Android")) {
-            return "Android Mobile";
-        } else if (_.includes(user_agent, "Konqueror")) {
-            return "Konqueror";
-        } else if (_.includes(user_agent, "Firefox")) {
-            return "Firefox";
-        } else if (_.includes(user_agent, "MSIE") || _.includes(user_agent, "Trident/")) {
-            return "Internet Explorer";
-        } else if (_.includes(user_agent, "Gecko")) {
-            return "Mozilla";
-        } else {
-            return "";
-        }
-    },
-    browserVersion: function (userAgent, vendor, opera) {
-        var browser = _.info.browser(userAgent, vendor, opera);
-        var versionRegexs = {
-            "Internet Explorer Mobile": /rv:(\d+(\.\d+)?)/,
-            "Microsoft Edge": /Edge\/(\d+(\.\d+)?)/,
-            "Chrome": /Chrome\/(\d+(\.\d+)?)/,
-            "Chrome iOS": /Chrome\/(\d+(\.\d+)?)/,
-            "Safari": /Version\/(\d+(\.\d+)?)/,
-            "Mobile Safari": /Version\/(\d+(\.\d+)?)/,
-            "Opera": /(Opera|OPR)\/(\d+(\.\d+)?)/,
-            "Firefox": /Firefox\/(\d+(\.\d+)?)/,
-            "Konqueror": /Konqueror:(\d+(\.\d+)?)/,
-            "BlackBerry": /BlackBerry (\d+(\.\d+)?)/,
-            "Android Mobile": /android\s(\d+(\.\d+)?)/,
-            "Internet Explorer": /(rv:|MSIE )(\d+(\.\d+)?)/,
-            "Mozilla": /rv:(\d+(\.\d+)?)/
-        };
-        var regex = versionRegexs[browser];
-        if (regex == undefined) {
-            return null;
-        }
-        var matches = userAgent.match(regex);
-        if (!matches) {
-            return null;
-        }
-        return String(parseFloat(matches[matches.length - 2]));
-    },
-    os: function () {
-        var a = userAgent;
-        if (/Windows/i.test(a)) {
-            if (/Phone/.test(a)) {
-                return 'Windows Mobile';
-            }
-            return 'Windows';
-        } else if (/(iPhone|iPad|iPod)/.test(a)) {
-            return 'iOS';
-        } else if (/Android/.test(a)) {
-            return 'Android';
-        } else if (/(BlackBerry|PlayBook|BB10)/i.test(a)) {
-            return 'BlackBerry';
-        } else if (/Mac/i.test(a)) {
-            return 'Mac OS X';
-        } else if (/Linux/.test(a)) {
-            return 'Linux';
-        } else {
-            return '';
-        }
-    },
-    device: function (user_agent) {
-        if (/iPad/.test(user_agent)) {
-            return 'iPad';
-        } else if (/iPod/i.test(user_agent)) {
-            return 'iPod';
-        } else if (/iPhone/i.test(user_agent)) {
-            return 'iPhone';
-        } else if (/(BlackBerry|PlayBook|BB10)/i.test(user_agent)) {
-            return 'BlackBerry';
-        } else if (/Windows Phone/i.test(user_agent)) {
-            return 'Windows Phone';
-        } else if (/Windows/i.test(user_agent)) {
-            return 'Windows';
-        } else if (/Macintosh/i.test(user_agent)) {
-            return 'Macintosh';
-        } else if (/Android/i.test(user_agent)) {
-            return 'Android';
-        } else if (/Linux/i.test(user_agent)) {
-            return 'Linux';
-        } else {
-            return '';
-        }
-    },
-    referringDomain: function (referrer) {
-        var split = referrer.split('/');
-        if (split.length >= 3) {
-            return split[2];
-        }
-        return '';
-    },
-    getBrowser: function () {
-        return {
-            b_dollar_browser: detector.browser.name,
-            b_dollar_browser_version: String(detector.browser.version)
-        }
-    },
-    getWindow: function () {
-        var winWidth, winHeight;
-        // 获取窗口宽度
-        if (window.innerWidth)
-            winWidth = window.innerWidth;
-        else if (document.body && document.body.clientWidth)
-            winWidth = document.body.clientWidth;
-        // 获取窗口高度
-        if (window.innerHeight)
-            winHeight = window.innerHeight;
-        else if (document.body && document.body.clientHeight)
-            winHeight = document.body.clientHeight;
-        // 通过深入 Document 内部对 body 进行检测，获取窗口大小
-        if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-            winHeight = document.documentElement.clientHeight;
-            winWidth = document.documentElement.clientWidth;
-        }
-        return {
-            b_dollar_win_width: winWidth,
-            b_dollar_win_height: winHeight
-        };
-    },
-    properties: function () {
-        return _.extend(_.generateNewProperties({
-            b_dollar_os: detector.os.name,
-            b_dollar_os_version: detector.os.fullVersion,
-            b_dollar_model: detector.device.name,
-            b_dollar_model_version: detector.device.fullVersion
-        }), {
-                b_dollar_browser_engine: detector.engine.name,
-                b_dollar_screen_height: screen.height,
-                b_dollar_screen_width: screen.width,
-                b_dollar_lib: 'js',
-                b_dollar_lib_version: LIB_VERSION
-            }, _.info.getBrowser());
-    },
-    //保存临时的一些变量，只针对当前页面有效
-    currentProps: {},
-    register: function (obj) {
-        _.extend(_.info.currentProps, obj);
-    },
-    //保存临时的Subject（主体对象），只针对当前页面有效
-    currentSubject:{},
-    registerSubject:function(sbj){
-        _.extend(_.info.currentSubject,sbj);
-    },
-    //保存临时的Object（客体对象），只针对当前页面有效
-    currentObject:{},
-    registerObject:function(obj){
-        _.extend(_.info.currentObject,obj);
+    return params;
+  },
+  searchEngine: function (referrer) {
+    if (referrer.search('https?://(.*)google.([^/?]*)') === 0) {
+      return 'google';
+    } else if (referrer.search('https?://(.*)bing.com') === 0) {
+      return 'bing';
+    } else if (referrer.search('https?://(.*)yahoo.com') === 0) {
+      return 'yahoo';
+    } else if (referrer.search('https?://(.*)duckduckgo.com') === 0) {
+      return 'duckduckgo';
+    } else if (referrer.search('https?://(.*)sogou.com') === 0) {
+      return 'sogou';
+    } else if (referrer.search('https?://(.*)so.com') === 0) {
+      return '360so';
+    } else {
+      return null;
     }
+  },
+  browser: function (user_agent, vendor, opera) {
+    var vendor = vendor || ''; // vendor is undefined for at least IE9
+    if (opera || _.includes(user_agent, " OPR/")) {
+      if (_.includes(user_agent, "Mini")) {
+        return "Opera Mini";
+      }
+      return "Opera";
+    } else if (/(BlackBerry|PlayBook|BB10)/i.test(user_agent)) {
+      return 'BlackBerry';
+    } else if (_.includes(user_agent, "IEMobile") || _.includes(user_agent, "WPDesktop")) {
+      return "Internet Explorer Mobile";
+    } else if (_.includes(user_agent, "Edge")) {
+      return "Microsoft Edge";
+    } else if (_.includes(user_agent, "FBIOS")) {
+      return "Facebook Mobile";
+    } else if (_.includes(user_agent, "Chrome")) {
+      return "Chrome";
+    } else if (_.includes(user_agent, "CriOS")) {
+      return "Chrome iOS";
+    } else if (_.includes(vendor, "Apple")) {
+      if (_.includes(user_agent, "Mobile")) {
+        return "Mobile Safari";
+      }
+      return "Safari";
+    } else if (_.includes(user_agent, "Android")) {
+      return "Android Mobile";
+    } else if (_.includes(user_agent, "Konqueror")) {
+      return "Konqueror";
+    } else if (_.includes(user_agent, "Firefox")) {
+      return "Firefox";
+    } else if (_.includes(user_agent, "MSIE") || _.includes(user_agent, "Trident/")) {
+      return "Internet Explorer";
+    } else if (_.includes(user_agent, "Gecko")) {
+      return "Mozilla";
+    } else {
+      return "";
+    }
+  },
+  browserVersion: function (userAgent, vendor, opera) {
+    var browser = _.info.browser(userAgent, vendor, opera);
+    var versionRegexs = {
+      "Internet Explorer Mobile": /rv:(\d+(\.\d+)?)/,
+      "Microsoft Edge": /Edge\/(\d+(\.\d+)?)/,
+      "Chrome": /Chrome\/(\d+(\.\d+)?)/,
+      "Chrome iOS": /Chrome\/(\d+(\.\d+)?)/,
+      "Safari": /Version\/(\d+(\.\d+)?)/,
+      "Mobile Safari": /Version\/(\d+(\.\d+)?)/,
+      "Opera": /(Opera|OPR)\/(\d+(\.\d+)?)/,
+      "Firefox": /Firefox\/(\d+(\.\d+)?)/,
+      "Konqueror": /Konqueror:(\d+(\.\d+)?)/,
+      "BlackBerry": /BlackBerry (\d+(\.\d+)?)/,
+      "Android Mobile": /android\s(\d+(\.\d+)?)/,
+      "Internet Explorer": /(rv:|MSIE )(\d+(\.\d+)?)/,
+      "Mozilla": /rv:(\d+(\.\d+)?)/
+    };
+    var regex = versionRegexs[browser];
+    if (regex == undefined) {
+      return null;
+    }
+    var matches = userAgent.match(regex);
+    if (!matches) {
+      return null;
+    }
+    return String(parseFloat(matches[matches.length - 2]));
+  },
+  os: function () {
+    var a = userAgent;
+    if (/Windows/i.test(a)) {
+      if (/Phone/.test(a)) {
+        return 'Windows Mobile';
+      }
+      return 'Windows';
+    } else if (/(iPhone|iPad|iPod)/.test(a)) {
+      return 'iOS';
+    } else if (/Android/.test(a)) {
+      return 'Android';
+    } else if (/(BlackBerry|PlayBook|BB10)/i.test(a)) {
+      return 'BlackBerry';
+    } else if (/Mac/i.test(a)) {
+      return 'Mac OS X';
+    } else if (/Linux/.test(a)) {
+      return 'Linux';
+    } else {
+      return '';
+    }
+  },
+  device: function (user_agent) {
+    if (/iPad/.test(user_agent)) {
+      return 'iPad';
+    } else if (/iPod/i.test(user_agent)) {
+      return 'iPod';
+    } else if (/iPhone/i.test(user_agent)) {
+      return 'iPhone';
+    } else if (/(BlackBerry|PlayBook|BB10)/i.test(user_agent)) {
+      return 'BlackBerry';
+    } else if (/Windows Phone/i.test(user_agent)) {
+      return 'Windows Phone';
+    } else if (/Windows/i.test(user_agent)) {
+      return 'Windows';
+    } else if (/Macintosh/i.test(user_agent)) {
+      return 'Macintosh';
+    } else if (/Android/i.test(user_agent)) {
+      return 'Android';
+    } else if (/Linux/i.test(user_agent)) {
+      return 'Linux';
+    } else {
+      return '';
+    }
+  },
+  referringDomain: function (referrer) {
+    var split = referrer.split('/');
+    if (split.length >= 3) {
+      return split[2];
+    }
+    return '';
+  },
+  getBrowser: function () {
+    return {
+      b_dollar_browser: detector.browser.name,
+      b_dollar_browser_version: String(detector.browser.version)
+    }
+  },
+  getWindow: function () {
+    var winWidth, winHeight;
+    // 获取窗口宽度
+    if (window.innerWidth)
+      winWidth = window.innerWidth;
+    else if (document.body && document.body.clientWidth)
+      winWidth = document.body.clientWidth;
+    // 获取窗口高度
+    if (window.innerHeight)
+      winHeight = window.innerHeight;
+    else if (document.body && document.body.clientHeight)
+      winHeight = document.body.clientHeight;
+    // 通过深入 Document 内部对 body 进行检测，获取窗口大小
+    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
+      winHeight = document.documentElement.clientHeight;
+      winWidth = document.documentElement.clientWidth;
+    }
+    return {
+      b_dollar_win_width: winWidth,
+      b_dollar_win_height: winHeight
+    };
+  },
+  properties: function () {
+    var h1s = document.body && document.body.getElementsByTagName('h1'),
+      pageH1 = '';
+
+    if (h1s && h1s.length && h1s.length > 0) {
+      pageH1 = h1s[0].innerText || h1s.textContent || '';
+    }
+    return _.extend(_.generateNewProperties({
+      b_dollar_os: detector.os.name,
+      b_dollar_os_version: detector.os.fullVersion,
+      //b_dollar_model: detector.device.name,
+      //b_dollar_model_version: detector.device.fullVersion
+    }), {
+        //b_dollar_browser_engine: detector.engine.name,
+        b_dollar_screen_height: screen.height,
+        b_dollar_screen_width: screen.width,
+        b_dollar_page_title: document.title,
+        b_dollar_page_h1: pageH1,
+        b_dollar_page_referrer: document.referrer,
+        b_dollar_lib: 'js',
+        b_dollar_lib_version: LIB_VERSION
+      }, _.info.getBrowser());
+  },
+  //保存临时的一些变量，只针对当前页面有效
+  currentProps: {},
+  register: function (obj) {
+    _.extend(_.info.currentProps, obj);
+  },
+  //保存临时的Subject（主体对象），只针对当前页面有效
+  currentSubject: {},
+  registerSubject: function (sbj) {
+    _.extend(_.info.currentSubject, sbj);
+  },
+  //保存临时的Object（客体对象），只针对当前页面有效
+  currentObject: {},
+  registerObject: function (obj) {
+    _.extend(_.info.currentObject, obj);
+  }
 };
 module.exports = _;
 
-},{"./config":1,"./uaDetector":8}]},{},[5]);
+},{"./JSON":1,"./config":2,"./uaDetector":9}]},{},[6]);

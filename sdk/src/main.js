@@ -1,5 +1,6 @@
 var _ = require('./utils');
 var rxStream = require('./rxStream');
+var JSON = require('./JSON');
 
 var defaultConfig = {
   sendLimit: 10,
@@ -16,6 +17,8 @@ if (rx) {
 if (rx.para) {
   _.extend(defaultConfig, rx.para);
 }
+
+defaultConfig.loadTime = rx.lt || 1 * new Date;
 
 _.extend(rx, rxStream);
 

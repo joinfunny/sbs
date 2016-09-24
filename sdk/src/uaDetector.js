@@ -1,5 +1,5 @@
 
-
+var JSON=require('./JSON');
 var detector = {};
 
 var NA_VERSION = "-1";

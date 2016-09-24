@@ -1,15 +1,16 @@
 // JSON polyfill
-"object" != typeof JSON && (JSON = {}),
-	function() {
+var toString = Object.prototype.toString;
+module.exports = ("object" === typeof JSON && toString.call(JSON) === '[object JSON]') ? JSON
+: (function(JSON) {
 		"use strict";
 
 		function f(e) {
 			return 10 > e ? "0" + e : e
 		}
 
-		function this_value() {
-			return this.valueOf()
-		}
+//		function this_value() {
+//			return this.valueOf()
+//		}
 
 		function quote(e) {
 			return rx_escapable.lastIndex = 0, rx_escapable.test(e) ? '"' + e.replace(rx_escapable, function(e) {
@@ -18,10 +19,22 @@
 			}) + '"' : '"' + e + '"'
 		}
 
+		function objectToJSON(e) {
+			switch(toString.call(e)){
+				case '[object Date]':
+					return isFinite(e.valueOf()) ? e.getUTCFullYear() + "-" + f(e.getUTCMonth() + 1) + "-" + f(e.getUTCDate()) + "T" + f(e.getUTCHours()) + ":" + f(e.getUTCMinutes()) + ":" + f(e.getUTCSeconds()) + "Z" : null;
+				case '[object Boolean]':
+				case '[object String]':
+				case '[object Number]':
+					return e.valueOf();
+			}
+			return e;
+		}
+		
 		function str(e, t) {
 			var r, n, i, o, s, a = gap,
 				u = t[e];
-			switch (u && "object" == typeof u && "function" == typeof u.toJSON && (u = u.toJSON(e)), "function" == typeof rep && (u = rep.call(t, e, u)), typeof u) {
+			switch (u && "object" == typeof u && (u = objectToJSON(u)), "function" == typeof rep && (u = rep.call(t, e, u)), typeof u) {
 				case "string":
 					return quote(u);
 				case "number":
@@ -31,7 +44,7 @@
 					return String(u);
 				case "object":
 					if (!u) return "null";
-					if (gap += indent, s = [], "[object Array]" === Object.prototype.toString.apply(u)) {
+					if (gap += indent, s = [], "[object Array]" === toString.call(u)) {
 						for (o = u.length, r = 0; o > r; r += 1) s[r] = str(r, u) || "null";
 						return i = 0 === s.length ? "[]" : gap ? "[\n" + gap + s.join(",\n" + gap) + "\n" + a + "]" : "[" + s.join(",") + "]", gap = a, i
 					}
@@ -48,9 +61,9 @@
 			rx_four = /(?:^|:|,)(?:\s*\[)+/g,
 			rx_escapable = /[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
 			rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-		"function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function() {
-			return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null
-		}, Boolean.prototype.toJSON = this_value, Number.prototype.toJSON = this_value, String.prototype.toJSON = this_value);
+//		"function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function() {
+//			return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null
+//		}, Boolean.prototype.toJSON = this_value, Number.prototype.toJSON = this_value, String.prototype.toJSON = this_value);
 		var gap, indent, meta, rep;
 		"function" != typeof JSON.stringify && (meta = {
 			"\b": "\\b",
@@ -83,5 +96,7 @@
 				"": j
 			}, "") : j;
 			throw new SyntaxError("JSON.parse")
-		})
-	}();
+		});
+		return JSON;
+	})({});
+

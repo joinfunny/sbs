@@ -8,6 +8,6 @@ module.exports = {
     sendLimit: 10,//发送限制，多于当前设置条数，就会发送事件
     crossSubDomain: true,//是否跨域
     loadTime: new Date(),//SDK加载时间
-    apiHost: 'http://streamcollector.cssrv.dataengine.com',
+    apiHost: 'https://fenxi.ruixuesoft.com',
     appId: 35
 };

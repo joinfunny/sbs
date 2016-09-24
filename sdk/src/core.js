@@ -2,6 +2,7 @@ var config = require('./config');
 var _ = require('./utils');
 var store = require('./store');
 var md5 = require('./jMd5');
+var JSON=require('./JSON');
 
 /**
  * 监听器状态
@@ -278,8 +279,9 @@ module.exports = {
       authingState = session[MONITORSTATE.AUTHING],
       sendingState = session[MONITORSTATE.SENDING];
 
-
+    //如果授权通过
     if (authState) {
+      //是否处于发送事件状态，如果没有在发送，则发送
       if (!sendingState) {
         this.path();
       }

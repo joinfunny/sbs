@@ -3,7 +3,7 @@ var store = require('./store');
 var core = require('./core');
 var dom = require('./dom');
 var config = require('./config');
-
+var JSON = require('./JSON');
 
 var rxStream = {};
 rxStream._ = _;
@@ -72,36 +72,40 @@ var commonWays = {
         b_dollar_domain: _.info.referringDomain(location.href)
     }, compaignParams));*/
 
-    var h1s = document.body && document.body.getElementsByTagName('h1') || [],
+    var h1s = document.body && document.body.getElementsByTagName('h1'),
       pageH1 = '';
 
-    if (_.isArray(h1s) && h1s.length > 0) {
+    if (h1s && h1s.length && h1s.length > 0) {
       pageH1 = dom.innerText(h1s[0]);
     }
 
-    that.track("view_page", {
-      properties: _.extend({
-        b_page_referrer: document.referrer,
-        b_page_referrer_host: _.info.referringDomain(document.referrer),
-        b_page_url: location.href,
-        b_page_url_path: location.pathname,
-        b_page_title: document.title,
-        b_page_h1: pageH1,
-        b_browser_language: navigator.language
-      }, compaignParams),
-      subject: {},
-      object: {}
-    });
     //注册load事件是为了获取到页面资源加载完成时间
     dom.addEvent(window, 'load', function () {
       var pageLoadTime = commonWays.getStayTime();
       core.globalContext.set('pageLoadTime', pageLoadTime);
       _.log('页面加载时间：' + pageLoadTime);
+      that.track("view_page", {
+        properties: _.extend({
+          //b_page_referrer: document.referrer,
+          b_page_referrer_host: _.info.referringDomain(document.referrer),
+          b_page_url: location.href,
+          b_page_url_path: location.pathname,
+          b_page_load_time: pageLoadTime,
+          //b_page_title: document.title,
+          //b_page_h1: pageH1,
+          //b_browser_language: navigator.language
+        }, compaignParams),
+        subject: {},
+        object: {}
+      });
     });
     dom.addEvent(document, 'click', function (e) {
       var preset = dom.getClickPreset(e);
       preset && that.track(preset.event, {
-        properties: preset.properties,
+        properties: _.extend({
+          //b_page_title: document.title,
+          //b_page_h1: pageH1
+        }, preset.properties),
         subject: {},
         object: {}
       });
@@ -110,9 +114,14 @@ var commonWays = {
       var pageLoadTime = core.globalContext.get('pageLoadTime');
       var pageStayTime = commonWays.getStayTime();
       var scrollPos = dom.getPageScroll();
+      var pageSize = dom.getPageSize();
       var properties = _.extend({
         b_page_load_time: pageLoadTime,//页面加载时间
-        b_page_stay_time: pageStayTime//页面停留时间
+        b_page_stay_time: pageStayTime,//页面停留时间
+        b_page_height: pageSize.PageHeight,
+        b_page_width: pageSize.PageWidth,
+        //b_page_title: document.title,
+        //b_page_h1: pageH1
       }, scrollPos);
       //_.log('页面离开：' + JSON.stringify(properties));
       that.track('leave_page', {

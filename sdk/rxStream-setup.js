@@ -27,12 +27,12 @@
     win[sdkName].para = para;
   }
 })({
-  sdkUrl: '/sdk/rxStream.js',//此为我们要引入的SDK地址，此参数我们在SDK生成的时候已经输出了，可不用更改
+  sdkUrl: location.protocol+'//'+ window.$$rx.sdkUrl,//此为我们要引入的SDK地址，此参数我们在SDK生成的时候已经输出了，可不用更改
   sendLimit: 1,//SDK支持批量事件一次发送，默认我们设置的为1条事件就触发，这样可以保证事件收集的准确性与及时性。
   showLog: true,//是否在开发者工具的console中输出事件收集日志。
   name: 'rxStream',//外部系统调用时的全局变量名，客户可灵活调整。
   autoTrack: true,//是否开启自动事件收集，如果为true,则系统会自动收集浏览页面、点击按钮、点击链接、离开页面这四项基础事件。如果觉得没用的话，可以写为false.
-  serverUrl: window.$$rx.sdkServerUrl,//服务地址，不可更改。每个客户的serverUrl都不相同。
+  apiHost: location.protocol+'//'+ window.$$rx.sdkServerUrl,//服务地址，不可更改。每个客户的serverUrl都不相同。
   appId: window.$$rx.appId
 });
 
@@ -47,7 +47,7 @@
      * 浏览滚屏
      * 一些滚屏插件中需要调用此方法
      * 调用方式:开始滚屏时调用：
-     * sdk.__events.ViewScreenPage.begin(1);
+     * sdk.__events.ViewScreenPage.begin(index);
      * 滚屏结束事件中调用：sdk.__events.ViewScreenPage.end();
      */
     pageExchange: {
@@ -119,9 +119,18 @@
     view_analysis_list: {
       track: function (data) {
         var properties = {
-          b_analysis_type: ''
+          b_analysis_type: data.b_analysis_type
         };
         sdk.track('view_analysis_list', { properties: properties });
+      }
+    },
+    addOverview: {
+      track: function (data) {
+        var properties = {
+          b_overview_title: data.b_overview_title,
+          b_analysis_count: data.b_analysis_count
+        };
+        sdk.track('addOverview', { properties: properties });
       }
     }
   }

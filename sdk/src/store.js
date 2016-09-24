@@ -1,5 +1,6 @@
 var config = require('./config');
 var _ = require('./utils');
+var JSON=require('./JSON');
 
 var LIB_KEY = config.LIB_KEY;
 
