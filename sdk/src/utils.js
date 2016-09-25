@@ -128,6 +128,21 @@ _.includes = function (str, needle) {
   return str.indexOf(needle) !== -1;
 };
 
+_.arrayFilter = function (array, predicate) {
+  var index = -1,
+    length = array ? array.length : 0,
+    resIndex = 0,
+    result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (predicate(value, index, array)) {
+      result[resIndex++] = value;
+    }
+  }
+  return result;
+};
+
 _.inherit = function (subclass, superclass) {
   subclass.prototype = new superclass();
   subclass.prototype.constructor = subclass;

@@ -2,7 +2,7 @@ var config = require('./config');
 var _ = require('./utils');
 var store = require('./store');
 var md5 = require('./jMd5');
-var JSON=require('./JSON');
+var JSON = require('./JSON');
 
 /**
  * 监听器状态
@@ -171,6 +171,7 @@ module.exports = {
   globalContext: {
     state: {
     },
+    lock: false,
     eventPool: [],
     get: function (key) {
       return key ? this.state[key] : this.state;
@@ -182,30 +183,25 @@ module.exports = {
       var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool' + config.appId, []);
       return pool;
     },
-    getTempEventPool: function () {
+    /*getTempEventPool: function () {
       var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool_temp_' + config.appId, []);
       return pool;
-    },
+    },*/
     setEventPool: function (eventPool) {
       _.localStorage.set(config.LIB_KEY + 'EventPool' + config.appId, JSON.stringify(eventPool));
     },
-    setTempEventPool: function (eventPool) {
+    /*setTempEventPool: function (eventPool) {
       _.localStorage.set(config.LIB_KEY + 'EventPool_temp_' + config.appId, JSON.stringify(eventPool));
-    },
+    },*/
     /**
      * 事件入池
      */
     pushEvent: function (event) {
-      if (store.getSession(MONITORSTATE.AUTH)) {
-        var pool = this.getEventPool();
-        event.__UUID__ = _.UUID();
-        pool.push(event);
-        this.setEventPool(pool);
-      } else {
-        var tempPool = this.getTempEventPool();
-        tempPool.push(event);
-        this.setTempEventPool(tempPool);
-      }
+      event.__UUID__ = _.UUID();
+      event.sending = false;
+      var pool = this.getEventPool();
+      pool.push(event);
+      this.setEventPool(pool);
     }
   },
 
@@ -249,7 +245,7 @@ module.exports = {
     //data.domain = store.getDomain();
     _.searchObjDate(data);
 
-    _.log(JSON.stringify(data, null, 4));
+    _.log('追踪到事件：\r\n' + JSON.stringify(data, null, 4));
 
     //插入事件池
     this.globalContext.pushEvent(data);
@@ -268,6 +264,7 @@ module.exports = {
    * @param sendImmediately 是否立即发送：true/false
    */
   monitor: function (sendImmediately) {
+    var that = this;
     if (sendImmediately) {
       this.path(true);
       return;
@@ -287,15 +284,18 @@ module.exports = {
       }
     } else { //未授权或者授权失效
       if (!authingState) {
-        this.auth();
+        this.auth(function (authState) {
+          authState && that.path();
+        });
       }
     }
   },
   /**
    * TOKEN验证
+   * param cb 回调函数，在授权成功后可以进行的操作
    * 异步请求，等待返回。
    */
-  auth: function () {
+  auth: function (cb) {
 
     var url = config.apiHost + '/token/' + config.appId + '?randomId=' + store.getSessionId() + '&domain=' + store.getDomain();
 
@@ -305,9 +305,6 @@ module.exports = {
       url: url,
       type: "GET",
       cors: true,
-      /*data: JSON.stringify({
-          message: ""
-      }),*/
       success: function (data) {
         var result = data,
           authed = result.code === 200;
@@ -326,125 +323,75 @@ module.exports = {
       },
       complete: function (xhr) {
         store.setSession(MONITORSTATE.AUTHING, false);
+        var authState = store.getSession(MONITORSTATE.AUTH);
+        cb && cb(authState);
       }
     });
   },
   //支持两种发送模式：
-  //1、sendImmediately:立即发送模式，ajax同步的方式将监听数据发送
+  //1、sendImmediately:立即发送模式，ajax异步的方式发送事件数据，不对事件数据进行监听
   //2、lately:缓存发送模式，SDK判断缓存数据量，发送数据
-  path: function (sendImmediately) {
+  path: function (sendImmediately, cb) {
     var that = this,
       session = store.getSession(),
-      authed = session[MONITORSTATE.AUTH];
-    if (!authed) {
+      authed = session[MONITORSTATE.AUTH],
+      sendingState = session[MONITORSTATE.SENDING];
+
+    if (!authed || sendingState) {
       return;
     }
+
     var url = config.apiHost + '/receive',
-      limit = config.sendLimit || 1,
-      tempEventPool = that.globalContext.getTempEventPool(),
-      eventPool = that.globalContext.getEventPool();
-    //直接发送时，采用同步方式发送。
-    if (sendImmediately === true) {
-      //如果存在临时缓存数据，则将临时数据也加入发送队列，并将临时缓存清空保存
-      var tempData = tempEventPool.splice(0);
-      //如果当前有数据正在发送，则跳过正在发送的数据，将剩下的事件数据一次性全部发送
-      var data = session[MONITORSTATE.SENDING] && session[MONITORSTATE.SENDINGDATALEN] ? eventPool.splice(session[MONITORSTATE.SENDINGDATALEN]) : eventPool.splice(0);
-      that.globalContext.setTempEventPool(tempEventPool);
-      //将事件池的剩下的正在发送的事件清出队列，有一定的概率会丢掉这些尚在发送中的数据。不过这个目前不再考虑了。可以承受范围内的
-      that.globalContext.setEventPool(eventPool.splice(0));
-      //_.log(JSON.stringify(data));
-      var postData = that.getPackingEvents(data);
-      var index = 5000, flag = false;
-      _.ajax({
-        url: url,
-        type: "POST",
-        contentType: 'application/json',
-        cors: true,
-        //async: false, //同步请求
-        data: postData,
-        success: function (data) {
-          flag = true;
-        },
-        complete: function (data) {
-          flag = true;
-        }
-      });
-      while (index > 0 && flag === true) {
-        index -= 1;
-      }
-      return;
-    }
+      limit = config.sendLimit || 1;
 
-
-    if (eventPool.length < limit) {
-      return;
-    }
-
-    var data = Array.prototype.slice.call(eventPool, 0);
-
-    var postLength = data.length;
-    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
-    store.setSession(MONITORSTATE.SENDINGDATALEN, len + postLength);
-
-
-
-
-
-    //如果存在临时缓存数据，将临时数据加入发送队列中，并清空临时缓存
-    if (tempEventPool.length > 0) {
-      var tempData = tempEventPool.splice(0);
-      data = Array.prototype.concat.call(tempData, data);
-      that.globalContext.setTempEventPool(tempEventPool);
-    }
-
-    /*var postIds = [];
-    _.each(data, function (item) {
-      postIds.push(item.___UUID__);
-    });*/
-
-
+    //更新状态正在发送数据中
     store.setSession(MONITORSTATE.SENDING, true);
 
-    var postData = that.getPackingEvents(data);
+    var sendingEvents = that.getWaitSendEvents(),
+      postLength = sendingEvents.length,
+      i = 0,
+      dataIds = [];
+
+    if (!sendImmediately && postLength < limit) {
+      store.setSession(MONITORSTATE.SENDING, false);
+      return;
+    }
+
+    _.each(sendingEvents, function (item) {
+      item.sending = true;
+      dataIds.push(item.__UUID__);
+      i++;
+    });
+
+    var postEvents = that.getPackingEvents(sendingEvents);
+
     /**
      * 200 成功
      * 402 token失效
      * 403 传参错误
      * 500 系统错误
      */
-
-    //console.log(postData);
-    var _eventPool = that.globalContext.getEventPool();
-    Array.prototype.splice.call(_eventPool, 0, postLength);
-    //_.log(JSON.stringify());
-    that.globalContext.setEventPool(_eventPool);
-    var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
-    store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);
-
     _.ajax({
       url: url,
       type: "POST",
       cors: true,
       contentType: "application/json",
-      data: postData,
+      data: postEvents,
       success: function (data) {
         try {
           //返回空值：将请求体内的事件踢出栈
-          function exec() {
-            //将请求体内的事件踢出栈
-            /*var _eventPool = that.globalContext.getEventPool();
-            Array.prototype.splice.call(_eventPool, 0, postLength);
-            //_.log(JSON.stringify());
-            that.globalContext.setEventPool(_eventPool);
-            var len = store.getSession()[MONITORSTATE.SENDINGDATALEN] || 0;
-            store.setSession(MONITORSTATE.SENDINGDATALEN, len - postLength);*/
-          }
           if (_.isEmptyObject(data) || (data.code === 200)) {
-            exec();
+            that.removeSendedEvents(dataIds);
           } else if (data.code === 402) {
             //授权失效状态，重新发送授权
             store.setSession(MONITORSTATE.AUTH, false);
-            that.auth();
+            //进行授权请求，请求通过后发起一次事件发送
+            that.auth(function (authState) {
+              authState && that.path();
+            });
+          } else {
+            //发送失败，将本次发送的数据状态更新为未发送状态
+            that.resetUnsendedEvents(dataIds);
           }
         } catch (ex) {
           _.log('事件发送返回消息错误');
@@ -456,9 +403,51 @@ module.exports = {
       },
       complete: function () {
         store.setSession(MONITORSTATE.SENDING, false);
+        _.log('事件发送完毕.');
       }
     });
 
+    if (sendImmediately) {
+      that.removeSendedEvents(dataIds);
+      store.setSession(MONITORSTATE.SENDING, false);
+    }
+  },
+  /**
+   * 获取事件池内等待发送的数据
+   */
+  getWaitSendEvents: function () {
+    var that = this,
+      eventPool = that.globalContext.getEventPool(),
+      events = [];
+    events = _.arrayFilter(eventPool, function (event, index, arr) {
+      return !event.sending;
+    });
+    _.log('获取到待发送数据：\r\n' + JSON.stringify(events, null, 4));
+    return events;
+  },
+  /**
+   * 删除已经发送出去的事件
+   */
+  removeSendedEvents: function (sendedEventIds) {
+    var that = this,
+      eventPool = that.globalContext.getEventPool();
+    eventPool = _.arrayFilter(eventPool, function (event, index, arr) {
+      return sendedEventIds.indexOf(event.__UUID__) === -1;
+    });
+    that.globalContext.setEventPool(eventPool);
+  },
+  /**
+   * 重置发送失败的事件
+   */
+  resetUnsendedEvents: function (unSendedEventIds) {
+    var that = this,
+      eventPool = that.globalContext.getEventPool();
+    _.each(eventPool, function (event) {
+      if (unSendedEventIds.indexOf(event.__UUID__) >= 0) {
+        event.sending = false;
+      }
+    });
+    that.globalContext.setEventPool(eventPool);
   },
   getPackingEvents: function (events) {
     var session = store.getSession(),
@@ -482,6 +471,7 @@ module.exports = {
         "randomId": sessionId,
         "data": dataStr
       });
+    _.log('发送事件数据：\r\n' + JSON.stringify(events, null, 4));
     return postData;
   }
 };

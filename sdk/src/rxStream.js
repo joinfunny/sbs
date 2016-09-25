@@ -129,6 +129,8 @@ var commonWays = {
         subject: {},
         object: {}
       }, true);//离开页面时立即将事件池清空，全部发送
+      
+      setTimeout(function () {}, 100);
     });
   }
 };
