@@ -547,12 +547,12 @@ _.localStorage = {
   },
 
   parse: function (name, defaultValue) {
-    var storedValue;
-    try {
-      var value = _.localStorage.get(name);
-      storedValue = JSON.parse(value) || defaultValue || {};
-    } catch (err) { }
-    return storedValue;
+      var storedValue = defaultValue;
+      try {
+          var value = _.localStorage.get(name);
+          storedValue = JSON.parse(value) || defaultValue || {};
+      } catch (err) { }
+      return storedValue;
   },
 
   set: function (name, value) {

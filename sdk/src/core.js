@@ -16,6 +16,30 @@ var MONITORSTATE = {
   SENDINGDATALEN: 'monitor_sending_len'
 };
 
+var locker = {
+    _lockTimer: null,
+    _lockState: false,
+    cbs: [],
+    exec: function (cb) {
+        var that = this;
+        that.cbs.push(cb);
+        if (!that._lockTimer) {
+            that._lockTimer = setInterval(function () {
+                if (that._lockState || that.cbs.length <= 0) return;
+                that._lockState = true;
+                var callback = that.cbs.shift();
+                callback();
+                _.log('队列函数数量：' + that.cbs.length);
+                if (that.cbs.length === 0) {
+                    clearInterval(that._lockTimer);
+                    that._lockTimer = null;
+                }
+                that._lockState = false;
+            }, 0);
+        }
+    }
+};
+
 module.exports = {
   checkOption: {
     /**
@@ -171,7 +195,6 @@ module.exports = {
   globalContext: {
     state: {
     },
-    lock: false,
     eventPool: [],
     get: function (key) {
       return key ? this.state[key] : this.state;
@@ -183,25 +206,21 @@ module.exports = {
       var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool' + config.appId, []);
       return pool;
     },
-    /*getTempEventPool: function () {
-      var pool = _.localStorage.parse(config.LIB_KEY + 'EventPool_temp_' + config.appId, []);
-      return pool;
-    },*/
     setEventPool: function (eventPool) {
       _.localStorage.set(config.LIB_KEY + 'EventPool' + config.appId, JSON.stringify(eventPool));
     },
-    /*setTempEventPool: function (eventPool) {
-      _.localStorage.set(config.LIB_KEY + 'EventPool_temp_' + config.appId, JSON.stringify(eventPool));
-    },*/
     /**
      * 事件入池
      */
     pushEvent: function (event) {
+      var that = this;
       event.__UUID__ = _.UUID();
       event.sending = false;
-      var pool = this.getEventPool();
-      pool.push(event);
-      this.setEventPool(pool);
+      locker.exec(function(){
+          var pool = that.getEventPool();
+          pool.push(event);
+          that.setEventPool(pool);
+      });
     }
   },
 
@@ -219,6 +238,7 @@ module.exports = {
    * @param p 要发送的事件对象
    */
   send: function (props) {
+    var that = this;
     var data = {
       properties: {},
       subject: {},
@@ -248,13 +268,16 @@ module.exports = {
     _.log('追踪到事件：\r\n' + JSON.stringify(data, null, 4));
 
     //插入事件池
-    this.globalContext.pushEvent(data);
+    that.globalContext.pushEvent(data);
     //触发监听
     //原本monitor使用了定时器，但后来发觉如果用户开多个页面的时候每个页面上都会存在定时器来不断的触发事件发送，这样会丧失数据的一致性。并且性能会有很大影响
     //所以目前改为主动触发
     //事件分为两种类型：1、可缓存的事件，2、立即发送的事件。
     //遇到立即发送的事件，会直接发送当前事件池的所有事件，不管回调结果即清空事件池。
-    this.monitor(data.sly);
+    setTimeout(function () {
+        that.monitor(data.sly);
+    }, 10);
+    
   },
 
   /**
@@ -429,25 +452,29 @@ module.exports = {
    * 删除已经发送出去的事件
    */
   removeSendedEvents: function (sendedEventIds) {
-    var that = this,
-      eventPool = that.globalContext.getEventPool();
-    eventPool = _.arrayFilter(eventPool, function (event, index, arr) {
-      return sendedEventIds.indexOf(event.__UUID__) === -1;
+    var that = this;
+    locker.exec(function () {
+        var eventPool = that.globalContext.getEventPool();
+        eventPool = _.arrayFilter(eventPool, function (event, index, arr) {
+            return sendedEventIds.indexOf(event.__UUID__) === -1;
+        });
+        that.globalContext.setEventPool(eventPool);
     });
-    that.globalContext.setEventPool(eventPool);
   },
   /**
    * 重置发送失败的事件
    */
   resetUnsendedEvents: function (unSendedEventIds) {
-    var that = this,
-      eventPool = that.globalContext.getEventPool();
-    _.each(eventPool, function (event) {
-      if (unSendedEventIds.indexOf(event.__UUID__) >= 0) {
-        event.sending = false;
-      }
-    });
-    that.globalContext.setEventPool(eventPool);
+      var that = this;
+      locker.exec(function () {
+          var eventPool = that.globalContext.getEventPool();
+          _.each(eventPool, function (event) {
+              if (unSendedEventIds.indexOf(event.__UUID__) >= 0) {
+                  event.sending = false;
+              }
+          });
+          that.globalContext.setEventPool(eventPool);
+      });
   },
   getPackingEvents: function (events) {
     var session = store.getSession(),
