@@ -1,0 +1,17 @@
+{
+  "name": "rx-stream-fed",
+  "version": "2.1.0",
+  "description": "the rx stream front end project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "keywords": [
+    "rxStream",
+    "jsSdk",
+    "react",
+    "fed"
+  ],
+  "author": "jiangfeng",
+  "license": "ISC"
+}
