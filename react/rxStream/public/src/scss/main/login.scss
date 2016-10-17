@@ -1,0 +1,232 @@
+@import "../../scss/base";
+@include reset;
+
+$bg-white:#ffffff;
+$bg-blue:#59c8e2;
+$bg-orange:#fbb31b;
+$radius:3px;
+$loginHeight:510px;
+$regHeight:670px;
+
+@mixin public-button ($bg) {
+  height: 40px;
+  font-size: 14px;
+  line-height: 40px;
+  text-align: center;
+  background-color: $bg;
+  width: 100%;
+  border: 0;
+  border-radius: 2px;
+  display: block;
+  color: #ffffff;
+}
+
+html{
+  height: 100%;
+}
+
+body{
+  overflow: hidden;
+  font-family: 'Microsoft YaHei';
+  background:url("img/bg.jpg") no-repeat bottom center #222629;
+  height: 100%;
+}
+.login-warp{
+  position: absolute;
+  background-color: $bg-white;
+  border-radius: $radius;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  -webkit-box-shadow:0 0 10px rgba(0, 0, 0, .8);
+  -moz-box-shadow:0 0 10px rgba(0, 0, 0, .8);
+  box-shadow:0 0 10px rgba(0, 0, 0, .8);
+  transform-style: preserve-3d;
+  transition: all .5s ease-out;
+  -webkit-transition: all .5s ease-out;
+  -webkit-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  opacity: 0;
+  &.rotate{
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    opacity: 1;
+  }
+  &.login-w{
+    height: $loginHeight;
+    margin-top: -$loginHeight/2;
+  }
+  &.reg-w{
+    height: $regHeight;
+    margin-top: -$regHeight/2;
+  }
+  .login-header{
+    border-radius: $radius $radius 0 0;
+    text-align: right;
+    padding: 0 10px;
+    .header-icon{
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      &.help{
+        background: url("img/help-icon.png") no-repeat;
+        margin: 20px 10px 0 0;
+      }
+      &.close-new{
+        background: url("img/close-icon.png") no-repeat;
+        margin: 20px 10px 0 0;
+      }
+    }
+  }
+  .login-inner{
+    .login-header{
+      &.login-bg{
+        height: 140px;
+        background: url("img/login-head.png") $bg-blue no-repeat center 55px;
+        .header-icon.close-new{
+          display: none;
+        }
+      }
+    }
+  }
+  .reg-inner{
+    opacity: 0;
+    .login-header{
+      &.reg-bg{
+        height: 168px;
+        background: url("img/reg-head.png") no-repeat center 80px,url("img/reg-bg.png") no-repeat center bottom $bg-blue;
+      }
+    }
+    .input-area{
+      padding-bottom: 10px;
+      &.cut-line{
+        padding-top: 10px;
+      }
+    }
+    .button-area{
+      padding: 0 45px;
+      .back-login{
+        text-align:center;
+        padding:0px;
+      }
+    }
+    .reg-tips{
+      border-top: solid #eeeeee 1px;
+      text-align: center;
+      color: #c2c2c2;
+      margin-top: 5px;
+      padding-top: 20px;
+    }
+  }
+  .input-area{
+    border-bottom: solid #eeeeee 1px;
+    padding: 25px 45px;
+    &.cut-line{
+      border-bottom: 0;
+      padding-bottom: 8px;
+    }
+    li{
+      padding: 10px 0;
+      position: relative;
+      .global-tips{
+        position: absolute;
+        text-align: center;
+        color: $bg-orange;
+        top: -14px;
+        left: 0;
+        width: 100%;
+        display: none;
+      }
+      input{
+        border-radius: 2px;
+        border: solid #dedede 1px;
+        background-color: #f6f8f9;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        width: 100%;
+        text-indent: 1em;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+        outline: none;
+        &:focus{
+          border: solid $bg-blue 1px;
+        }
+        &.input-error{
+          border: solid $bg-orange 1px;
+        }
+        &.code{
+          width: 200px;
+        }
+        &.right{
+          background: url("img/yes-icon.png") no-repeat 284px 13px #f6f8f9;
+        }
+      }
+    }
+    .error-tips{
+      position: absolute;
+      background-color: $bg-orange;
+      white-space: nowrap;
+      height: 35px;
+      line-height: 35px;
+      padding: 0 15px;
+      color: #ffffff;
+      border-radius: 2px;
+      top: 13px;
+      left: 325px;
+      display: none;
+      ins{
+        position: absolute;
+        top: 10px;
+        left: -6px;
+        width: 0px;
+        height: 0px;
+        border-bottom: 7px solid transparent;
+        border-top: 7px solid transparent;
+        border-right: 7px solid $bg-orange;
+        font-size: 0px;
+        line-height: 0px;
+      }
+      i{font-style: normal;display: inline;}
+    }
+  }
+  .button-area{
+    padding: 25px 45px;
+    li{
+      padding: 10px 0;
+      position: relative;
+      .login-bt{
+        @include public-button($bg-orange);
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+        outline: none;
+        &.disabled{
+          background: #B4B4B4;
+          cursor: no-drop;
+          &:hover{
+            background: darken(#B4B4B4,5%);
+          }
+        }
+        &:hover{
+          background: darken($bg-orange,5%);
+        }
+      }
+      .go-reg-bt{
+        @include public-button($bg-blue);
+        &:hover{
+          background: darken($bg-blue,5%);
+          text-decoration: none;
+        }
+      }
+      .forget-pas{
+        position: absolute;
+        top: 65px;
+        right: 0;
+        color: #c2c2c2;
+      }
+    }
+  }
+}

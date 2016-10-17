@@ -1,0 +1,103 @@
+@import "../../../scss/base";
+
+$box-border: 1px solid #D2D2D2;
+$box-shadow: 2px 2px 2px rgba(0,0,0,.1);
+%box-shadow{ @include box-shadow($box-shadow); }
+%transition{ @include transition(all .38s ease-out 0s); }
+%transition-cubic-bezier{ @include transition(all .38s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s); }
+%transition-none{ @include transition(none); }
+%icon-32{ @include icon(32px); background-repeat:no-repeat; background-position:50%; }
+%icon-19{ @include icon(19px); background-repeat:no-repeat; background-position:50%; }
+%icon-12{ @include icon(12px); background-repeat:no-repeat; background-position:50%; }
+$body-bgc:#f0f0f0;
+$link-color:#1C9FE8;
+%left-triangle{ border-style: solid; border-width: 4px 6px 4px 0; border-color: transparent #4a90e2 transparent transparent; }
+%right-triangle{ border-style: solid; border-width: 4px 6px 4px 0; border-color: transparent #4a90e2 transparent transparent; }
+
+
+html, body { width: 100%; height: 100%; }
+body{ background-color:$body-bgc; font-family:$font-family-zh; color:#787878; }
+
+///**/
+$box-padding:4px;
+.overviews-wrapper{
+}
+.overview-list{padding:$box-padding;
+}
+.overview{ @extend %transition-cubic-bezier; @include transform(scale(1, 1)); position:relative; float:left; padding:4px; width:33.333%;
+	.overview-link{ position:relative; display:block; @extend %transition; @extend %box-shadow; border:$box-border; background-color:#fff; height:144px; cursor:pointer; color:#787878;
+	&:hover{ border-color:#00BAD5; background-color:#E5FCFF; text-decoration:none; }
+	}
+	.icon-remove{ @include icon(32px); position:absolute; z-index:2; top:10px; right:10px; background:url(img/trash.png) 50% no-repeat;
+	&:hover{ background-image:url(img/trash-red.png); }
+	}
+	.confirm-remove{ @extend %transition-cubic-bezier; @include transform(scale(0, 0)); @extend %abs-full; top:$box-padding; right:$box-padding; bottom:$box-padding; left:$box-padding; z-index:9; background-color:rgba(0,0,0,.8); color:#fff;
+		.tip{ text-align:center; line-height:144px; 
+		.icon-bang{ @include icon(20px); margin-right:6px; background:url(img/bang-red.png) 50% no-repeat; }
+		}
+		.btn-confirm-remove{ position:absolute; right:10px; bottom:10px; @include border-radius(2px); padding:0; width:64px; line-height:24px; background-color:#E52C58; color:#fff; }
+	}
+&.show-confirm-remove{
+&:hover{ z-index:2;
+	.confirm-remove{ @include transform(scale(1, 1)); }
+}
+}
+&.hide-overview{ @include transform(scale(0, 0)); }
+}
+.overview-new{
+	a{ background:#fff url(img/plus-gray.png) 50% no-repeat; 
+	&:hover{ background-image:url(img/plus.png); }
+	}
+}
+.icons-analysis{ overflow:hidden; float:left; border-right:$box-border; width:144px; height:100%;
+	ul{ width:144px; }
+	li{ float:left; border:1px solid #E6E6E6; border-width:0 1px 1px 0; width:48px; height:48px; background:url(img/diagram.png) 50% no-repeat; }
+	.icon-{ background-image:url(img/diagram.png); } //
+	.icon-diagram{ background-image:url(img/diagram.png); } // 曲线图
+	.icon-histogram{ background-image:url(img/histogram.png); } // 柱状图
+	.icon-piechart{ background-image:url(img/piechart.png); } // 饼图
+	.icon-funnel{ background-image:url(img/funnel.png); } // 漏斗图
+	.icon-retained{ background-image:url(img/retained.png); } // 留存分析
+	.icon-table{ background-image:url(img/table.png); } // 表格
+	.icon-revisit{ background-image:url(img/revisit.png); } // 回访频率
+}
+.overview-content{ overflow:hidden; padding:5px 12px; }
+.overview-header{ padding-right:26px; height:30px;
+	.overview-h{ line-height:30px; font-size:16px; font-weight:bold; @extend %text-ellipsis; }
+}
+.overview-body{ overflow:hidden; height:72px; padding:7px 0; line-height:20px;
+	.description{}
+}
+.overview-footer{ line-height:30px;
+	.last-update{
+		.date{}
+	}
+}
+
+
+@media (max-width: 1440px) and (min-width: 799px){
+	.overview {
+    	width: 50%;
+	}
+}
+@media (max-width: 799px){
+	.overview {
+    	width: 100%;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+// placeholder
+//----------------------------------------
+///* all */
+//::-webkit-input-placeholder { color:#f00; }
+//::-moz-placeholder { color:#f00; } /* firefox 19+ */
+//:-ms-input-placeholder { color:#f00; } /* Internet Explorer 10+ */
+//:-moz-placeholder { color:#f00; } /* firefox 14-18 */
+ 
+///*  webkit */
+//#field2::-webkit-input-placeholder { color:#00f; }
+//#field3::-webkit-input-placeholder { color:#090; background:lightgreen; text-transform:uppercase; }
+//#field4::-webkit-input-placeholder { font-style:italic; text-decoration:overline; letter-spacing:3px; color:#999; }
+// 
+///* mozilla */
+//#field2::-moz-placeholder { color:#00f; }
+//#field3::-moz-placeholder { color:#090; background:lightgreen; text-transform:uppercase; }
+//#field4::-moz-placeholder { font-style:italic; text-decoration:overline; letter-spacing:3px; color:#999; }
+
+
+@mixin placeholder($selector:input, $prefixes:$prefixes){
+  @each $prefix in $prefixes {
+
+    @if $prefix == webkit and $prefix-for-webkit == true {
+      #{$selector}::-webkit-input-placeholder { @content; }
+    }
+    @else if $prefix == moz and $prefix-for-mozilla == true {
+      #{$selector}::-moz-input-placeholder { @content; }
+      #{$selector}:-moz-input-placeholder { @content; }
+    }
+    @else if $prefix == ms and $prefix-for-microsoft == true {
+      #{$selector}:-ms-input-placeholder { @content; }
+    }
+    @else if $prefix == o and $prefix-for-opera == true {
+      #{$selector}::-o-input-placeholder { @content; }
+    }
+    @else if $prefix == spec and $prefix-for-spec == true {
+      #{$selector}::input-placeholder { @content; }
+    }
+    @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+

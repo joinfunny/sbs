@@ -1,0 +1,47 @@
+@import "base";
+
+
+/* base */
+html{-ms-touch-action: none;}
+html,body{ height:100%; }
+body{ font-family:$font-family-zh; }
+$mask-opacity: .29;
+%transition{ @include transition(all .1s ease-out 0s); }
+%transition-none{ @include transition(none); }
+.wrapper{ }
+.header{
+	h1{ }
+}
+.bodyer{ }
+.article{
+	.article-h{ }
+}
+.section{
+	.section-h{ }
+}
+.footer{ }
+.js{
+	.wrapper{ }
+}
+
+//@include ui-mask;
+//@import "../../scss/ui/loading/loading-annulus-rotate";
+//@import "../../scss/ui/loading/loading-bounce-circle";
+//@import "../../scss/ui/loading/loading-rotate-fade";
+//@import "../../scss/widget/image-browser";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

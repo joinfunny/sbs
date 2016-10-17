@@ -1,0 +1,8 @@
+// background-size
+//----------------------------------------
+///*
+//	background-size: auto || <length> || <percentage> || cover || contain
+//*/
+@mixin background-size($size:cover, $prefixes:$prefixes){
+	@include prefixer(background-size, $size, $prefixes);
+}

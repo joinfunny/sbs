@@ -1,0 +1,19 @@
+
+///* 
+//'<div class="mask"><div class="mask-layer"></div><div class="loading loading-annulus-rotate">' + 
+//		'12'.split('').map(function(i){ return '<i class="l-' + i + '"></i>' }).join('') + 
+//		'</div></div>'
+// */
+.loading-annulus-rotate{ @include absmiddle(120px); z-index:2;
+	i{ @extend %abs-tl; border:10px solid #fff; width:100px; height:100px; border-radius:50%; }
+	.l-1{ @include opacity(.2);}
+	.l-2{ border-color:#fff #fff transparent transparent; @include animation(loading-annulus-rotate 0.62s ease-in-out 0s infinite); }
+}
+@mixin prefixer-content($prefixes:$prefixes){
+	0%{ @include transform(rotate(0deg), $prefixes); }
+	100%{ @include transform(rotate(360deg), $prefixes); }
+}
+@include keyframes-prefixer-content(loading-annulus-rotate);
+
+
+

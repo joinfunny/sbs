@@ -1,0 +1,4 @@
+///* reset mobile font-size */
+html{font-size: 6.25vw;}
+@media screen and (max-device-width:320px){ html{font-size:20px;} }
+@media screen and (min-device-width:480px){ html{font-size:30px;} }
