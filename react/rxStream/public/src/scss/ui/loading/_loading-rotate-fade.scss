@@ -1,0 +1,24 @@
+
+///* 
+//'<div class="mask"><div class="mask-layer"></div><div class="loading loading-rotate-fade">' + 
+//		'12345678'.split('').map(function(i){ return '<i class="l-' + i + '"></i>' }).join('') + 
+//		'</div></div>'
+// */
+.loading-rotate-fade{ @include absmiddle(62px, 77px); z-index:2;
+	i{ position:absolute; width:10px; height:24px; background-color:#fff; border-radius:8px 8px 0 0; @include opacity(0); @include animation(loading-rotate-fade 3s ease-in-out 0s infinite alternate); @include animation-duration(1s); }
+	.l-1{ left:0px; top:28px; @include transform(rotate(-90deg)); @include animation-delay(0.0s); }
+	.l-2{ left:8px; top:10px; @include transform(rotate(-45deg)); @include animation-delay(0.2s); }
+	.l-3{ left:26px; top:3px; @include transform(rotate(0deg)); @include animation-delay(0.4s); }
+	.l-4{ right:8px; top:10px; @include transform(rotate(45deg)); @include animation-delay(0.8s); }
+	.l-5{ right:0px; top:28px; @include transform(rotate(90deg)); @include animation-delay(1.0s); }
+	.l-6{ right:8px; bottom:7px; @include transform(rotate(135deg)); @include animation-delay(1.2s); }
+	.l-7{ left:26px; bottom:0px; @include transform(rotate(180deg)); @include animation-delay(1.4s); }
+	.l-8{ left:8px; bottom:7px; @include transform(rotate(-135deg)); @include animation-delay(1.6s); }
+}
+@mixin prefixer-content($prefixes:$prefixes){
+	0%{ @include opacity(0, $prefixes); }
+	100%{ @include opacity(0, $prefixes); }
+}
+@include keyframes-prefixer-content(loading-rotate-fade);
+
+

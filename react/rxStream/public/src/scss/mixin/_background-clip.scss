@@ -1,0 +1,8 @@
+// background-clip
+//----------------------------------------
+///*
+//	background-clip: border-box|padding-box|content-box;
+//*/
+@mixin background-clip($clip:border-box, $prefixes:$prefixes){
+	@include prefixer(background-clip, $clip, $prefixes);
+}

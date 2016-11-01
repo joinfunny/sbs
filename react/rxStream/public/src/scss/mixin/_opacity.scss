@@ -1,0 +1,7 @@
+// opacity
+//----------------------------------------
+@mixin opacity($opacity:1, $prefixes:$prefixes){
+	@include prefixer(opacity, $opacity, $prefixes);
+//	filter:alpha(opacity=#{$opacity * 100});
+//	-ms-filter:alpha(opacity=#{$opacity*100});
+}

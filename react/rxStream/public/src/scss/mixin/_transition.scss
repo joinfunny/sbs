@@ -1,0 +1,19 @@
+//@import "prefixer";
+
+///* 
+// http://www.w3cplus.com/content/css3-transition
+// http://cubic-bezier.com/
+//
+//    transition : [<'transition-property'> || <'transition-duration'> || <'transition-timing-function'> || <'transition-delay'> [, [<'transition-property'> || <'transition-duration'> || <'transition-timing-function'> || <'transition-delay'>]]* 
+//
+//    transition-property : none | all | [ <IDENT> ] [ ',' <IDENT> ]*
+//
+//    transition-duration : <time> [, <time>]*
+//
+//    transition-timing-function : ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>) [, ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier(<number>, <number>, <number>, <number>)]* 
+//
+//    transition-duration : <time> [, <time>]* 
+// */ 
+@mixin transition($value:all .38s ease-in 0s, $prefixes:$prefixes){
+	@include prefixer(transition, $value, $prefixes);
+}

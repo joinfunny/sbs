@@ -1,0 +1,43 @@
+//@import "prefixer";
+
+// pre-wrap
+//----------------------------------------
+///*
+//	http://www.w3cplus.com/content/css3-gradient
+//
+//	linear-gradient( [<point> || <angle>,]? <stop>, <stop> [, <stop>]* )
+//	background: linear-gradient( left, rgba(255,255,255,0) 5%, rgba(255,255,255,1) 80%), url(bg.png) 50% 0 repeat-y;
+//*/
+@mixin linear-gradient($value, $prefixes:$prefixes){
+	@include prefixer-value(background, linear-gradient(#{$value}), $prefixes);
+}
+
+
+///*	radial-gradient([<bg-position> || <angle>,]? [<shape> || <size>,]? <color-stop>, <color-stop>[, <color-stop>]*);
+//	background: radial-gradient(#ace 5%, #f96 25%, #1E90FF 50%);
+//	background: radial-gradient(contain, #ace, #f96, #1E90FF);
+//	background: radial-gradient(bottom left, circle, #ace, #f96, #1E90FF);
+//	background: radial-gradient(bottom left, ellipse, #ace, #f96, #1E90FF);
+//	background: radial-gradient(ellipse closest-side, #ace, #f96 10%, #1E90FF 50%, #f96);
+//	background: radial-gradient(ellipse farthest-corner, #ace, #f96 10%, #1E90FF 50%, #f96);
+//	background: radial-gradient(80% 20%, closest-corner, #ace, #f96);
+//*/
+@mixin radial-gradient($value, $prefixes:$prefixes){
+	@include prefixer-value(background, radial-gradient(#{$value}), $prefixes);
+}
+
+	
+///*	
+//	background: repeating-radial-gradient(#ace, #ace 5px, #f96 5px, #f96 10px);
+//	*/
+@mixin repeating-radial-gradient($value, $prefixes:$prefixes){
+	@include prefixer-value(background, repeating-radial-gradient(#{$value}), $prefixes);
+}
+
+	
+///*	
+//	background: repeating-linear-gradient(top left -45deg, #ace, #ace 5px, #f96 5px, #f96 10px);
+//	*/
+@mixin repeating-linear-gradient($value, $prefixes:$prefixes){
+	@include prefixer-value(background, repeating-linear-gradient(#{$value}), $prefixes);
+}

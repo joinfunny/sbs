@@ -1,0 +1,8 @@
+
+///* 下拉选择框 */
+%dropdown-bottom-triangle{ border-style: solid; border-width: 5px 4px 0 4px; border-color: #A0A0A0 transparent transparent transparent; }
+.dropdown-select{ position:relative; @extend %li-btn-item; outline:none; border:0px; line-height:28px; cursor: pointer; padding:0 20px 0 10px; width:auto; background-color:#FAFAFC;
+&:after{ content:" "; @extend %dropdown-bottom-triangle; position:absolute; top:50%; right:0; margin:-3px 6px 0 0; }
+&.open, &:focus, &:hover{ border-color:#B4B4B4; }
+&.open:after, &:focus:after, &:hover:after{ border-top-color:#858585; }
+}

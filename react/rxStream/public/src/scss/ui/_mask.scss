@@ -1,0 +1,14 @@
+///*
+//'<div class="ui-mask"><div class="ui-mask-layer"></div></div>'
+//*/
+@mixin ui-mask($bgc:#000, $opacity:.62){
+%ui-mask{ overflow:hidden; @extend %abs-full; width:100%; height:100%; }
+.ui-mask{ @extend %ui-mask; display:none; z-index:32766;
+&.ui-mask-show{ display:block; }
+}
+.ui-mask-layer{ @extend %ui-mask; background-color:$bgc; @include opacity($opacity); }
+}
+
+
+
+

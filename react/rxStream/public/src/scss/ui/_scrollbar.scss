@@ -1,0 +1,154 @@
+///* Scrollbar
+//
+//::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的
+//::-webkit-scrollbar-button 滚动条两端的按钮
+//::-webkit-scrollbar-track  外层轨道
+//::-webkit-scrollbar-track-piece  内层滚动槽
+//::-webkit-scrollbar-thumb 滚动的滑块
+//::-webkit-scrollbar-corner 边角
+//::-webkit-resizer 定义右下角拖动块的样式
+//
+//上面是滚动条的主要几个设置属性，还有更详尽的CSS属性
+//
+//:horizontal 水平方向的滚动条
+//
+//:vertical 垂直 方向的滚动条
+//
+//:decrement 应用于按钮和内层轨道(track piece)。它用来指示按钮或者内层轨道是否会减小视窗的位置(比如，垂直滚动条的上面，水平滚动条的左边。)
+//
+//:increment decrement类似，用来指示按钮或内层轨道是否会增大视窗的位置(比如，垂直滚动条的下面和水平滚动条的右边。)
+//
+//:start 伪类也应用于按钮和滑块。它用来定义对象是否放到滑块的前面。
+//
+//:end 类似于start伪类，标识对象是否放到滑块的后面。
+//
+//:double-button  该伪类以用于按钮和内层轨道。用于判断一个按钮是不是放在滚动条同一端的一对按钮中的一个。对于内层轨道来说，它表示内层轨道是否紧靠一对按钮。
+//
+//:single-button 类似于double-button伪类。对按钮来说，它用于判断一个按钮是否自己独立的在滚动条的一段。对内层轨道来说，它表示内层轨道是否紧靠一个single-button。
+//
+//:no-button 用于内层轨道，表示内层轨道是否要滚动到滚动条的终端，比如，滚动条两端没有按钮的时候。
+//
+//:corner-present  用于所有滚动条轨道，指示滚动条圆角是否显示。
+//
+//:window-inactive 用于所有的滚动条轨道，指示应用滚动条的某个页面容器(元素)是否当前被激活。(在webkit最近的版本中，该伪类也可以用于::selection伪元素。webkit团队有计划扩展它并推动成为一个标准的伪类)
+//
+//*/
+
+///* HTML
+//
+//<!-- 滚动条整体部分，可以设置宽度啥的 -->
+//<div class="-scrollbar">
+//<!-- 滚动条两端的按钮 -->
+//<div class="-scrollbar-button-start"></div>
+//<div class="-scrollbar-button-end"></div>
+//<!--  外层轨道 -->
+//<div class="-scrollbar-track"></div>
+//<!--  内层滚动槽 -->
+//<div class="-scrollbar-track-piece"></div>
+//<!-- 滚动的滑块 -->
+//<div class="-scrollbar-thumb"></div>
+//<!-- 边角 -->
+//<div class="-scrollbar-corner"></div>
+//<!-- 定义右下角拖动块的样 -->
+//<div class="-resizer"></div>
+//</div>
+//
+//*/
+
+///* customize scrollbar appearence */
+@mixin scrollbar($selector-x:"*", $selector-y:$selector-x, $width:5px, $height:$width, $background-x:rgba(0,0,0,.2), $background-y:$background-x){
+#{$selector-y}::-webkit-scrollbar {
+    width: $width;
+	//border-radius:#{$width/2};
+	//background:$background-y;
+	//box-shadow:inset 1px 1px 2px rgba(0,0,0,.4);
+}
+#{$selector-x}::-webkit-scrollbar {
+    height: $height;
+	//border-radius:#{$height/2};
+	//background:$background-y;
+	//box-shadow:inset 1px 1px 2px rgba(0,0,0,.4);
+}
+#{$selector-y}::-webkit-scrollbar-track{
+//	background:url(../img/scrollbar/scrollbar-bg.png) 0 50% repeat-y;
+//	background-size:16px auto;
+}
+#{$selector-x}::-webkit-scrollbar-track{
+//	background:url(../img/scrollbar/scrollbar-bg-x.png) 0 50% repeat-y;
+//	background-size:16px auto;
+}
+#{$selector-y}::-webkit-scrollbar-button:start{
+//	height:16px;
+}
+#{$selector-x}::-webkit-scrollbar-button:horizontal:start{
+//	width:16px;
+//	background:url(../img/scrollbar/scrollbar-button-start-x.png) 50% 50% no-repeat;
+//	background-size:100% auto;
+}
+#{$selector-y}::-webkit-scrollbar-button:end{
+//	height:16px;
+//	background:url(../img/scrollbar/scrollbar-button-end.png) 50% 50% no-repeat;
+//	background-size:100% auto;
+}
+#{$selector-x}::-webkit-scrollbar-button:end{
+//	width:16px;
+//	background:url(../img/scrollbar/scrollbar-button-end-x.png) 50% 50% no-repeat;
+//	background-size:100% auto;
+}
+#{$selector-y}::-webkit-scrollbar-thumb {
+	border-radius:#{$width/2};
+//	border-width:8px 0 8px 0;
+//	border-image:url(../img/scrollbar/scrollbar-thumb.png) 8 0 8 0 fill;
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat;
+//	background-size:100% 100%;
+//	border:1px solid transparent;
+//	border-radius: 8px;
+	background-color:#4098C6;
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -webkit-linear-gradient(top, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -moz-linear-gradient(top, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -ms-linear-gradient(top, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -o-linear-gradient(top, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, linear-gradient(top, #48ACE0, #4098C6, #3784AC);
+//	box-shadow:0px 1px 1px rgba(0,0,0,.3);
+//  margin:auto 2px;
+}
+#{$selector-x}::-webkit-scrollbar-thumb {
+	border-radius:#{$width/2};
+//	border-width:8px 0 8px 0;
+//	border-image:url(../img/scrollbar/scrollbar-thumb-x.png) 8 0 8 0 fill;
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat;
+//	background-size:100% 100%;
+//	border:1px solid transparent;
+//	border-radius: 8px;
+	background-color:#a3b0c4;
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -webkit-linear-gradient(left, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -moz-linear-gradient(left, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -ms-linear-gradient(left, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -o-linear-gradient(left, #48ACE0, #4098C6, #3784AC);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, linear-gradient(left, #48ACE0, #4098C6, #3784AC);
+//	box-shadow:0px 1px 1px rgba(0,0,0,.3);
+//  margin:2px auto;
+}
+#{$selector-y}::-webkit-scrollbar-thumb:hover{
+//	background-image:url(../img/scrollbar/scrollbar-thumb-hover.png);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -webkit-linear-gradient(top, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -moz-linear-gradient(top, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -ms-linear-gradient(top, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, -o-linear-gradient(top, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg.png) 50% 50% no-repeat, linear-gradient(top, #2ED8FF, #21B9FF, #1195D9);
+}
+#{$selector-x}::-webkit-scrollbar-thumb:hover{
+//	background-image:url(../img/scrollbar/scrollbar-thumb-hover-x.png);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -webkit-linear-gradient(left, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -moz-linear-gradient(left, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -ms-linear-gradient(left, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, -o-linear-gradient(left, #2ED8FF, #21B9FF, #1195D9);
+//	background:url(../img/scrollbar/scrollbar-thumb-bg-x.png) 50% 50% no-repeat, linear-gradient(left, #2ED8FF, #21B9FF, #1195D9);
+}
+#{$selector-y}::-webkit-scrollbar-thumb:window-inactive{
+//	background-image:url(../img/scrollbar/scrollbar-thumb-inactive.png);
+}
+#{$selector-x}::-webkit-scrollbar-thumb:window-inactive{
+//	background-image:url(../img/scrollbar/scrollbar-thumb-inactive-x.png);
+}
+}

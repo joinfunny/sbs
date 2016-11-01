@@ -1,0 +1,23 @@
+
+@mixin absmiddle($width, $height:$width) { position:absolute; top:50%; left:50%; margin:-#{$height / 2} 0 0 -#{$width / 2}; width:$width; height:$height; }
+@mixin fixedmiddle($width, $height:$width) { position:fixed; top:50%; left:50%; margin:-#{$height / 2} 0 0 -#{$width / 2}; width:$width; height:$height; }
+@mixin absolute($size:0){ position:absolute; top:$size; right:$size; bottom:$size; left:$size; }
+@mixin fixed($size:0){ position:fixed; top:$size; right:$size; bottom:$size; left:$size; }
+%abs-full { position:absolute; top:0; right:0; bottom:0; left:0; }
+%abs-tr { position:absolute; top:0; right:0; }
+%abs-tr-full { position:absolute; top:0; right:0; width:100%; height:100%; }
+%abs-rb { position:absolute; right:0; bottom:0; }
+%abs-rb-full { position:absolute; right:0; bottom:0; width:100%; height:100%; }
+%abs-bl { position:absolute; bottom:0; left:0; }
+%abs-bl-full { position:absolute; bottom:0; left:0; width:100%; height:100%; }
+%abs-tl { position:absolute; top:0; left:0; }
+%abs-tl-full { position:absolute; top:0; right:0; width:100%; height:100%; }
+%fixed-full { position:fixed; top:0; right:0; bottom:0; left:0; }
+%fixed-tr { position:fixed; top:0; right:0; }
+%fixed-tr-full { position:fixed; top:0; right:0; width:100%; height:100%; }
+%fixed-rb { position:fixed; right:0; bottom:0; }
+%fixed-rb-full { position:fixed; right:0; bottom:0; width:100%; height:100%; }
+%fixed-bl { position:fixed; bottom:0; left:0; }
+%fixed-bl-full { position:fixed; bottom:0; left:0; width:100%; height:100%; }
+%fixed-tl { position:fixed; top:0; left:0; }
+%fixed-tl-full { position:fixed; top:0; left:0; width:100%; height:100%; }

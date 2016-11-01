@@ -1,0 +1,46 @@
+
+///* Image full screen show 
+//
+//<div class="image-browser"><img class="thumbnail"><img class="original-image"></div>
+//<div class="image-browser start-mask"><img class="thumbnail"><img class="original-image"></div>
+//<div class="image-browser loading-original-image"><img class="thumbnail"><img class="original-image"></div>
+//<div class="image-browser original-image-loaded"><img class="thumbnail"><img class="original-image"></div>
+//
+//*/
+
+.image-browser{ overflow:hidden; @extend %fixed-full; z-index:9999; background-color:#000; @include opacity(0);
+	@include transition(all .38s ease-out 0s); @include transform(scale(.62,.62));
+	img{ position:absolute; }
+	.thumbnail{ visibility:hidden; }
+	.original-image{ z-index:999; }
+	&.loading-original-image{
+		.thumbnail{ visibility:visible; }
+		.original-image{ visibility:hidden; }
+		&:before{ content:" "; @include absmiddle(16px); z-index:99; background:url(../img/loading/05043118.gif) 50% no-repeat; @include background-size; }
+	}
+	&.original-image-loaded{
+		.thumbnail{ }
+		.original-image{ @include transition(transform .38s ease-in 0s); }
+	}
+	&.start-mask{ @include opacity(1); @include transform(scale(1,1)); }
+	&.panstart, &.pinchstart{
+		.original-image{ @include transition(none); }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

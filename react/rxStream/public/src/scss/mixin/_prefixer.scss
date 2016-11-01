@@ -1,0 +1,55 @@
+//@import "../$/prefixes";
+
+// property prefixer
+//----------------------------------------
+@mixin prefixer ($property, $value, $prefixes:$prefixes) {
+  $transform: nth($value,1) == 'transform';
+  @each $prefix in $prefixes {
+
+    @if $prefix == webkit and $prefix-for-webkit == true {
+      -webkit-#{$property}: #{if($transform, -webkit-#{$value}, $value)};
+    }
+    @else if $prefix == moz and $prefix-for-mozilla == true {
+      -moz-#{$property}: #{if($transform, -moz-#{$value}, $value)};
+	  
+    }
+    @else if $prefix == ms and $prefix-for-microsoft == true {
+      -ms-#{$property}: #{if($transform, -ms-#{$value}, $value)};
+    }
+    @else if $prefix == o and $prefix-for-opera == true {
+      -o-#{$property}: #{if($transform, -o-#{$value}, $value)};
+    }
+    @else if $prefix == spec and $prefix-for-spec == true {
+      #{$property}: $value;
+    }
+    @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
+
+// property's value prefixer
+//----------------------------------------
+@mixin prefixer-value ($property, $value, $prefixes:$prefixes) {
+  @each $prefix in $prefixes {
+
+    @if $prefix == webkit and $prefix-for-webkit == true {
+      #{$property}: -webkit-#{$value};
+    }
+    @else if $prefix == moz and $prefix-for-mozilla == true {
+      #{$property}: -moz-#{$value};
+    }
+    @else if $prefix == ms and $prefix-for-microsoft == true {
+      #{$property}: -ms-#{$value};
+    }
+    @else if $prefix == o and $prefix-for-opera == true {
+      #{$property}: -o-#{$value};
+    }
+    @else if $prefix == spec and $prefix-for-spec == true {
+      #{$property}: $value;
+    }
+    @else {
+      @warn "Unrecognized prefix: #{$prefix}";
+    }
+  }
+}
