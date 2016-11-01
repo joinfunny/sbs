@@ -63,7 +63,8 @@ gulp.task("lib", function () {
             opts.srcDir + '/js/lib/lodash/lodash.js',
             opts.srcDir + '/js/lib/react/react.js',
             opts.srcDir + '/js/lib/react/react-dom.js',
-            opts.srcDir + '/js/lib/react/react-with-addons.js'
+            opts.srcDir + '/js/lib/react/react-with-addons.js',
+            opts.srcDir + '/js/lib/react/react-router.js'
         ])
         .pipe(concat('lib.js'))
         .pipe(gulp.dest(opts.buildDir + '/js/lib/'));
@@ -115,7 +116,8 @@ gulp.task("clean", function () {
 })
 
 
-gulp.task("webpack", shell.task(['webpack -p --progress --colors']));
+gulp.task("webpack-p", shell.task(['webpack -p --progress --colors']));
+gulp.task("webpack-u", shell.task(['webpack --progress --colors']));
 gulp.task("webpack-dev-server", shell.task(['webpack-dev-server --content-base ./public']));
 
 gulp.task('default', ['webpack-dev-server', 'sassfile', 'watchsass']);
@@ -124,6 +126,6 @@ gulp.task('build', gulpSequence(
     'clean',
     'sassfile',
     ['copy:css', 'copy:img', 'copy:js','copy:html'],
-    'webpack'
+    'webpack-u'
 ));
 
