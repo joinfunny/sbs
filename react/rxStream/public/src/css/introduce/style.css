@@ -127,6 +127,7 @@ body {
   width: 227px;
   height: 41px;
   background: url(img/TT_01.png) no-repeat; }
+
 .m-page-01 .main-line {
   top: 50%;
   position: absolute;
@@ -485,6 +486,7 @@ body {
     line-height: 24px;
     color: #FFFFFF;
     opacity: 0.8; }
+
 .m-page-04 .icon {
   top: 50%;
   position: absolute;
@@ -607,6 +609,7 @@ body {
       position: absolute;
       z-index: 10;
       cursor: pointer; }
+
 @keyframes yuan {
   from {
     margin-top: -1px;
@@ -792,6 +795,7 @@ body {
     line-height: 24px;
     color: #FFFFFF;
     opacity: 0.8; }
+
 .m-page-06 .menu {
   z-index: 8;
   top: 50%;
@@ -811,6 +815,7 @@ body {
     width: 130px;
     height: 47px;
     background: url(img/menu_text.png) center no-repeat; }
+
 .m-page-06 .video-bg {
   z-index: 1;
   position: absolute;

@@ -3,6 +3,7 @@
   font-family: 'Glyphicons Halflings';
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot");
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+
 .glyphicon {
   position: relative;
   top: 1px;
@@ -1009,7 +1010,8 @@ th {
     -ms-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     -o-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
-  .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  .btn.disabled, .btn[disabled],
+  fieldset[disabled] .btn {
     cursor: not-allowed;
     -webkit-opacity: 0.65;
     -moz-opacity: 0.65;
@@ -1021,7 +1023,8 @@ th {
     -ms-box-shadow: none;
     -o-box-shadow: none;
     box-shadow: none; }
-  .btna.disabled, fieldset[disabled] .btna {
+  .btna.disabled,
+  fieldset[disabled] .btna {
     pointer-events: none; }
 
 .btn-default {
@@ -1202,7 +1205,8 @@ th {
   color: #337ab7;
   font-weight: normal;
   border-radius: 0; }
-  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
+  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled],
+  fieldset[disabled] .btn-link {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -1215,7 +1219,9 @@ th {
     color: #23527c;
     text-decoration: underline;
     background-color: transparent; }
-  .btn-link[disabled]:hover, .btn-link[disabled]:focus, fieldset[disabled] .btn-link:hover, fieldset[disabled] .btn-link:focus {
+  .btn-link[disabled]:hover, .btn-link[disabled]:focus,
+  fieldset[disabled] .btn-link:hover,
+  fieldset[disabled] .btn-link:focus {
     color: #777777;
     text-decoration: none; }
 
@@ -2238,8 +2244,10 @@ button * {
   bottom: 17px;
   left: 23px;
   width: 28px; }
+
 .panel-filter-conditions .li-btn-item {
   white-space: nowrap; }
+
 .panel-filter-conditions .options-relation-btn {
   display: none;
   position: absolute;
@@ -2256,6 +2264,7 @@ button * {
   border: 1px solid #ccc;
   background-color: #fff;
   cursor: pointer; }
+
 .panel-filter-conditions .linkage-box {
   display: -moz-inline-box;
   display: inline-block;
@@ -2280,6 +2289,7 @@ button * {
       border: none;
       width: 150px;
       height: 24px; }
+
 .panel-filter-conditions input[type^=date] {
   width: 120px; }
 
@@ -2287,6 +2297,7 @@ button * {
   padding-left: 50px; }
   .show-options-relation .filter-option-list:before {
     display: block; }
+
 .show-options-relation .options-relation-btn {
   display: block; }
 
@@ -2396,6 +2407,7 @@ button * {
 
 .drag-btn-list .condition-btn {
   /* 按钮禁用拖拽 */ }
+
 .drag-btn-list .li-btn-item.drag-btn-item .condition-btn {
   /*@extend %transition-quick; @include opacity(0);*/ }
 
@@ -2470,29 +2482,35 @@ button * {
     outline-color: #f90; }
   100% {
     outline-color: transparent; } }
+
 @-moz-keyframes drop-hint {
   0% {
     outline-color: #f90; }
   100% {
     outline-color: transparent; } }
+
 @-ms-keyframes drop-hint {
   0% {
     outline-color: #f90; }
   100% {
     outline-color: transparent; } }
+
 @-o-keyframes drop-hint {
   0% {
     outline-color: #f90; }
   100% {
     outline-color: transparent; } }
+
 @keyframes drop-hint {
   0% {
     outline-color: #f90; }
   100% {
     outline-color: transparent; } }
+
 /* 行为事件分析 */
 #Event_analysis .panel-filter-events, #Funnel_analysis .panel-filter-events {
   width: 25%; }
+
 #Event_analysis .label-checkbox-total, #Funnel_analysis .label-checkbox-total {
   display: block; }
 
@@ -2532,6 +2550,7 @@ button * {
     #Funnel_analysis .filter-conditions-actived .panel-filter-events, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-events, #Worth_analysis .filter-conditions-hint .panel-filter-events,
     #Worth_analysis .filter-conditions-actived .panel-filter-events, #Worth_analysis .filter-conditions-mouseenter .panel-filter-events {
       width: 20%; } }
+
 /* 1440*900 */
 @media (max-width: 1439px) {
   #Event_analysis, #Funnel_analysis, #Worth_analysis {
@@ -2543,6 +2562,7 @@ button * {
     #Funnel_analysis .filter-conditions-actived .panel-filter-events, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-events, #Worth_analysis .filter-conditions-hint .panel-filter-events,
     #Worth_analysis .filter-conditions-actived .panel-filter-events, #Worth_analysis .filter-conditions-mouseenter .panel-filter-events {
       width: 20%; } }
+
 /* 1366*768 | 1364*768 */
 @media (max-width: 1363px) {
   #Event_analysis, #Funnel_analysis, #Worth_analysis {
@@ -2554,6 +2574,7 @@ button * {
     #Funnel_analysis .filter-conditions-actived .panel-filter-events, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-events, #Worth_analysis .filter-conditions-hint .panel-filter-events,
     #Worth_analysis .filter-conditions-actived .panel-filter-events, #Worth_analysis .filter-conditions-mouseenter .panel-filter-events {
       width: 20%; } }
+
 /* 1280*1024 | 1280*800 | 1280*720 */
 @media (max-width: 1279px) {
   #Event_analysis .filter-events-hint .panel-filter-events, #Event_analysis .filter-events-actived .panel-filter-events, #Event_analysis .filter-events-mouseenter .panel-filter-events, #Funnel_analysis .filter-events-hint .panel-filter-events, #Funnel_analysis .filter-events-actived .panel-filter-events, #Funnel_analysis .filter-events-mouseenter .panel-filter-events, #Worth_analysis .filter-events-hint .panel-filter-events, #Worth_analysis .filter-events-actived .panel-filter-events, #Worth_analysis .filter-events-mouseenter .panel-filter-events {
@@ -2572,6 +2593,7 @@ button * {
     width: 20%; }
   #Event_analysis .filter-conditions-actived .panel-filter-attrs, #Event_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Funnel_analysis .filter-conditions-actived .panel-filter-attrs, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Worth_analysis .filter-conditions-actived .panel-filter-attrs, #Worth_analysis .filter-conditions-mouseenter .panel-filter-attrs {
     width: 15%; } }
+
 /* 1152*864 */
 @media (max-width: 1151px) {
   #Event_analysis .filter-events-hint .panel-filter-events, #Event_analysis .filter-events-actived .panel-filter-events, #Event_analysis .filter-events-mouseenter .panel-filter-events, #Funnel_analysis .filter-events-hint .panel-filter-events, #Funnel_analysis .filter-events-actived .panel-filter-events, #Funnel_analysis .filter-events-mouseenter .panel-filter-events, #Worth_analysis .filter-events-hint .panel-filter-events, #Worth_analysis .filter-events-actived .panel-filter-events, #Worth_analysis .filter-events-mouseenter .panel-filter-events {
@@ -2590,6 +2612,7 @@ button * {
     width: 15%; }
   #Event_analysis .filter-conditions-actived .panel-filter-attrs, #Event_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Funnel_analysis .filter-conditions-actived .panel-filter-attrs, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Worth_analysis .filter-conditions-actived .panel-filter-attrs, #Worth_analysis .filter-conditions-mouseenter .panel-filter-attrs {
     width: 10%; } }
+
 /* 1024*768 */
 @media (max-width: 1023px) {
   #Event_analysis .filter-events-hint .panel-filter-events, #Event_analysis .filter-events-actived .panel-filter-events, #Event_analysis .filter-events-mouseenter .panel-filter-events, #Funnel_analysis .filter-events-hint .panel-filter-events, #Funnel_analysis .filter-events-actived .panel-filter-events, #Funnel_analysis .filter-events-mouseenter .panel-filter-events, #Worth_analysis .filter-events-hint .panel-filter-events, #Worth_analysis .filter-events-actived .panel-filter-events, #Worth_analysis .filter-events-mouseenter .panel-filter-events {
@@ -2608,26 +2631,34 @@ button * {
     width: 10%; }
   #Event_analysis .filter-conditions-actived .panel-filter-attrs, #Event_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Funnel_analysis .filter-conditions-actived .panel-filter-attrs, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Worth_analysis .filter-conditions-actived .panel-filter-attrs, #Worth_analysis .filter-conditions-mouseenter .panel-filter-attrs {
     width: 10%; } }
+
 @media (max-width: 799px) {
   #Event_analysis .filter-attrs-hint .panel-filter-events, #Event_analysis .filter-conditions-hint .panel-filter-events, #Event_analysis .filter-attrs-actived .panel-filter-events, #Event_analysis .filter-attrs-mouseenter .panel-filter-events, #Event_analysis .filter-conditions-actived .panel-filter-events, #Event_analysis .filter-conditions-mouseenter .panel-filter-events, #Funnel_analysis .filter-attrs-hint .panel-filter-events, #Funnel_analysis .filter-conditions-hint .panel-filter-events, #Funnel_analysis .filter-attrs-actived .panel-filter-events, #Funnel_analysis .filter-attrs-mouseenter .panel-filter-events, #Funnel_analysis .filter-conditions-actived .panel-filter-events, #Funnel_analysis .filter-conditions-mouseenter .panel-filter-events, #Worth_analysis .filter-attrs-hint .panel-filter-events, #Worth_analysis .filter-conditions-hint .panel-filter-events, #Worth_analysis .filter-attrs-actived .panel-filter-events, #Worth_analysis .filter-attrs-mouseenter .panel-filter-events, #Worth_analysis .filter-conditions-actived .panel-filter-events, #Worth_analysis .filter-conditions-mouseenter .panel-filter-events {
     width: 10%; } }
+
 /* 漏斗分析 */
 #Funnel_analysis .date-option-menu, #Funnel_analysis .btn-toggle-compare, #Funnel_analysis .label-date-range-2, #Funnel_analysis .date-range-tabs, #Retained_analysis .date-option-menu, #Retained_analysis .btn-toggle-compare, #Retained_analysis .label-date-range-2, #Retained_analysis .date-range-tabs, #Revisit_analysis .date-option-menu, #Revisit_analysis .btn-toggle-compare, #Revisit_analysis .label-date-range-2, #Revisit_analysis .date-range-tabs {
   display: none; }
+
 #Funnel_analysis .table-main-header, #Retained_analysis .table-main-header, #Revisit_analysis .table-main-header {
   display: none; }
+
 #Funnel_analysis .table-main-body, #Retained_analysis .table-main-body, #Revisit_analysis .table-main-body {
   top: 0 !important; }
 
 #Funnel_analysis .analysis-title {
   padding-right: 10px; }
+
 #Funnel_analysis .label-date-range-1 {
   margin: 0; }
+
 #Funnel_analysis .time-axis-units {
   padding: 0 10px; }
+
 #Funnel_analysis .funnel-window-period {
   margin-left: 3px;
   color: #343739; }
+
 #Funnel_analysis .panel-filter-events {
   width: 25%; }
   #Funnel_analysis .panel-filter-events .filter-option-list .li-btn-item {
@@ -2643,6 +2674,7 @@ button * {
 /* 留存分析 */
 #Retained_analysis .date-option-menu, #Retained_analysis .btn-toggle-compare, #Retained_analysis .label-date-range-2 {
   display: none; }
+
 #Retained_analysis .panel-filter-events .filter-option-list .li-btn-item {
   margin-left: 2.5em; }
   #Retained_analysis .panel-filter-events .filter-option-list .li-btn-item:last-child:before {
@@ -2663,6 +2695,7 @@ button * {
 @media (max-width: 1279px) {
   #Retained_analysis .panel-filter-events, #Retained_analysis .panel-filter-attrs, #Revisit_analysis .panel-filter-events, #Revisit_analysis .panel-filter-attrs {
     width: 22%; } }
+
 /* 1152*864 */
 @media (max-width: 1151px) {
   #Retained_analysis .panel-filter-events, #Retained_analysis .panel-filter-attrs, #Revisit_analysis .panel-filter-events, #Revisit_analysis .panel-filter-attrs {
@@ -2673,6 +2706,7 @@ button * {
     width: 26%; }
   #Retained_analysis .filter-conditions-actived .panel-filter-events, #Retained_analysis .filter-conditions-actived .panel-filter-attrs, #Retained_analysis .filter-conditions-mouseenter .panel-filter-events, #Retained_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Revisit_analysis .filter-conditions-actived .panel-filter-events, #Revisit_analysis .filter-conditions-actived .panel-filter-attrs, #Revisit_analysis .filter-conditions-mouseenter .panel-filter-events, #Revisit_analysis .filter-conditions-mouseenter .panel-filter-attrs {
     width: 15%; } }
+
 /* 1024*768 */
 @media (max-width: 1023px) {
   #Retained_analysis .panel-filter-events, #Retained_analysis .panel-filter-attrs, #Revisit_analysis .panel-filter-events, #Revisit_analysis .panel-filter-attrs {
@@ -2689,6 +2723,7 @@ button * {
     width: 176px; }
   #Retained_analysis .filter-conditions-actived .panel-filter-events, #Retained_analysis .filter-conditions-actived .panel-filter-attrs, #Retained_analysis .filter-conditions-mouseenter .panel-filter-events, #Retained_analysis .filter-conditions-mouseenter .panel-filter-attrs, #Revisit_analysis .filter-conditions-actived .panel-filter-events, #Revisit_analysis .filter-conditions-actived .panel-filter-attrs, #Revisit_analysis .filter-conditions-mouseenter .panel-filter-events, #Revisit_analysis .filter-conditions-mouseenter .panel-filter-attrs {
     width: 10%; } }
+
 /* 回访频率 */
 #Revisit_analysis .panel-table {
   width: 100%; }
@@ -2708,6 +2743,7 @@ button * {
     width: 100%; }
   .panel-main .panel-charts-toolbar .charts-type-menu a {
     margin: 0px; } }
+
 @media (max-width: 1023px) {
   .panel-main .panel-charts-toolbar .date-range-compare .btn-toggle-compare {
     position: relative;
@@ -2716,6 +2752,7 @@ button * {
       position: absolute;
       top: 0px;
       left: 20px; } }
+
 /* 媒体查询，窄屏遮罩提示 */
 .media-query-warning {
   display: none;
@@ -2743,6 +2780,7 @@ button * {
 @media (max-width: 799px) {
   .media-query-warning {
     display: block; } }
+
 *::-webkit-scrollbar {
   width: 5px; }
 
@@ -2833,6 +2871,7 @@ button * {
     -ms-transform: scale(1, 1);
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
+
 @-moz-keyframes prompt-box-animation {
   0% {
     -webkit-transform: scale(0, 0);
@@ -2852,6 +2891,7 @@ button * {
     -ms-transform: scale(1, 1);
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
+
 @-ms-keyframes prompt-box-animation {
   0% {
     -webkit-transform: scale(0, 0);
@@ -2871,6 +2911,7 @@ button * {
     -ms-transform: scale(1, 1);
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
+
 @-o-keyframes prompt-box-animation {
   0% {
     -webkit-transform: scale(0, 0);
@@ -2890,6 +2931,7 @@ button * {
     -ms-transform: scale(1, 1);
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
+
 @keyframes prompt-box-animation {
   0% {
     -webkit-transform: scale(0, 0);
@@ -2909,6 +2951,7 @@ button * {
     -ms-transform: scale(1, 1);
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
+
 .panel-date-picker {
   position: absolute;
   z-index: 32766;
@@ -3218,18 +3261,23 @@ button * {
   -ms-transition: background-color 0.38s ease-out 0s;
   -o-transition: background-color 0.38s ease-out 0s;
   transition: background-color 0.38s ease-out 0s; }
+
 .dropdown-picker .panel-date-picker .date-range-pages li:hover, .panel-date-picker .date-range-pages .dropdown-picker li:hover, .dropdown-picker .panel-date-picker .btn-custom-range:hover, .panel-date-picker .dropdown-picker .btn-custom-range:hover, .dropdown-picker .panel-date-picker .btn-custom-range.actived, .panel-date-picker .dropdown-picker .btn-custom-range.actived {
   border: 1px solid #3DCEBB;
   background-color: #EBFCEA;
   color: #707070; }
+
 .dropdown-picker .panel-date-picker td:hover, .panel-date-picker .dropdown-picker td:hover, .dropdown-picker .panel-date-picker td.selected, .panel-date-picker .dropdown-picker td.selected {
   outline: 1px solid #3DCEBB;
   background-color: #EBFCEA;
   color: #707070; }
+
 .dropdown-picker[class~=input-select-one] > .dropdown-list, .dropdown-picker[class~=input-select-multiple] > .dropdown-list, .dropdown-picker[class~=select-one] > .dropdown-list, .dropdown-picker[class~=select-multiple] > .dropdown-list {
   overflow: auto; }
+
 .dropdown-picker.data-structure-tree > .dropdown-list {
   overflow: visible; }
+
 .dropdown-picker > .dropdown-list {
   max-height: 28px;
   min-height: 28px; }
@@ -3318,6 +3366,7 @@ button * {
     cursor: not-allowed; }
   .dropdown-picker > .dropdown-list.data-loading {
     background: url(/css/img/loading/05043130.gif) 50% no-repeat; }
+
 .dropdown-picker.open {
   visibility: visible; }
   .dropdown-picker.open .dropdown-sublist:hover {

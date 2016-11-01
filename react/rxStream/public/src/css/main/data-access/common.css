@@ -545,6 +545,7 @@ body {
 
 .toast.success {
   background-color: #15a4fa; }
+
 .toast.warning {
   background-color: #d64e4e; }
 
@@ -713,6 +714,5 @@ body {
   .s-table .event-add-edit-warp .left-warp {
     width: 100%;
     border-right: none; }
-
   .s-table .event-add-edit-warp .right-warp {
     display: none; } }
