@@ -25,7 +25,7 @@ module.exports = {
         }, {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: 'babel-loader?cacheDirectory'
             }, {
                 test: /\.scss$/,
                 loader: 'style!css!sass?sourceMap'
