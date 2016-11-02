@@ -14,7 +14,7 @@ export default class Header extends React.Component {
         this.state =  {
             apps:apps,
             currentApp:demo,
-            userName:'测试'
+            userName:'测试-1'
         };
     }
 

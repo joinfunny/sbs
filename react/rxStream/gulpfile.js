@@ -72,12 +72,12 @@ gulp.task("lib", function () {
 
 
 gulp.task('sassfile', function () {
-    return gulp.src(opts.srcDir+'/scss/**/*.scss')
-        .pipe(sass().on('error', sass.logError)).pipe(gulp.dest(opts.srcDir+'/css/'));
+    return gulp.src(opts.srcDir + '/scss/**/*.scss')
+        .pipe(sass().on('error', sass.logError)).pipe(gulp.dest(opts.srcDir + '/css/'));
 });
 
-gulp.task('watchsass',function(){
-    gulp.watch(opts.srcDir+'/scss/**/*.scss', ['sassfile']);
+gulp.task('watchsass', function () {
+    gulp.watch(opts.srcDir + '/scss/**/*.scss', ['sassfile']);
 });
 
 gulp.task('copy:js', function () {
@@ -112,12 +112,19 @@ gulp.task('copy:html', function () {
 
 gulp.task("clean", function () {
     return gulp.src(opts.buildDir)
-        .pipe(clean({read: false}));
+        .pipe(clean({
+            read: false
+        }));
 })
 
 
+//压缩JS
 gulp.task("webpack-p", shell.task(['webpack -p --progress --colors']));
+//不压缩JS
 gulp.task("webpack-u", shell.task(['webpack --progress --colors']));
+
+gulp.task("webpack-w", shell.task(['webpack --display-error-details --progress --colors --watch']));
+
 gulp.task("webpack-dev-server", shell.task(['webpack-dev-server --content-base ./public/src']));
 
 gulp.task('default', ['webpack-dev-server', 'sassfile', 'watchsass']);
@@ -125,9 +132,7 @@ gulp.task('default', ['webpack-dev-server', 'sassfile', 'watchsass']);
 gulp.task('build', gulpSequence(
     'clean',
     'lib',
-    'sassfile',
-    ['copy:css', 'copy:img', 'copy:js','copy:html'],
+    'sassfile', ['copy:css', 'copy:img', 'copy:js', 'copy:html'],
     'webpack-u',
     'webpack-dev-server'
 ));
-
