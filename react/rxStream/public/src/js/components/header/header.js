@@ -14,7 +14,7 @@ export default class Header extends React.Component {
         this.state =  {
             apps:apps,
             currentApp:demo,
-            userName:'测试-1'
+            userName:'测试-4'
         };
     }
 
@@ -35,17 +35,17 @@ export default class Header extends React.Component {
                                     )
                                 })
                             }
-                            <li data-appId="0" role="switchApp">+新建应用</li>
+                            <li data-appId="0" role="switchApp">+新建 应用</li>
                         </ul>
                     </div>
                     </div>
                 </div>
-                <div className="header-data-count">数据总数：<span>if()</span></div>
+                <div className="header-data-count">数据总数：<span>-1-</span></div>
                 <div className="header-right">
                     <ul>
                         <li><a href="javascript:void(0);"><img src="../css/main/img/name.png" /><span className="wel-come"><b className="user-name">{ this.state.userName ? ('欢迎' + this.state.userName) :'' }</b></span></a></li>
                         <li className="separator"></li>
-                        <li><a href="introduce"><img src="../css/main/img/house.png" /><span>首页</span></a></li>
+                        <li><a href="introduce"><img src="../css/main/img/house.png" /><span>首页1</span></a></li>
                         <li className="separator"></li>
                         <li><a href="doc"><img className="imgages_icon" src="../css/main/img/help.png" /><span>帮助</span></a></li>
                         <li className="separator"></li>
