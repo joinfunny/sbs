@@ -1,0 +1,28 @@
+module.exports = (function () {
+    "use strict"
+
+    return function (html) {
+        if (!html) return { title: false, description: false };
+
+        var title = html.match(/\<title\>(.*?)\<\/title\>/)
+            , meta = html.match(/\<meta\s(.*?)\/?\>/g)
+            , description;
+
+        if (meta) {
+            for (var i = meta.length; i--;) {
+                if (meta[i].indexOf('name="description"') > -1 || meta[i].indexOf('name="Description"') > -1) {
+                    description = meta[i].match(/content\=\"(.*?)\"/)[1];
+                }
+            }
+        }
+
+        (title && title[1] !== '') ? (title = title[1]) : (title = 'No Title');
+        description || (description = 'No Description');
+
+        return {
+            title: title,
+            description: description
+        };
+    };
+
+})();
