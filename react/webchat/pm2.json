@@ -1,0 +1,17 @@
+{
+    "name": "m",
+    "script": "./server/server.js",
+    "exec_mode" : "cluster_mode",
+    "watch": false,
+    "error_file": "../logs/crash.log",
+    "instances": 0,
+    "merge_logs": true,
+    "log_date_format": "YYYY/MM/DD HH:mm:ss",
+    "env": {
+        "NODE_ENV": "production"
+    },
+    "env_debug": {
+        "NODE_ENV": "development",
+        "DEBUG": "http,api,general"
+    }
+}

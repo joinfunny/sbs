@@ -1,0 +1,72 @@
+@import (less) "../../less_common/normalize.css";
+@import "../../less_common/adapter.less";
+* {
+    padding: 0;
+    margin: 0
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    .font-size(12*2);
+    color: #484f55;
+    background: #f9f9f9;
+    font-family: "微软雅黑";
+}
+.content {
+	width: 568/@rem;
+	padding: 20/@rem; 
+	margin-top: 88/@rem; 
+	margin-bottom: 20/@rem;
+	.tit {
+		text-align: center; 
+		.font-size(20*2); 
+		font-weight: bold; 
+		margin-bottom: 20/@rem;
+	}
+	p {
+		.font-size(12*2);
+		line-height: 26/@rem; 
+		margin-left: 26/@rem;
+		&.indent {
+			text-indent: 2em;  
+			margin-left: 0px;
+		}
+	}
+	h1 {
+		.font-size(16*2); 
+		font-weight: bold; 
+		line-height: 26/@rem; 
+		margin-top: 10/@rem;
+	}
+	.strong {
+		font-weight: bold;
+	}
+	.line {
+		border-bottom: 1px #484f55 solid; 
+		display: inline-block;
+	}
+	h2 {
+		 .font-size(14*2); 
+		 font-weight: bold; 
+		 line-height: 26/@rem; 
+		 margin-top: 6/@rem; 
+		 margin-left: 26/@rem;
+	}
+	.wz {
+		 color: #0072b6; 
+		 text-decoration: 
+		 underline; 
+		 font-weight: bold;
+	}
+	input {
+		border: none; 
+		text-align: center; 
+		width: 300px; 
+		height: 26px; 
+		margin-bottom: -8px;
+	}
+	.tx_r {
+		text-align: right;
+	}
+}

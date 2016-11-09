@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+;(function(win, lib) {
+    var doc = win.document;
+    var docEl = doc.documentElement;
+    var metaEl = doc.querySelector('meta[name="viewport"]');
+    var flexibleEl = doc.querySelector('meta[name="flexible"]');
+    var dpr = 0;
+    var scale = 0;
+    var tid;
+    var flexible = lib.flexible || (lib.flexible = {});
+
+    if (metaEl) {
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+            scale = parseFloat(match[1]);
+            dpr = parseInt(1 / scale);
+        }
+    } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+            var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+            var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+            if (initialDpr) {
+                dpr = parseFloat(initialDpr[1]);
+                scale = parseFloat((1 / dpr).toFixed(2));
+            }
+            if (maximumDpr) {
+                dpr = parseFloat(maximumDpr[1]);
+                scale = parseFloat((1 / dpr).toFixed(2));
+            }
+        }
+    }
+
+    if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+                dpr = 3;
+            } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+                dpr = 2;
+            } else {
+                dpr = 1;
+            }
+        } else {
+            // 其他设备下，仍旧使用1倍的方案
+            dpr = 1;
+        }
+        scale = 1 / dpr;
+    }
+
+    docEl.setAttribute('data-dpr', dpr);
+    if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+            docEl.firstElementChild.appendChild(metaEl);
+        } else {
+            var wrap = doc.createElement('div');
+            wrap.appendChild(metaEl);
+            doc.write(wrap.innerHTML);
+        }
+    }
+
+    function refreshRem(){
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+            width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+    }
+
+    win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+    }, false);
+    win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+        }
+    }, false);
+
+    if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+    } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+            doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+    }
+
+
+    refreshRem();
+
+    flexible.dpr = win.dpr = dpr;
+    flexible.refreshRem = refreshRem;
+    flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+            val += 'px';
+        }
+        return val;
+    }
+    flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+            val += 'rem';
+        }
+        return val;
+    }
+})(window, window['lib'] || (window['lib'] = {}));
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>m站</title>
+</head>
+<body>
+    <h2>搜索历史</h2>
+    <ul>
+        <li>
+            <a href="./search_history.html">搜索历史</a>
+        </li>
+    </ul>
+    <h2>制作稿</h2>
+    <ul>
+        <li>
+            <a href="./main.html">首页</a>
+        </li>
+        <li>
+            <a href="./city.html">城市选择页</a>
+        </li>
+        <li>
+            <a href="./city_result.html">城市选择页</a>
+        </li>
+        <li>
+            <a href="./category.html">分类</a>
+        </li>
+    </ul>
+    <h2>
+        问答相关
+    </h2>
+    <ul>
+        <li>
+            <a href="./qa_list.html">问答_列表</a>
+        </li>
+        <li>
+            <a href="./qa_detail.html">问答_详情</a>
+        </li>
+        <li>
+            <a href="./qa_question.html">问答_我要提问</a>
+        </li>
+
+    </ul>
+    <h2>
+        资讯相关
+    </h2>
+    <ul>
+        <li>
+            <a href="./news_detail_new.html">资讯_新详情</a>
+        </li>
+        <li>
+            <a href="./news_list.html">资讯_列表</a>
+        </li>
+        <li>
+            <a href="./news_detail.html">资讯_详情</a>
+        </li>
+        <li>
+            <a href="./news_list_0629.html">资讯_列表_0629</a>
+        </li>
+
+    </ul>
+    <h2>
+        机构&课程相关
+    </h2>
+    <ul>
+        <li>
+            <a href="./agency_list.html">机构_列表</a>
+        </li>
+        <li>
+            <a href="./agency_detail.html">机构_详情</a>
+        </li>
+        <li>
+            <a href="./agency_allcourse.html">机构_所有课程</a>
+        </li>
+        <li>
+            <a href="./course_list.html">课程_列表</a>
+        </li>
+        <li>
+            <a href="./course_detail.html">课程_详情</a>
+        </li>
+        <li>
+            <a href="./course_filter_cate.html">列表_筛选列表_分类</a>
+        </li>
+        <li>
+            <a href="./course_filter_order.html">列表_筛选列表_排序</a>
+        </li>
+        <li>
+            <a href="./course_filter_filter.html">列表_筛选列表_筛选</a>
+        </li>
+        <li>
+            <a href="./course_filter_area.html">列表_筛选列表_位置</a>
+        </li>
+    </ul>
+    <h2>
+        个人中心相关
+    </h2>
+    <ul>
+        <li>
+            <a href="./login.html">登录</a>
+        </li>
+        <li>
+            <a href="./register.html">注册</a>
+        </li>
+        <li>
+            <a href="./forget_1.html">忘记密码_1</a>
+        </li>
+        <li>
+            <a href="./forget_2.html">忘记密码_2</a>
+        </li>
+        <li>
+            <a href="./uc_index.html">个人中心_首页</a>
+        </li>
+        <li>
+            <a href="./uc_favorite_course.html">个人中心_我的收藏_课程</a>
+        </li>
+        <li>
+            <a href="./uc_favorite_agency.html">个人中心_我的收藏_机构</a>
+        </li>
+        <li>
+            <a href="./uc_favorite_qa.html">个人中心_我的收藏_问答</a>
+        </li>
+        <li>
+            <a href="./uc_baoming_course.html">个人中心_我的报名_课程</a>
+        </li>
+        <li>
+            <a href="./uc_baoming_shiting.html">个人中心_我的报名_试听</a>
+        </li>
+        <li>
+            <a href="./uc_baoming_shiting_empty.html">个人中心_我的报名_试听_空</a>
+        </li>
+        <li>
+            <a href="./uc_userinfo.html">个人中心_用户信息</a>
+        </li>
+        <li>
+            <a href="./uc_my_comments.html">个人中心_我的评论</a>
+        </li>
+        <li>
+            <a href="./uc_my_loan.html">个人中心_我的贷款</a>
+        </li>
+        <li>
+            <a href="./uc_my_qa.html">个人中心_我的问答</a>
+        </li>
+        <li>
+            <a href="./uc_msg_sys.html">个人中心_消息_系统</a>
+        </li>
+        <li>
+            <a href="./uc_msg_cmt.html">个人中心_消息_评论</a>
+        </li>
+    </ul>
+</body>
+</html>

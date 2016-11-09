@@ -1,0 +1,328 @@
+/**
+ * 资讯页面
+ * 这里样式和style不重叠，包含资讯所有页面
+ */
+@import (less) "../../less_common/normalize.css";
+@import "../../less_common/adapter.less";
+@import "./widget.less";
+
+
+// 资讯页面
+.p_news {
+    background: #f0f0f0;
+    position: relative;
+    box-sizing: border-box;
+    .no_more {
+        text-align: center;
+        .font-size(26);
+        color: #999999;
+        line-height: 60/@rem;
+        margin-top: -20/@rem;
+        margin-bottom: 20/@rem;
+    }
+    &.concise {
+        &.hasfooter {
+            padding-bottom: 0;
+        }
+        .p_news_details {
+            margin-bottom: 0;
+            border-bottom: 0;
+            .news_content {
+                padding-top: 18/@rem;
+            }
+        }
+    }
+}
+//详情页面
+.p_news_details {
+    background: #fff;
+    border-bottom:1px solid #bfbebe;
+    margin-bottom: 20/@rem;
+    &.fixed {
+        .p_top {
+            background: #f9f9f9;
+            border-bottom: 1px solid #e1e1e1;
+            .top_title {
+                opacity: 1;
+            }
+        }
+        .news_content {
+            padding-top: (18+88)/@rem;
+        }
+    }
+    .p_top {
+        overflow: hidden;
+        padding: 0 20/@rem;
+        height: 88/@rem;
+        line-height: 88/@rem;
+        width: 100%;
+        transition: all ease 400ms;
+        display: flex;
+        .top {
+            display: inline-block;
+            width: 52/@rem;
+            height: 52/@rem;
+            line-height: 52/@rem;
+            background: #666666;
+            border-radius: 100%;
+            text-align: center;
+            margin: 18/@rem 0;
+            vertical-align: middle;
+            b {
+                margin-top: 12/@rem;
+            }
+            &.top_left {
+                float: left;
+            }
+            &.top_right {
+                float: right;
+            }
+        }
+        .top_title {
+            flex: 1;
+            margin-left: 10/@rem;
+            margin-right: 82/@rem;
+            .font-size(30);
+            text-align: center;
+            color: black;
+            opacity:0;
+        }
+    }
+    .news_content {
+        padding: (18+88)/@rem 18/@rem 20/@rem 18/@rem;
+        .title {
+            display: table;
+            .font-size(30);
+            color: #505050;
+            font-weight: normal;
+        }
+        .news_time{
+            width: 100%;
+            overflow: hidden;
+            display: table;
+            margin: 20/@rem 0 16/@rem;
+            .font-size(24);
+            color: #999;
+            .news_source{
+                margin-left: 26/@rem;
+            }
+            .news_eye{
+                float: right;
+                text-align: right;
+            }
+        }
+        .news_info{
+            display: table;
+            margin-bottom: 20/@rem;
+            span{
+                display: inline-block;
+                padding: 10/@rem 15/@rem;
+                .font-size(24);
+                color: #505050;
+                text-align: center;
+                background: #f4f5f6;
+                margin: 0 10/@rem 10/@rem 0;
+            }
+        }
+        .remark {
+            display: table;
+            margin: 10/@rem 0 25/@rem 0;
+        }
+        .re {
+            padding: 4/@rem 5/@rem;
+            .font-size(18);
+            color: #0aaaf5;
+            border: 1px solid #0aaaf5;
+            border-radius: 4/@rem;
+            line-height: 1;
+            margin-right: 6/@rem;
+        }
+        .source {
+            .font-size(18);
+            color: #a0a0a0;
+        }
+        .times {
+            float: right;
+            .font-size(24);
+            color: #a0a0a0;
+        }
+        .details {
+            word-wrap: break-word;
+            word-break:break-all;
+            img {
+                width: 100%!important;
+                height: auto!important;
+                margin: 10/@rem 0;
+                vertical-align: top;
+                display: block;
+                max-width: 100%;
+            }
+            p {
+                text-align: justify;
+                text-indent: 2em;
+                color: #505050;
+                margin: 10/@rem 0;
+            }
+        }
+
+    }
+}
+//列表页面
+.p_news_list {
+    .banner {
+        width: 100%;
+        display: block;
+    }
+    .news_title{
+        display: inline-block;
+        padding-left: 20/@rem;
+        border-bottom: 1px solid #bfbebe;
+        border-top: 20/@rem solid #eee;
+        line-height: 66/@rem;
+        height: 66/@rem;
+        width: 100%;
+        font-weight: 600;
+        .font-size(28);
+    }
+    .list {
+        margin-top: 20/@rem;
+    }
+    .agency {
+        margin-bottom: 20/@rem;
+        border-bottom:1px solid #bfbebe;
+        background: #fff;
+        .flex {
+            overflow: hidden;
+            display: flex;
+            padding: 18/@rem 20/@rem;
+            > img {
+                width: 177/@rem;
+                height: 133/@rem;
+                display: block;
+                border-radius: 6/@rem;
+                margin-right: 20/@rem;
+            }
+
+        }
+        .items {
+            flex: 1;
+            padding-bottom: 36/@rem;
+            position: relative;
+            .times {
+                margin-left: 18/@rem;
+                float: left;
+                .font-size(24);
+                color: #a0a0a0;
+                line-height: 1;
+            }
+            .content {
+                color: #666;
+            } 
+        }
+        .name {
+            .font-size(30);
+            color: #505050;
+        }
+        .re {
+            float: left;
+            padding: 4/@rem 5/@rem;
+            .font-size(18);
+            border-radius: 2px;
+            line-height: 1;
+            vertical-align: bottom;
+            &.red {
+                color: #ff6432;
+                border:1px solid #ff6432;
+            }    
+            &.blue {
+                color: #5f9bf5;
+                border:1px solid #5f9bf5;
+            }
+            &.green {
+                color: #5aaf2d;
+                border:1px solid #5aaf2d;
+            }
+        }
+        .browse {
+            line-height: 1;
+            float: right;
+            .num {
+                margin-left: 14/@rem;
+               .font-size(24); 
+               color: #999;
+            }
+        }
+        .info {
+            height: 28/@rem;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+    }
+}
+// 列表页分类
+.p_news_head {
+    background-color: #fff;
+    padding-bottom: 14/@rem;
+    .one::-webkit-scrollbar{display:none}
+    .one {
+        height: 80/@rem;
+        overflow: hidden;
+        overflow-x: scroll;
+        white-space: nowrap;
+        border-bottom: 1px solid #ccc;
+        a {
+            box-sizing: border-box;
+            display: inline-block;
+            width: 136/@rem;
+            height: 80/@rem;
+            line-height: 80/@rem;
+            .font-size(24);
+            text-align: center;
+            white-space: nowrap;
+            position: relative;
+            color: #333;
+            &.active {
+                color: #5f9bf5;
+                border-bottom: 4px solid #5f9bf5;
+            }
+        }
+    }
+    .two {
+        overflow: hidden;
+        a {
+            float: left;
+            display: table;
+            .font-size(24);
+            height: 60/@rem;
+            line-height: 60/@rem;
+            padding-left: 30/@rem;
+            padding-right: 30/@rem;
+            text-align: center;
+            margin-left: 20/@rem;
+            margin-top: 14/@rem;
+            color: #5f9bf5;
+            border: 1px solid #5f9bf5;
+            border-radius: 30/@rem;
+            &.active {
+                color: #fff;
+                background-color: #5f9bf5;
+            }
+        }
+    }
+}
+.p_news_slider {
+    .w_slider {
+        height: 240/@rem;
+    }
+    .navigation {
+        width: 100%;
+        text-align: center;
+        a {
+            background-color: #fff;
+            &.active {
+                background-color: #5f9bf5;
+            }
+        }
+    }
+}

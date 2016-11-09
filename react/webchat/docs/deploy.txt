@@ -1,0 +1,20 @@
+svn地址: svn://123.56.89.14/fe/trunk/m-h5
+
+1、安装node环境，v4.4.4 LTS   https://nodejs.org/en/download/
+2、node安装成功后通过npm安装pm2，npm install pm2 -g
+3、svn上check代码出来，cd到代码目录后执行npm install ./
+4、cd到m-h5
+5、pm2 start ./pm2.json 启动服务，默认创建socket文件：/dev/shm/m.kezhanwang.cn.sock，可以在server/server.js内修改
+6、配置nginx vhost 使用 upstream 到 unix://dev/shm/m.kezhanwang.cn.sock
+
+添加服务:
+pm2 start ./pm2.json
+重启服务:
+pm2 restart m
+停止服务:
+pm2 stop m
+删除服务:
+pm2 deltet m
+
+更新代码:
+svn check最新代码，cd到代码目录后npm install ./

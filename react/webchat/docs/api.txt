@@ -1,0 +1,698 @@
+开发域名 dev.kezhanwang.cn
+线上域名 kezhanwang.cn
+
+
+
+一. 课程列表
+ 
+用途: 课程列表展示
+备注: 
+地址: /app/appinfo/courselist
+方式: get
+返回: json
+参数: 
+wd: 搜索关键词
+sort: 排序方式,num_focus关注数,num_order报名数, tuition 价格 ，score评分 ，为空默认
+p: 可选,默认1,第几页,从1开始
+ps: 可选,每页多少,默认10
+
+areaid: 地域id
+cate2id或者cateid: 二级分类id  
+
+
+
+二. 筛选页
+
+
+用途: 筛选的信息
+备注: 
+地址: /app/appinfo/filter
+方式: get
+返回: json
+参数: 
+
+
+
+
+三. 我的
+
+用途: 我的个人详情
+备注: 
+地址: /app/appinfo/my
+方式: get
+返回: json
+参数: 
+
+
+
+四. 关注
+
+用途: 关注
+备注: 
+地址: /focus/do
+方式: get/post
+返回: json
+参数: //post参数 oid=课程id或者学校id  op=1关注 2取消关注  otype=2 表示关注的课程/otype=1表示学校
+http://www.kezhanwang.cn/focus/do
+
+
+五. 课程详情
+
+用途: 课程详情
+备注: 
+地址: /app/appinfo/coursedetail?id=1
+方式: get
+返回: json
+参数:   &isDetail=1返回课程详情
+id 课程id
+
+
+六. 测评详情
+
+用途: 课程详情
+备注: 
+地址: /app/appinfo/evaldetail?id=1
+方式: get
+返回: json
+参数: 
+id 测评id
+
+
+七. 申请贷款前的准备信息
+
+用途: 银行,贷款套餐情况
+备注: 
+地址: /loan/apply?cid=1
+方式: get
+返回: json
+参数: 
+cid 课程id,在提交时也需要
+view 1展示一个简单地内容页,用于调试
+
+
+返回值说明:
+relation:步骤3中联系人的关系选项
+banks:银行信息,提交的bank_id字段值来源于bankcode
+tuition:申请贷款的学费上限
+loanTypes:贷款类型,数组.
+    rateid:贷款类型,1,弹性X+Y. 2,贴息模式
+    repaymentday:每月的还款日
+    ratetimex:X阶段月份数.
+    ratetimey:Y阶段月份数.贴息模式没有这个值
+    ratex:X阶段利率.
+    ratey:Y阶段利率.
+    
+弹性X+Y模式的计息:
+选择一个还款方式,前6个月X阶段只还息,后6个月Y阶段等额本息
+X阶段每月还款额 = 贷款总额 * X阶段月利率  就是 money_apply * ratex
+X阶段每月还款额 = 贷款总额 * Y阶段月利率 + 贷款总额 / Y阶段月份. 就是 money_apply * ratey + money_apply / ratetimey.
+
+贴息模式的计算:
+每个月还款数相同, = 贷款总额 / 贷款月份, money_apply / ratetimex
+
+所有的除法都是向上取两位小数.
+
+
+八. 提交贷款
+用途: 提交银行贷款
+备注: 
+地址: /loan/submit
+方式: post,包含图片信息
+返回: json 
+参数: 
+每项的参数名详见
+http://123.56.156.37:8888/loan/apply?cid=1&view=1 
+
+九. 登录
+用途: 登录并获取用户信息
+备注: 
+地址: /app/appuser/uinfo
+方式: post/get包含图片信息
+返回: json code=0登录成功，code=1用户名或密码错误，或请求失败
+参数: 
+em :手机号 pw：md5之后密码 tp：get固定值
+每项的参数名详见
+http://dev.kezhanwang.cn/app/appuser/uinfo?em=15210096723&pw=e10adc3949ba59abbe56e057f20f883e&tp=get
+
+十. 获取用户信息
+用途: 根据用户ID获取用户信息
+备注: 
+地址: /app/appuser/uinfo
+方式: post/get包含图片信息
+返回: json code=0请求成功，且，code=1用户名或密码错误，或请求失败
+参数: 
+em :手机号 pw：md5之后密码 tp：get固定值
+http://dev.kezhanwang.cn/app/appuser/uinfo?uid=2&tp=get
+
+十一.注册
+用途: 根据用户ID获取用户信息
+备注: 
+地址: /app/appuser/register
+方式: post/get
+返回: json code=0请求成功 code = 1,系统错误， code = 3 手机号错误
+参数: 
+em :手机号 pw：md5密码 tel:手机号 ,co:验证码，source=来源0:PC,1:IOS,2:android
+http://dev.kezhanwang.cn/app/appuser/Register?pw=e10adc3949ba59abbe56e057f20f883e&tel=15210096731&co=0123&source=2
+
+十二. 发送验证码
+用途: 根据手机号发送验证码
+备注: 
+地址: /app/appuser/code
+方式: post/get包含图片信息
+返回: json code=0请求成功，且，code=1请求失败，正常情况下result=0已发送
+参数: 
+tel :手机号 , tp：sent
+http://dev.kezhanwang.cn/app/appuser/code?tp=sent&tel=15210096741 
+
+十三. 验证手机验证码
+用途: 验证手机验证码
+备注: 
+地址: /app/appuser/code
+方式: post/get包含图片信息
+返回: json code=0请求成功，且，code=1请求失败，正常情况下result=0验证码可用
+参数: 
+tel :手机号 ,co:验证码 ,tp：ckco
+http://dev.kezhanwang.cn/app/appuser/code?tp=ckco&tel=15210096741&co=3076 
+
+十四.验证手机号可用
+用途: 验证手机号是否可以注册
+备注: 
+地址: /app/appuser/uinfo
+方式: post/get包含图片信息
+返回: json code=0请求成功，且，code=1请求失败，正常情况下result=-1可注册，result=1表示已注册，result=2表示格式错误
+参数: 
+tel :手机号 ,co:验证码 ,tp：ckco
+http://dev.kezhanwang.cn/app/appuser/uinfo?tel=15212312321&tp=ckte 
+
+十五.提交建议
+用途: 提交建议
+备注: 
+地址: /app/appuser/addAdvice
+方式: post/get包含图片信息
+返回: json code=0请求成功，code=1 为错误， code=0时 
+参数: 
+msg :建议内容
+http://dev.kezhanwang.cn/app/appuser/AddAdvice?msg=tt 
+
+十五.修改个人信息
+用途: 修改个人信息
+备注: 
+地址: /app/appuser/Update
+方式: post/get包含图片信息
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=3 参数为空， code=0时，result=1表示更新成功，result=0未更新 
+参数: 
+msg :建议内容
+http://dev.kezhanwang.cn/app/appuser/Update?name=%E5%B2%AD%E7%88%B7&sex=1
+
+
+十六.报名
+用途: 报名信息
+备注: 
+地址: /app/appuser/enroll
+方式: post/get包含图片信息
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=3 参数错误， code=0时，result=0成功，result=1重复插入 
+参数:  name;姓名  sid：学校ID  cid：课程  tel：手机号
+http://dev.kezhanwang.cn/app/appuser/enroll?name=lwl_0321&sid=1&tel=15210096723&cid=1
+
+十六.上传头像
+用途: 上传头像
+备注: 
+地址: 
+方式: post包含图片信息
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=3 参数错误， data下img为返回头像地址 
+参数:  以表单形式提交即可
+http://bbs.kezhanwang.cn/uploadicon.php
+
+十七.我的贷款
+用途: 贷款信息
+备注: 
+地址: 
+方式: get
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=1 未知错误 
+http://www.kezhanwang.cn/app/Apiv20/MyLoan
+
+十八.我关注的学校
+用途: 我关注的学校
+备注: 
+地址: 
+方式: get
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=1 未知错误 
+http://www.kezhanwang.cn/app/Apiv20/FocusSchool
+
+十九.我的报名
+用途: 我的报名信息列表
+备注: 
+地址: 
+方式: get
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=1 未知错误 
+http://www.kezhanwang.cn/app/Apiv20/MyEnroll
+
+
+十九.手机重置密码
+用途: 手机重置密码
+备注: 
+地址: 
+方式: get/post
+返回: json 返回结果code=0为正常，code=1 未知错误 ,code = 3 参数错误
+参数说明 authType=2固定值mobile手机号,code手机验证码，pwd密码，repwd重复密码
+http://dev.kezhanwang.cn/app/apiv20/RePwd?authType=2&mobile=15210096723&code=4293&pwd=126&repwd=126
+
+二十.学校列表
+用途: 学校列表
+备注: 
+地址: 
+方式: get/post
+返回: json 返回结果code=0为正常，code=1 未知错误 ,code = 3 参数错误
+参数说明 排序sort:num_course课程数，num_focus关注数，num_teacher教师数 ；cateid 二级分类ID；
+lng：经度;lat纬度 ；dist距离（0-5）；price价格(0-10000)；score评分；p分页；ps单页显示数目
+http://dev.kezhanwang.cn/app/Apiv20/SchoolList
+
+二十一.学校详情
+用途: 学校详情
+备注: 
+地址: 
+方式: get/post
+返回: json 返回结果code=0为正常，code=1 未知错误 ,code = 3 参数错误
+参数说明 id 学校ID &isDetail=1返回学校详情
+http://dev.kezhanwang.cn/app/apiv20/schooldetail?id=1
+
+
+二十二.分类列表
+用途: 分类列表
+备注: 
+地址: 
+方式: get/post
+返回: json 返回结果code=0为正常，code=1 未知错误 ,code = 3 参数错误
+http://dev.kezhanwang.cn/app/apiv20/catelist
+
+二十三 搜素页筛选项列表
+备注: 
+地址: 
+方式: get/post
+http://dev.kezhanwang.cn/app/apiv20/filteritem
+
+二十四 搜索关键词
+用途: 搜索页搜索下拉
+备注: 该关键词为搜索频率最高的词
+地址: 
+方式: get/post
+返回: json 返回结果code=0为正常，code=1 未知错误
+http://dev.kezhanwang.cn/app/apiv20/topword
+
+二十五 详情（课程和学校详情）
+用途: 获取课程和学校详情
+备注: 
+地址: 
+方式: get/post
+参数: cid 获取课程详情 sid获取学校详情
+返回: json 返回结果code=0为正常，code=1 未知错误
+http://dev.kezhanwang.cn/app/apiv20/getdesp
+
+二十六 获取地域筛选列表
+用途: 获取课程和学校详情
+备注: 
+地址: 
+方式: get/post
+参数: cid 获取课程详情 sid获取学校详情
+返回: json 返回结果code=0为正常，code=1 未知错误
+http://dev.kezhanwang.cn/app/apiv20/gerarea
+
+
+二十七 检查贷款提交的每步参数是否正确
+用途: 校验贷款提交参数
+备注: 
+地址: /loan/check
+方式: get/post
+参数: cid 获取课程详情 part当前要校验的步骤,1,2,3,4
+返回: json 返回结果code=0为正常，code=其他,错误信息在msg中.data:field中指定的是错误的项的名称
+http://dev.kezhanwang.cn/loan/check
+
+二十八 底部小红点提醒
+用途: 底部几个tab的小红点提醒.
+备注: 
+地址: 
+方式: 
+返回: json  
+参数:  
+结果:
+1,有提醒.0没提醒.
+my:我的提醒
+http://dev.kezhanwang.cn/app/apiv20/red
+
+
+
+
+首页接口
+http://dev.kezhanwang.cn/app/Apiv20/MyHome
+ad_list:轮播图
+cate_list：分类标签
+word_list：大家都在学什么
+school_list：周边学校
+eval_list：测评
+course_list：猜你喜欢
+
+
+
+十八. 发表评论
+用途: 用户发表评论.
+备注: 登录态
+地址: /comment/publish
+方式: post
+返回: json  
+参数: 
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+score:  评分,1~5
+content:     评论内容
+pic_1~9:    图片的内容
+结果:
+发表本条评论的详细信息
+
+
+
+十九. 某个用户发表过的评论
+用途: 某个用户发表过的评论
+备注: 登录态
+地址: /comment/user
+方式: get
+返回: json  
+参数: 
+p: 翻页,默认1
+ps: 每页条数,默认10
+结果:
+用户发表的评论列表
+
+
+二十. 某个对象被评论的列表
+用途: 某个对象被评论的列表
+备注: 登录态
+地址: /comment/object
+方式: get
+返回: json  
+参数: 
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+p: 翻页,默认1
+ps: 每页条数,默认10
+cid: 该条评论(或回复)的id，如果cid有值，则该条评论置顶（如果为回复id，则该回复在该评论中置顶）。
+结果:
+
+
+
+二十一. 踩和赞评论
+用途: 踩和赞评论
+备注: 登录态
+地址: /comment/upanddown
+方式: post
+返回: json  
+参数: 
+op: 操作类型,1赞,2踩,3取消赞,4取消踩
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+p: 翻页,默认1
+ps: 每页条数,默认10
+结果:
+赞或踩的最新数值,取决操作对象是赞还是踩
+
+二十九. 发表评论
+用途: 用户发表评论.
+备注: 登录态
+地址: /comment/publish
+方式: post
+返回: json  
+参数: 
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+score:  评分,1~5
+content:     评论内容
+pic_1~9:    图片的内容
+结果:
+发表本条评论的详细信息
+
+
+
+三十. 某个用户发表过的评论
+用途: 某个用户发表过的评论
+备注: 登录态
+地址: /comment/user
+方式: get
+返回: json  
+参数: 
+p: 翻页,默认1
+ps: 每页条数,默认10
+结果:
+用户发表的评论列表
+
+
+三十一. 某个对象被评论的列表
+用途: 某个对象被评论的列表
+备注: 登录态
+地址: /comment/object
+方式: get
+返回: json  
+参数: 
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+p: 翻页,默认1
+ps: 每页条数,默认10
+结果:
+
+
+三十二. 踩和赞评论
+用途: 踩和赞评论
+备注: 登录态
+地址: /comment/upanddown
+方式: post
+返回: json  
+参数: 
+op: 操作类型,1赞,2踩,3取消赞,4取消踩
+oid:   赞的对象(评论id)
+otype:  评论的对象类型,0评论,1学校,2课程
+结果:
+赞或踩的最新数值,取决操作对象是赞还是踩
+
+三十三.试听
+用途: 课程试听
+备注: 
+地址: /app/appuser/enroll
+方式: post/get包含图片信息
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=3 参数错误，
+参数:  name;姓名  sid：学校ID  cid：课程  tel：手机号   act=listen 固定值
+http://dev.kezhanwang.cn/app/appuser/enroll?name=qqq&tel=15210096723&cid=1&code=1234&act=listen
+
+
+三十四.我的试听
+用途: 课程试听
+备注: 
+地址: /app/Apiv20/mylisten
+方式: post/get包含图片信息
+返回: json 返回code = 5 是未登录，结果code=0为正常，code=3 参数错误，
+参数:  
+http://www.kezhanwang.cn/app/Apiv20/mylisten
+
+
+三十五.问答详情
+用途: 问答详情
+备注: 
+地址: /app/Apiv20/questiondetail?id=1
+方式: post/get包含图片信息
+返回: json 返回结果code=0为正常，code=3 参数错误，
+参数:  id:问题ID，p:分页页码 oid:回复ID（需要置顶的回复ID）可不传
+http://dev.kezhanwang.cn/app/apiv20/questiondetail?id=1&p=1
+
+
+三十六.发布问题
+用途: 问答
+备注: 需登录
+地址: /app/apiv20/makequestion
+方式: post  包含图片信息
+返回: json 返回结果code=0为正常，code=3 参数错误，
+参数:  title:标题，content:内容，cateid：分类ID ，（图片可选）
+http://dev.kezhanwang.cn/app/apiv20/makequestion
+
+
+三十七.回复问题
+用途: 问答
+备注: 需登录
+地址: /app/apiv20/questionreply
+方式: post  包含图片信息
+返回: json 返回结果code=0为正常，code=3 参数错误，
+参数:  question_id:问题ID，answer_id：问题回答的ID（如回答问题则answer_id = 0 ,反之answer_id = 0默认是回答问题），
+	reply_id 回复ID回复某一条消息的ID ，content:内容，（图片可选）
+http://dev.kezhanwang.cn/app/apiv20/questionreply
+
+
+三十八.举报问题
+用途: 问答
+备注: 需登录
+地址: /app/apiv20/questionreport
+方式: post  包含图片信息
+返回: json 返回结果code=0为正常，code=3 参数错误，
+参数:  question_id:问题ID，type:举报类型
+http://dev.kezhanwang.cn/app/apiv20/questionreport
+
+三十九.收藏问题
+用途: 问答
+备注: 需登录
+地址: /focus/do
+方式: get/post
+返回: json
+参数: //post参数 oid=问题ID ， op=1关注 2取消关注  ，otype=7固定值
+http://www.kezhanwang.cn/focus/do
+
+
+四十.回答点赞
+用途: 问答
+备注: 需登录
+地址: /app/apiv20/replyvote
+方式: get/post
+返回: json
+参数: //post参数 op:1是赞，3是取消赞,oid:点赞对象（回复ID） ,otype:8 固定值
+http://www.kezhanwang.cn/app/apiv20/replyvote
+
+
+四十一.发现首页
+用途: 问答
+备注: 
+地址: /app/apiv20/find
+方式: get/post
+返回: json
+参数: 
+http://dev.kezhanwang.cn/app/apiv20/find
+
+四十二.搜索关键词
+用途: 问答
+备注: 
+地址: /app/apiv20/searchword
+方式: get/post
+返回: json
+参数: 
+http://dev.kezhanwang.cn/app/apiv20/searchword
+
+四十三.搜索结果页
+用途: 问答
+备注: 
+地址: /app/apiv20/qsearch
+方式: get/post
+返回: json
+参数: wd: 搜索关键词，p：分页
+http://dev.kezhanwang.cn/app/apiv20/qsearch
+
+四十四.问答首页
+用途: 问答
+备注: 
+地址: /app/apiv20/question
+方式: get/post
+返回: json
+参数: cid: 分类ID，p：分页
+http://dev.kezhanwang.cn/app/apiv20/question
+
+四十五.问答首页 轮播图
+用途: 问答
+备注: 
+地址: /app/apiv20/questionad
+方式: get/post
+返回: json
+参数: 
+http://dev.kezhanwang.cn/app/apiv20/questionad
+
+四十六.消息列表
+用途: 问答
+备注: 
+地址: /app/apiv20/msg
+方式: get
+返回: json
+参数: type：100 系统消息 ，101评论消息，102问答消息 ，p 分页 ；mark_id ：标记已读ID（12,13,14）逗号隔开
+http://dev.kezhanwang.cn/app/apiv20/msg
+
+四十七.我的问答
+用途: 问答
+备注: 
+地址: /app/apiv20/myquestion
+方式: get  需登录
+返回: json 
+返回结果说明：otype:0 问题，otype:1 回答 ,otype:2 回复
+参数: p 分页 
+http://dev.kezhanwang.cn/app/apiv20/myquestion
+
+四十八.消息删除
+用途: 问答
+备注: 
+地址: /app/apiv20/msgdel
+方式: get  需登录
+返回: json 
+参数: ids（12,13,14）逗号隔开
+http://dev.kezhanwang.cn/app/apiv20/msgdel
+
+四十九. 回复评论
+用途: 回复评论，回复评论的回复.
+备注: 登录态
+地址: /comment/reply
+方式: post
+返回: json  
+参数: 
+oid:   评论的对象(课程id)
+otype:  评论的对象类型,0评论,1学校,2课程
+score:  评分,1~5
+content:     评论内容
+pic_1~9:    图片的内容
+pid：	被回复的评论（或回复）的id
+
+五十.问答删除
+用途: 问答
+备注: 
+地址: /app/apiv20/questiondel
+方式: get  需登录
+返回: json 
+参数: id
+http://dev.kezhanwang.cn/app/apiv20/questiondel
+
+五十一.消息红点
+用途: 问答
+备注: 
+地址: /app/apiv20/msgnum
+方式: get  需登录
+返回: json 
+返回结果 0 总数 100 系统消息 101评论消息 102 问答消息
+参数: id
+http://dev.kezhanwang.cn/app/apiv20/msgnum
+
+
+五十二.我关注的问答
+用途: 问答
+备注: 
+地址: /app/apiv20/focusquestion
+方式: get  需登录
+返回: json 
+参数: 
+http://dev.kezhanwang.cn/app/Apiv20/focusquestion
+
+五十三.app微信登录
+用途: 登录
+备注: 
+地址: /app/apiv20/wxlogin
+方式: 
+返回: json 
+必选参数: unionid，openid，nickname
+可选参数：sex，country，province，city，headimgurl，lat，lng
+例：http://dev.kezhanwang.cn/app/apiv20/wxlogin?unionid=1&openid=2&nickname=a
+
+五十四.app微信绑定
+用途: 绑定微信
+备注: 需登录
+地址: /app/apiv20/wxlogin
+方式: 
+返回: json 
+必选参数: uid，unionid
+可选参数：nickname，openid，sex，country，province，city，headimgurl，lat，lng
+例：http://dev.kezhanwang.cn/app/apiv20/bindwx?uid=1000006&unionid=123
+
+//样例
+用途: 
+备注: 
+地址: 
+方式: get/post
+返回: view/json
+参数: 
+
+

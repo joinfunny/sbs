@@ -1,0 +1,39 @@
+/**
+ * 适配器，采用rem方案适配大部分机型
+ */
+
+// rem因子单位，除字体外所有单位均需除以这个单位换算成rem
+// 设计稿为640使用@rem，设计稿为750使用@750rem
+// 如: width: 100/@rem; 这里100指设计稿上量出的100px，不需要人工除以2
+@rem: 640/10rem;
+@750rem: 750/10rem;
+
+// 为了防止在pc页面上展示全屏拉伸问题，限制居中最大宽度为600px
+.fixed_center() {
+    max-width: 600px;
+    margin: auto;
+    [data-dpr="2"] & {
+        max-width: 600px*2;
+        margin: auto;
+    }
+    [data-dpr="3"] & {
+        max-width: 600px*3;
+        margin: auto;
+    }
+}
+body {
+    .fixed_center();
+}
+
+// 保证所有屏幕展示字体大小一致，font-size不使用rem方案
+// 使用rem方案会让字体等比例放大，在6s/6p的机型上看起来特别low，在大屏手机上，希望看到更多文字！
+// 绝大多数的字体文件，是自带一些点阵尺寸的，通常是16px和24px，rem容易出现一些奇数尺寸
+.font-size(@size) {
+    font-size: @size/1px;
+    [data-dpr="1"] & {
+        font-size: @size/2px;
+    }
+    [data-dpr="3"] & {
+        font-size: @size/2px*3;
+    }
+}

@@ -1,0 +1,117 @@
+// 个人中心表单
+.w_uc_form {
+    padding: 0 32/@rem;
+    .row {
+        display: block;
+        position: relative;
+        &.box {
+            display: flex;
+            input {
+                flex: 1;
+            }
+        }
+        &.flex {
+            flex: 1;
+        }
+        .cancel {
+            position: absolute;
+            background: data-uri("../images/input_cancel.png") no-repeat center;
+            background-size: 18/@rem 18/@rem;
+            height: 72/@rem;
+            width: 72/@rem;
+            right: -(72-18)/2/@rem;
+            top: 0;
+        }
+    }
+    .vcode {
+        width: 232/@rem;
+        height: 60/@rem;
+        line-height: 60/@rem;
+        display: block;
+        border-radius: 3px;
+        color: #5f9bf5;
+        .font-size(28);
+        text-align: center;
+        border: 1px solid #5f9bf5;
+        margin-left: 16/@rem;
+        margin-top: 10/@rem;
+        &.pending {
+            background: #f4f4f2;
+        }
+    }
+    input {
+        display: block;
+        line-height: 72/@rem;
+        outline: none;
+        .font-size(28);
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #d8d8d8;
+    }
+    &.login_form {
+        margin-top: 83/@rem;
+    }
+    .btn {
+        border-radius: 3px;
+        display: block;
+        width: 100%;
+        outline: none;
+        text-align: center;
+        text-decoration: none;
+    }
+    .btn_login {
+        margin-top: 36/@rem;
+        background: #5f9bf5;
+        color: white;
+        height: 80/@rem;
+        line-height: 80/@rem;
+        .font-size(30);
+    }
+}
+.w_uc_tabs {
+    height: 80/@rem;
+    display: flex;
+    background: white;
+    border-bottom: 1px solid #d8d8d8;
+    li {
+        min-width: 100%/4;
+        display: block;
+        line-height: 80/@rem;
+        text-align: center;
+        flex: 1;
+        a {
+            color: #505050;
+            .font-size(28);
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            span {
+                position: relative;
+            }
+            .p {
+                position: absolute;
+                right: -16/@rem;
+                top: -6/@rem;
+                height: 14/@rem;
+                width: 14/@rem;
+                background: #f52300;
+                border-radius: 50%;
+            }
+        }
+        &.active {
+            color: #5f9bf5;
+            a {
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    border-bottom: 4/@rem solid #5f9bf5;
+                    width: 100%;
+                    bottom: -1px;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
