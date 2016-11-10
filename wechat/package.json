@@ -1,0 +1,22 @@
+{
+  "name": "wx",
+  "version": "1.1.0",
+  "author": "jiangfeng",
+  "private": true,
+  "scripts": {},
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "bluebird": "^3.4.6",
+    "ejs": "^2.5.2",
+    "heredoc": "^1.3.1",
+    "koa": "^1.2.4",
+    "lodash": "^4.16.6",
+    "raw-body": "^2.1.7",
+    "request": "^2.78.0",
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.17"
+  },
+  "dependencies": {}
+}

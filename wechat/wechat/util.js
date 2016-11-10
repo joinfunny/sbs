@@ -9,7 +9,6 @@ exports.parseXMLAsync = function(xml){
 		xml2js.parseString(xml,{trim:true},function(err,content){
 			if(err) reject(err)
 			else resolve(content)
-
 		})
 	})
 }

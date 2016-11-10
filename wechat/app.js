@@ -46,8 +46,8 @@ var tpl = heredoc(function() {
     		<script src="http://zeptojs.com/zepto-docs.min.js"></script>
     		<script>
     			wx.config({
-    			    debug: false,
-    			    appId: 'wx5029c5f778bbe57b', 
+    			    debug: true,
+    			    appId: 'wx0a21f4c28ef0f3a7', 
     			    timestamp: '<%= timestamp %>', 
     			    nonceStr: '<%= noncestr %>', 
     			    signature: '<%= signature %>',
@@ -148,9 +148,6 @@ var tpl = heredoc(function() {
     					})									
     				})
     			})
-    			
-    			
-    			
     		</script>
     	</body>
     	</html>
@@ -203,8 +200,6 @@ app.use(function*(next) {
         var ticket = ticketData.ticket;
         var url = this.href;
         var params = sign(ticket, url);
-
-
         console.log(params);
         this.body = ejs.render(tpl, params);
 
@@ -217,5 +212,5 @@ app.use(function*(next) {
 app.use(wechat(config.wechat, reply.reply)); //第二个参数，在中间件handler
 
 
-app.listen(1234)
-console.log('listening 1234')
+app.listen(80)
+console.log('listening 80')
