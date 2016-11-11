@@ -3,9 +3,9 @@
 
 module.exports = {
     'button': [{
-        'name': '语音搜电影',
+        'name': '百度搜索',
         'type': 'view',
-        'url': 'http://xuhan.ngrok.cc/movie'
+        'url': 'http://baidu.com'
     }, {
         'name': '榜单',
         'sub_button': [{

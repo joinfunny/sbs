@@ -95,8 +95,6 @@ Wechat.prototype.fetchAccessToken = function(data){
 	  		}
 	  	})
 	  	.then(function(data){
-   	  		
-
 	  		that.saveAccessToken(data)       //保存票据
 	  		return Promise.resolve(data)
 	  	})

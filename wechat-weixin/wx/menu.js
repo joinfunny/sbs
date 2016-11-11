@@ -44,14 +44,5 @@ module.exports = {
 			'type' : 'location_select',
 			'key' : 'location_select'
 		}]
-		// {
-		// 	// 'name' : '图片消息',
-		// 	// 'type' : 'media_id',
-		// 	// 'media_id' : ''
-		// },{
-		// 	'name' : '跳转图文消息url',
-		// 	'type' : 'view_limited',
-		// 	'media_id' : '...' 
-		// }
 	}]
 }

@@ -96,7 +96,6 @@ Wechat.prototype.fetchAccessToken = function(data){
 	  	})
 	  	.then(function(data){
    	  		
-
 	  		that.saveAccessToken(data)       //保存票据
 	  		return Promise.resolve(data)
 	  	})
@@ -122,8 +121,6 @@ Wechat.prototype.fetchTicket = function(access_token){
 	  		}
 	  	})
 	  	.then(function(data){
-   	  		
-
 	  		that.saveTicket(data)       //保存票据
 	  		return Promise.resolve(data)
 	  	})
@@ -143,7 +140,6 @@ Wechat.prototype.isValidTicket = function(data){
 	}else{
 		return false
 	}
-	
 }
 
 /*Wechat函数验证票据合法*/
@@ -165,9 +161,7 @@ Wechat.prototype.isValidAccessToken = function(data){
 
 /*更新ticket方法*/
 Wechat.prototype.updateTicket = function(access_token){
-	
 	var url = api.ticket.get + '&access_token=' + access_token + '&type=jsapi' 
-
 	return new Promise(function(resolve,reject){
 		/*request方法库，向某url发送请求*/
 		request({url:url,json:true}).then(function(response){
@@ -259,51 +253,7 @@ Wechat.prototype.getMovieBox = function(access_token){
 			resolve(content)
 		})
 	})
-}
-
-/*周边电影*/
-// Wechat.prototype.getMovie = function(){
-	
-// 	var url = 'http://op.juhe.cn/onebox/movie/pmovie?dtype=&city=湘潭&key=5da7ef714f8e9201ec01554e2a9f9af6'
-
-// 	return new Promise(function(resolve,reject){
-// 		/*request方法库，向某url发送请求*/
-// 		request({url:url,json:true}).then(function(response){
-// 			var data = response.body
-// 			console.log(data)
-// 			// var rank = []
-// 			// var title = []
-// 			// var box = []
-// 			// var content = {
-// 			// 	rank : '',
-// 			// 	title : '',
-// 			// 	box : ''
-// 			// }
-// 			// var result = data.result
-// 			// result.forEach(function(item){
-// 			// 	rank.push(item.rid)
-// 			// 	title.push(item.name)
-// 			// 	box.push(item.wboxoffice)
-// 			// })
-// 			// content = {
-// 			// 	rank : rank,
-// 			// 	title : title,
-// 			// 	box : box
-// 			// }
-// 			// console.log(content)
-// 			// resolve(content)
-// 		})
-// 	})
-// }
-
-
-
-
-
-
-
-
-
+} 
 
 /*聚合数据平台查附近影讯*/
 Wechat.prototype.nearbyMovie = function(location){
@@ -378,9 +328,6 @@ Wechat.prototype.updateAccessToken = function(){
 		})
 	})
 }
-
-
-
 /*上传临时素材方法*/
 Wechat.prototype.uploadMaterial = function(type,material,permanant){
 	var that = this
@@ -690,7 +637,6 @@ Wechat.prototype.fetchGroups = function(){
 		  })		
 	})
 }
-
 Wechat.prototype.checkGroup = function(openId){
 	var that = this
 
@@ -719,7 +665,6 @@ Wechat.prototype.checkGroup = function(openId){
 		  })		
 	})
 }
-
 /*更新分组*/
 Wechat.prototype.updateGroup = function(id,name){
 	var that = this
@@ -752,8 +697,6 @@ Wechat.prototype.updateGroup = function(id,name){
 		  })		
 	})
 }
-
-
 /*批量移动*/
 Wechat.prototype.moveGroup = function(openIds,to){
 	var that = this
@@ -793,7 +736,6 @@ Wechat.prototype.moveGroup = function(openIds,to){
 		  })		
 	})
 }
-
 /*用户列表*/
 Wechat.prototype.listUsers = function(openId){
 	var that = this
@@ -823,7 +765,6 @@ Wechat.prototype.listUsers = function(openId){
 	})
 
 }
-
 /*用户备注*/
 Wechat.prototype.remarkUsers = function(openId,remark){
 	var that = this
@@ -900,7 +841,6 @@ Wechat.prototype.fetchUsers = function(openIds,lang){
 }
 
 /*群发消息*/
-
 Wechat.prototype.sendByGroup = function(type,message,groupId){
 	var that = this
 	var msg = {
@@ -951,7 +891,6 @@ Wechat.prototype.sendByOpenId = function(type,message,openIds){
 	
 	msg[type] = message
 	
-	
 	return new Promise(function(resolve,reject){
 		that
 		  .fetchAccessToken()
@@ -972,7 +911,6 @@ Wechat.prototype.sendByOpenId = function(type,message,openIds){
 		  	})
 		  })
 	})
-
 }
 
 /*删除消息*/
