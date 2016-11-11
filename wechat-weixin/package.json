@@ -1,0 +1,31 @@
+{
+  "name": "weixin",
+  "version": "0.0.1",
+  "description": "weixin",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^0.8.6",
+    "bluebird": "^3.3.5",
+    "connect-mongo": "^1.2.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "heredoc": "^1.3.1",
+    "jade": "^1.11.0",
+    "koa": "^1.2.0",
+    "koa-request": "^1.0.0",
+    "koa-router": "^5.4.0",
+    "koa-views": "^4.1.0",
+    "lodash": "^4.11.1",
+    "mongoose": "^4.4.19",
+    "raw-body": "^2.1.6",
+    "request": "^2.72.0",
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -148,7 +148,6 @@ exports.reply = function*(next) {
                 description: '时尚时尚最时尚',
                 musicUrl: 'http://220.169.243.157/m10.music.126.net/20160415153628/8bc5952220acfc1ad38c56ed06a60453/ymusic/d069/c757/272e/828fbd204b8e045d91af9dec15125c89.mp3',
                 thumbMediaId: data.media_id
-
             }
         } else if (content === '8') {
             var data = yield wechatApi.uploadMaterial('image', path.join(__dirname, '../2.jpg'), {

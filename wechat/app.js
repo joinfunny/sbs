@@ -61,8 +61,9 @@ var tpl = heredoc(function() {
     					'onMenuShareQQ',
     					'onMenuShareWeibo',
     					'onMenuShareQZone',
-    					'previewImage'
-
+    					'previewImage',
+						'showAllNonBaseMenuItem',
+						'hideOptionMenu'
     			    ] 
     			})
     			wx.ready(function(){
@@ -71,7 +72,9 @@ var tpl = heredoc(function() {
     				    success: function(res) {
     				     	//alert(JSON.stringify(res))
     				    }
-    				})
+    				});
+					//wx.showAllNonBaseMenuItem();
+					//wx.hideOptionMenu();
     				
     				//分享到朋友圈
     				

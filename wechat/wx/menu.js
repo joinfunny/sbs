@@ -43,15 +43,11 @@ module.exports = {
                 'name': '查看经纬度',
                 'type': 'location_select',
                 'key': 'location_select'
+            },
+            {
+            	'name' : '电影页面测试',
+            	'type' : 'view',
+            	'url': 'http://1518g40e82.iask.in/movie'
             }]
-            // {
-            // 	// 'name' : '图片消息',
-            // 	// 'type' : 'media_id',
-            // 	// 'media_id' : ''
-            // },{
-            // 	'name' : '跳转图文消息url',
-            // 	'type' : 'view_limited',
-            // 	'media_id' : '...' 
-            // }
     }]
 }
