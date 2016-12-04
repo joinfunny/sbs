@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>瑞雪分析云-RX STREAM</title>
+<link rel="stylesheet" href="css/index.css">
+<% include main/inc/base-script.html %>
+    <script>
+        var sdkObj = {
+            sdkScript:'(function(j){var h=j.sdkUrl,a=j.name,d=this,g=d.document,f=null,e=null;d.RXSTREAM201607=a;d[a]=d[a]||function(i){return function(){(d[a]._rx=d[a]._rx||[]).push([i,arguments])}};var b=["track","trackSignup","identify"];for(var c=0;c<b.length;c++){d[a][b[c]]=d[a].call(null,b[c])}if(!d[a].lt){f=g.createElement("script"),e=g.getElementsByTagName("script")[0];f.async=true;f.src=h;e.parentNode.insertBefore(f,e);d[a].lt=1*new Date();d[a].para=j}})({sdkUrl:"<%=sdkUrl%>",sendLimit:1,showLog:true,name:"rxStream",autoTrack:true,apiHost:"<%=sdkServerUrl%>",appId:{{appId}}});'
+        };
+    </script>
+</head>
+<body>
+<% include ./inc/header.html %>
+<% include ./inc/left.html %>
+<% include ./inc/main.html %>
+<div class="create-app-mark" >
+    <h2></h2>
+    <div class="button-warp">
+        <a href="javascript:;" class="button button-green" role="connectOwnWeb">接入您的网站数据</a>
+        <a href="javascript:;" class="button button-red" role="connectDemo">电商DEMO展示</a>
+    </div>
+    <p class="tips">深度体验瑞雪云的强大之处。</p>
+    <span class="close-button" role="closeMark"></span>
+</div>
+<div class="dialog-mark">
+    <div class="create-app-dialog step-1">
+        <span class="close-dialog" role="cancelOperate"></span>
+        <div class="step-warp">
+            <ul>
+                <li class="first-step">01  选择平台</li>
+                <li class="mid-step">02  安装SDK</li>
+                <li class="last-step">03  检测数据</li>
+            </ul>
+            <span><ins></ins></span>
+        </div>
+        <div class="step1-content">
+            <ul class="app-type-list">
+                <li class="web active" role="appList" data-type="web"><span>网站</span></li>
+                <li class="android" role="appList" data-type="android"><span>安卓(敬请期待)</span></li>
+            </ul>
+            <p class="step-c-tips">选择您想接入的平台，点击添加SDK</p>
+            <div class="step-button-warp">
+                <a href="javascript:;" class="cancel" role="cancelOperate">取消操作</a>
+                <a href="javascript:;" class="next" role="goStep2">下一步</a>
+            </div>
+        </div>
+        <div class="step2-content">
+            <p class="demo-tips">请按照以下步骤安装SDK, 不要关闭此页面</p>
+            <ul class="step2-demo-img">
+                <li class="demo-1">
+                    <span></span>
+                    <p>复制以下代码</p>
+                </li>
+                <li class="demo-2">
+                    <span></span>
+                    <p>粘贴到您网站页面的<i>&lt;head&gt;&lt;/head&gt</i>之间</p>
+                </li>
+                <li class="demo-3">
+                    <span></span>
+                    <p>点击右下角的按钮检测SDK的安装状态</p>
+                </li>
+                <li class="demo-4">
+                    <span></span>
+                    <p>检测成功后, 点击开始分析查看网站的数据</p>
+                </li>
+            </ul>
+            <div class="step2-code-warp">
+                <input class="code-inner" role="selectInputVal" id="code-content" type="text" readonly/>
+                <span class="copy-button"  data-clipboard-target="code-content" id="copyScript" role="copyScript">复制</span>
+            </div>
+            <div class="step-button-warp">
+                <a href="javascript:;" class="cancel" role="cancelOperate">取消操作</a>
+                <a href="javascript:;" class="next" role="checkSdk">检测SDK安装状态</a>
+            </div>
+        </div>
+        <div class="step3-content">
+            <p class="test-tips">应用数据检测用时 30秒 至 2 分钟， 请耐心等待<br>
+                 如果出现问题， 请联系客服</p>
+            <div class="interval-time">正在第 <span class="travel"></span> 次检测数据..   <span class="time"></span> 秒后自动重新检测
+                <p class="progress"><ins></ins></p>
+            </div>
+            <div class="test-success" style="display: none">
+                <p class="success-tips">已检测到以下应用数据</p>
+                <ul class="app-list">
+
+                </ul>
+            </div>
+            <div class="test-failed" style="display: none">
+                <p class="failed-tips">未检测到应用数据</p>
+                <p class="failed-fu-tips">建议您返回上一步重新安装, 或请致电我们客服人员,<br>
+                    会为您做出最详细的解答, 联系电话: 010-56793769</p>
+            </div>
+            <div class="step-button-warp">
+                <a href="javascript:;" class="cancel" role="goStep2">上一步</a>
+                <a href="javascript:;" class="next complete" role="complete" style="display: none">开始分析</a>
+            </div>
+        </div>
+        <span class="step-loading"></span>
+    </div>
+</div>
+
+<script id="web-list-temp" type="text/x-dot-template">
+    <li class="list-title">
+        <span>产品名称</span>
+        <span>网址</span>
+    </li>
+    {{for(var i=0;i<it.length;i++){ }}
+    <li class="list-c" data-id="{{=it[i].id}}">
+        <span><input type="text" value="{{=it[i].label}}"/></span>
+        <span class="web-name">{{=it[i].domain}}</span>
+    </li>
+    {{ } }}
+</script>
+<script id="slide-button-temp" type="text/x-dot-template">
+    <span class="slide-button {{=it.active}}" role="slideData"><ins class="slideChild" role="slideData"></ins></span>
+    <p class="slide-tips">点击左侧的滑块<i>{{=it.text}}</i>电商DEMO数据</p>
+    <p class="slide-current">当前数据为: <i>{{=it.current}}</i></p>
+</script>
+<script src="js/index.js"></script>
+</body>
+</html>
+

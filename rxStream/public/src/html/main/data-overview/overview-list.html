@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>数据概览</title>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="/css/main/data-overview/common.css">
+<link rel="stylesheet" href="/css/main/overview-list.css">
+<% include ../inc/base-script.html %>
+</head>
+<body>
+<div class="overviews-wrapper">
+  <ul class="overview-list"  data-role="">
+    <li class="overview overview-new"><a href="/main/data-overview/analysis-list/new" class="overview-link"> </a></li>
+  </ul>
+</div>
+<script id="overview-temp" type="text/x-dot-template">
+{{ if(it && it.length>0) { }}
+  {{ for(var i=0;i<it.length;i++){ var curOverView=it[i]; }}
+  <li class="overview" data-overview-id="{{= curOverView.UniqueID }}">
+        <% include ../inc/overview-remove.html %>
+        <a href="/main/data-overview/analysis-list/{{= curOverView.UniqueID }}" class="overview-link">
+        <div class="icons-analysis">
+          <ul> 
+          {{ for(var j=0,len=curOverView.typeIcons.length;j<len;j++){ }}
+          <li class="{{= curOverView.typeIcons[j] }}"></li>
+          {{ } }}                 
+          </ul>
+        </div>
+        <div class="overview-content">
+          <div class="overview-header">
+            <h2 class="overview-h">{{= curOverView.Title }}</h2>
+          </div>
+          <div class="overview-body">
+            <p class="description">{{= curOverView.Description }}</p>
+          </div>
+          <div class="overview-footer">
+            <p class="last-update">最后更新时间：<span class="date">{{= curOverView.LastTime }}</span></p>
+          </div>
+        </div>
+        </a></li>
+  {{ }
+  } }}
+</script>
+<script src="/js/main/data-overview/index.js"></script>
+</body>
+</html>

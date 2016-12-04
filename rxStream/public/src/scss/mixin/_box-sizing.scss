@@ -1,0 +1,7 @@
+//@import "prefixer";
+
+// box-sizing: border-box | content-box;
+//----------------------------------------
+@mixin box-sizing($boxmodel:content-box, $prefixes:$prefixes){
+	@include prefixer(box-sizing, $boxmodel, $prefixes);
+}

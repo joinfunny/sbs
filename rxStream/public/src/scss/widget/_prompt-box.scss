@@ -1,0 +1,60 @@
+
+/* 提示框 */
+.prompt-box {
+  @include absmiddle(400px, 100px);
+  @include transform(scale(0, 0));
+  @include border-radius(10px);
+  @include box-shadow(1px 1px 20px rgba(0, 0, 0, .5));
+  z-index:32767;
+  font-size: 18px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #fff;
+  @include animation(prompt-box-animation 1s ease-in-out 0s 2 alternate running);
+  i {
+    &:before {
+      @include border-radius(50%);
+      @include inline-block;
+      margin: 0 10px 0 0;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      background-color: #35F13E;
+      font-size: 40px;
+      vertical-align: middle;
+      color: #fff;
+    }
+  }
+}
+
+.prompt-box-success {
+  i {
+    &:before {
+      background-color: #35F13E;
+    }
+  }
+}
+
+.prompt-box-failure {
+  i {
+    &:before {
+      background-color: #e55b41;
+    }
+  }
+}
+
+/* 拖拽目标提示 */
+@mixin prefixer-content($prefixes: $prefixes) {
+  0% {
+    @include transform(scale(0, 0));
+  }
+  40% {
+    @include transform(scale(1, 1));
+  }
+  100% {
+    @include transform(scale(1, 1));
+  }
+}
+
+@include keyframes-prefixer-content(prompt-box-animation);
+

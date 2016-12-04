@@ -1,0 +1,7 @@
+//@import "prefixer";
+
+// text-shadow: h-shadow v-shadow blur color;
+//----------------------------------------
+@mixin text-shadow($value:1px 1px 2px #000, $prefixes:$prefixes){
+	@include prefixer(text-shadow, $value, $prefixes);
+}

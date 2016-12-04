@@ -1,0 +1,105 @@
+<header class="dashboard-widget-header">
+  <div class="dashboard-widget-explain">
+    <h2 title="2列2维度——支付订单的实际支付金额的总和，实际支付金额的均值查看" data-href=""><a href="../user-analysis/Event/analysis">2列2维度——支付订单的实际支付金额的总和，实际支付金额的均值查看2列2维度——支付订单的实际支付金额的总和，实际支付金额的均值查看</a></h2>
+    <div class="dashboard-widget-timerange" title="本周(11-9 0:00至11-14 0:00)，按屏幕宽度分组">本周(11-9 0:00至11-14 0:00)，按屏幕宽度分组</div>
+      <ul class="tool-icon-list">
+          <li class="pie active refresh-charts" data-type="pie"></li>
+          <li class="line refresh-charts" data-type="line"></li>
+          <li class="bar refresh-charts" data-type="bar"></li>
+          <li class="grid refresh-charts" data-type="grid"></li>
+      </ul>
+  </div>
+</header>
+
+<!-- Dashboard 组件配置 -->
+<div class="dashboard-widget-config">
+  <div class="dashboard-widget-dropdown">
+    <div class="dropdown dashboard-widget-segmentation-timeunit">
+      <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="widgetUnit" class="selected" data-value="hour"> <span class="dropdown-selection-label">按小时</span> </span> <i class="caret"></i> </button>
+      <ul class="dropdown-menu pull-right" role="menu">
+        <li class="select-m"> <a data-value="rollup" draggable="false">合计</a> </li>
+        <li class="select-m active"> <a data-value="hour" draggable="false">按小时</a> </li>
+        <li class="select-m"> <a data-value="day" draggable="false">按天</a> </li>
+        <li class="select-m"> <a data-value="week" draggable="false">按周</a> </li>
+        <li class="select-m"> <a data-value="month" draggable="false">按月</a> </li>
+      </ul>
+    </div>
+    <div id="" class="dashboard-widget-chart-types">
+      <ul>
+        <li data-method="widgetType" data-value="number" title="数字" class="icon-num"></li>
+        <li data-method="widgetType" data-value="line" title="线图" class="icon-line-chart"></li>
+        <li data-method="widgetType" data-value="column" title="柱图" class="icon-bar-chart active"></li>
+        <li data-method="widgetType" data-value="pie" title="饼图" class="icon-pie-chart" style="display:none;"></li>
+        <li data-method="widgetType" data-value="table" title="表格" class="icon-table"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard 组件工具栏 -->
+<div id="" class="dashboard-widget-toolbar">
+  <div class="dashboard-widget-date-switch">
+      <!-- Dashboard 组件配置 -->
+      <div class="dashboard-widget-config group-st">
+          <div class="dashboard-widget-dropdown">
+              <div class="dropdown dashboard-widget-segmentation-timeunit">
+                  <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="widgetUnit" class="selected" data-value="hour"> <span class="dropdown-selection-label">共5组</span> </span> <i class="caret"></i> </button>
+                  <ul class="multiselect-container dropdown-menu pull-right" role="menu">
+                      <li class="multiselect-item"><input class="i-search" type="text" placeholder="搜索"/></li>
+                      <li class="multiselect-item active" data-name="ipad Aire">
+                          <label class="checkbox"><input type="checkbox" checked="checked" /> ipad Aire</label>
+                      </li>
+                      <li class="multiselect-item active" data-name="三星Galaxy Tab7">
+                          <label class="checkbox"><input type="checkbox" checked="checked" /> 三星Galaxy Tab7</label>
+                      </li>
+                      <li class="multiselect-item" data-name="Surface Pro3">
+                          <label class="checkbox"><input type="checkbox" /> Surface Pro3</label>
+                      </li>
+                      <li class="multiselect-item" data-name="ThinkPad">
+                          <label class="checkbox"><input type="checkbox"/> ThinkPad</label>
+                      </li>
+                      <li class="multiselect-item" data-name="小米平板">
+                          <label class="checkbox"><input type="checkbox"/> 小米平板</label>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div id="" class="selector dashboard-widget-by-select">
+    <select multiple="multiple" style="display: block;">
+      <option value="640">640</option>
+      <option value="1080">1080</option>
+      <option value="2048">2048</option>
+      <option value="1920" disabled="disabled">1920</option>
+    </select>
+    <div>
+      <button class="btn-selector multiselect btn btn-default" data-toggle="dropdown"><span class="multiselect-selected-text">共4组</span></button>
+      <ul style="max-height: 220px; overflow-y: scroll;" class="multiselect-container dropdown-menu">
+        <li class="multiselect-item filter disabled" value="0">
+          <input class="multiselect-search" type="text" placeholder="最多显示3组数据" disabled="disabled">
+        </li>
+        <li class="multiselect-item active"><a tabindex="0">
+          <label class="checkbox">
+            <input type="checkbox" value="640">
+            640</label>
+          </a></li>
+        <li class="multiselect-item active"><a tabindex="0">
+          <label class="checkbox">
+            <input type="checkbox" value="1080">
+            1080</label>
+          </a></li>
+        <li class="multiselect-item active"><a tabindex="0">
+          <label class="checkbox">
+            <input type="checkbox" value="2048">
+            2048</label>
+          </a></li>
+        <li class="multiselect-item disabled"><a tabindex="-1">
+          <label class="checkbox">
+            <input type="checkbox" value="1920" disabled="disabled">
+            1920</label>
+          </a></li>
+      </ul>
+    </div>
+  </div>
+</div>

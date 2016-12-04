@@ -1,0 +1,264 @@
+<script id="overview-temp" type="text/x-dot-template">
+    <div class="overview-loading" style="display: none;"></div>
+    <span class="del-block" role="deleteOverview"></span>
+    <article class="dashboard-widget" draggable="false">
+        <!-- 图表表头 -->
+        {{if(it.AnalysisType === 'Event') {}}
+        <header class="dashboard-widget-header">
+            <div class="dashboard-widget-explain">
+                <h2 title="{{=it.Title}}" data-href=""><a href="/main/user-analysis/{{=it.AnalysisType}}/analysis?id={{=it.UniqueID}}">{{=it.Title}}</a></h2>
+                <div class="dashboard-widget-timerange" title="{{=it.Remark}}">{{=it.Remark}}</div>
+                {{if(it.Config.requestData.actions.length< 2 && it.Config.requestData.groupFields.length < 3){ }}
+                <ul class="tool-icon-list charts-icon" role="convertChart">
+                    <li class="line fa fa-line-chart refresh-charts {{if(it.Config.currentChart == 'line'){ }}active{{ } }}" data-type="line"></li>
+                    <li class="bar fa fa-bar-chart refresh-charts {{if(it.Config.currentChart == 'bar' || it.Config.currentChart == 'pie'){ }}active{{ } }}" data-type="bar"></li>
+                    <li class="grid fa fa-table refresh-charts {{if(it.Config.currentChart == 'grid'){ }}active{{ } }}" data-type="grid"></li>
+                </ul>
+                <ul class="tool-icon-list total-icon" style="display: none;" role="totalConvertChart">
+                    {{if(it.Config.requestData.groupFields.length > 0){ }}
+                    <li class="pie fa fa-pie-chart refresh-charts active" data-type="pie"></li>
+                    {{ } }}
+                    <li class="grid fa fa-table refresh-charts" data-type="grid"></li>
+                </ul>
+                {{ } }}
+            </div>
+        </header>
+        <!-- Dashboard 组件配置 -->
+        <div class="dashboard-widget-config">
+            <div class="dashboard-widget-dropdown">
+                <div class="dropdown dashboard-widget-segmentation-timeunit">
+                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="widgetUnit" class="selected" data-value="{{=it.Config.requestData.unit}}"> <span class="dropdown-selection-label">
+                        {{if(it.Config.requestData.unit == 'day'){ }}
+                            按天
+                            {{ }else if(it.Config.requestData.unit == 'hour'){ }}
+                            按小时
+                            {{ }else if(it.Config.requestData.unit == 'week'){ }}
+                            按周
+                            {{ }else if(it.Config.requestData.unit == 'month'){ }}
+                            按月
+                            {{ } }}
+                    </span> </span> <i class="caret"></i> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li class="select-m"> <a data-type="select" data-value="rollup" draggable="false">合计</a> </li>
+                        <li class="select-m {{if(it.Config.requestData.unit == 'hour'){ }}active{{ } }} {{if(it.rangeDays >= 30){ }}no-click{{ } }}"> <a data-type="select" data-value="hour" draggable="false">按小时</a> </li>
+                        <li class="select-m {{if(it.Config.requestData.unit == 'day'){ }}active{{ } }}"> <a data-type="select" data-value="day" draggable="false">按天</a> </li>
+                        <li class="select-m {{if(it.Config.requestData.unit == 'week'){ }}active{{ } }}"> <a data-type="select" data-value="week" draggable="false">按周</a> </li>
+                        <li class="select-m {{if(it.Config.requestData.unit == 'month'){ }}active{{ } }}"> <a data-type="select" data-value="month" draggable="false">按月</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard 组件工具栏 -->
+        <div class="dashboard-widget-toolbar">
+            <div class="dashboard-widget-date-switch">
+                <div class="date-tab" style="display: {{if(it.Config.currentChart !== 'grid'&&it.Config.requestData.actions.length< 2 && it.Config.requestData.groupFields.length < 3){ }}none{{ } }};">
+                    <span class="time-move time-left" role="dateLeftScroll"></span>
+                    <span class="date-text"></span>
+                    <span class="time-move time-right" role="dateRightScroll"></span>
+                </div>
+                <div class="group-wrap"></div>
+                <!-- Dashboard 组件配置 -->
+            </div>
+        </div>
+        <!-- 图表内容 -->
+        <div class="dashboard-widget-content">
+            <div class="dashboard-widget-chart" data-echarts-chart="10">
+                <!-- echarts 容器 -->
+                <div class="echarts-container" style="">
+                    <div class="echarts-none"></div>
+                    <div class="echarts-main"></div>
+                </div>
+                <!-- 表格容器 -->
+                <div class="table-container" style=" display:none">
+                    <div class="table-main">
+
+                    </div>
+                    <div class="table-main compare-table"></div>
+                </div>
+            </div>
+        </div>
+        {{ }else if(it.AnalysisType === 'Funnel') { }}
+            <!-- 图表表头 -->
+        <header class="dashboard-widget-header">
+            <div class="dashboard-widget-explain">
+                <h2 title="{{=it.Title}}" data-href=""><a href="/main/user-analysis/{{=it.AnalysisType}}/analysis?id={{=it.UniqueID}}">{{=it.Title}}</a></h2>
+                <div class="dashboard-widget-timerange" title="{{=it.Remark}}">{{=it.Remark}}</div>
+            </div>
+        </header>
+            <!-- Dashboard 组件配置 -->
+            <div class="dashboard-widget-config">
+                <div class="dashboard-widget-dropdown">
+                    <div class="dropdown dashboard-widget-segmentation-timeunit">
+                        <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span class="selected" data-value="3"> <span class="dropdown-selection-label">全部</span> </span> <i class="caret"></i> </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图表内容 -->
+        <div class="dashboard-widget-content">
+            <div class="dashboard-widget-chart" data-echarts-chart="10">
+                <!-- echarts 容器 -->
+                <div class="echarts-container" style="">
+                    <div class="echarts-none"></div>
+                    <div class="channel-per"></div>
+                </div>
+            </div>
+        </div>
+        {{ }else if(it.AnalysisType === 'Retained') { }}
+        <header class="dashboard-widget-header">
+            <div class="dashboard-widget-explain">
+                <h2 title="{{=it.Title}}" data-href=""><a href="/main/user-analysis/{{=it.AnalysisType}}/analysis?id={{=it.UniqueID}}">{{=it.Title}}</a></h2>
+                <div class="dashboard-widget-timerange" title="{{=it.Remark}}">{{=it.Remark}}</div>
+            </div>
+        </header>
+        <!-- Dashboard 组件工具栏 -->
+        <div class="dashboard-widget-toolbar">
+            <div class="dashboard-widget-date-switch">
+                <div class="date-tab">
+                    <span class="time-move time-left" role="dateLeftScroll"></span>
+                    <span class="date-text"></span>
+                    <span class="time-move time-right" role="dateRightScroll"></span>
+                </div>
+                <div class="group-wrap"></div>
+                <!-- Dashboard 组件配置 -->
+            </div>
+        </div>
+        <!-- 图表内容 -->
+        <div class="dashboard-widget-content">
+            <div class="dashboard-widget-chart" data-echarts-chart="10">
+                <!-- echarts 容器 -->
+                <div class="echarts-container" style="">
+                    <div class="echarts-none"></div>
+                    <div class="echarts-main"></div>
+                </div>
+            </div>
+        </div>
+        {{ }else if(it.AnalysisType === 'Revisit') { }}
+        <header class="dashboard-widget-header">
+            <div class="dashboard-widget-explain">
+                <h2 title="{{=it.Title}}" data-href=""><a href="/main/user-analysis/{{=it.AnalysisType}}/analysis?id={{=it.UniqueID}}">{{=it.Title}}</a></h2>
+                <div class="dashboard-widget-timerange" title="{{=it.Remark}}">{{=it.Remark}}</div>
+            </div>
+        </header>
+        <!-- Dashboard 组件工具栏 -->
+        <div class="dashboard-widget-toolbar">
+            <div class="dashboard-widget-date-switch">
+                <div class="date-tab">
+                    <span class="time-move time-left" role="dateLeftScroll"></span>
+                    <span class="date-text"></span>
+                    <span class="time-move time-right" role="dateRightScroll"></span>
+                </div>
+                <div class="group-wrap"></div>
+                <!-- Dashboard 组件配置 -->
+            </div>
+        </div>
+        <!-- 图表内容 -->
+        <div class="dashboard-widget-content">
+            <div class="dashboard-widget-chart" data-echarts-chart="10">
+                <!-- echarts 容器 -->
+                <div class="echarts-container" style="">
+                    <div class="echarts-none"></div>
+                    <div class="echarts-main"></div>
+                </div>
+            </div>
+        </div>
+        {{ }else if(it.AnalysisType === 'Worth') {}}
+        <header class="dashboard-widget-header">
+            <div class="dashboard-widget-explain">
+                <h2 title="{{=it.Title}}" data-href=""><a href="/main/user-analysis/{{=it.AnalysisType}}/analysis?id={{=it.UniqueID}}">{{=it.Title}}</a></h2>
+                <div class="dashboard-widget-timerange" title="{{=it.Remark}}">{{=it.Remark}}</div>
+                <ul class="tool-icon-list charts-icon">
+                    <li role="convertChart" class="radar fa fa-bullseye refresh-charts {{if(it.Config.currentChart == 'radar'){ }}active{{ } }}" data-type="radar"></li>
+                    <li role="convertChart" class="grid fa fa-table refresh-charts {{if(it.Config.currentChart == 'grid'){ }}active{{ } }}" data-type="grid"></li>
+                </ul>
+            </div>
+        </header>
+        <!-- Dashboard 组件配置 -->
+        <div class="dashboard-widget-config">
+            <div class="dashboard-widget-dropdown">
+                <div class="dropdown dashboard-widget-segmentation-timeunit">
+                    <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span id="widgetUnit" class="selected"> <span class="dropdown-selection-label">
+                        按数值
+                    </span> </span> <i class="caret"></i> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li class="select-m active"> <a data-type="select" data-value="num" draggable="false">按数值</a> </li>
+                        <li class="select-m"> <a data-type="select" data-value="score" draggable="false">按分值</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard 组件工具栏 -->
+        <div class="dashboard-widget-toolbar">
+            <div class="dashboard-widget-date-switch">
+                <div class="group-wrap"></div>
+                <!-- Dashboard 组件配置 -->
+            </div>
+        </div>
+        <!-- 图表内容 -->
+        <div class="dashboard-widget-content">
+            <div class="dashboard-widget-chart" data-echarts-chart="10">
+                <!-- echarts 容器 -->
+                <div class="echarts-container" style="">
+                    <div class="echarts-none"></div>
+                    <div class="echarts-main"></div>
+                </div>
+                <!-- 表格容器 -->
+                <div class="table-container" style=" display:none">
+                    <div class="table-main">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ } }}
+    </article>
+    <div class="placeholder-mask"></div>
+</script>
+<script id="overview-group-temp" type="text/x-dot-template">
+    {{if(it.Config.requestData.groupFields.length>0 && it.resData.length>0){
+    var display = it.Config.currentChart!=='grid'?true:false; }}
+    <div class="dashboard-widget-config group-st" style="display: {{=display?'block':'none'}};">
+        <div class="dashboard-widget-dropdown">
+            <div class="dropdown dashboard-widget-segmentation-timeunit">
+                <button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> <span class="selected" data-value="hour"> <span class="dropdown-selection-label">共{{=it.resData[0].chartData.series.length}}组</span> </span> <i class="caret"></i> </button>
+                <ul class="multiselect-container dropdown-menu pull-right" role="menu">
+                    <li class="multiselect-item"><input class="i-search" type="text" placeholder="搜索"/></li>
+                    {{for(var i = 0,itemData = it.resData[0].chartData.series;i < itemData.length;i++){ }}
+                    <li class="multiselect-item {{if(itemData[i].checked){ }}active{{ } }}">
+                        <label class="checkbox {{if(!itemData[i].checked){ }}disabled{{ } }}" data-name="{{=itemData[i].name}}">
+                            <input type="checkbox" {{if(itemData[i].checked){ }}checked="checked"{{ }else{ }}disabled="true"{{ } }} role="groupChecked" data-name="{{=itemData[i].name}}" />{{=itemData[i].name}}</label>
+                    </li>
+                    {{ } }}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <span class="group-right-text" style="display: {{=display?'none':'block'}};">共{{=it.resData[0].chartData.series.length}}组</span>
+    {{ } }}
+</script>
+<script id="funnel-main-temp" type="text/x-dot-template">
+    <ul class="channel-top">
+        <li>{{=it.currentTab}}</li>
+        <li class="pre-num">{{=it.globalRate}}%</li>
+        <li>总体转化率</li>
+    </ul>
+    <ul class="channel-list">
+        {{for(var i=0;i<it.data.length;i++) { }}
+        <li>
+            <span class="type-name">{{=it.requestZhData.funnels[i].actionName_zh}}</span>
+            <span class="pre-bar"><ins style="width: {{=it.data[i].conversionRate}}%"></ins></span>
+            <span class="pre-a-num">{{=it.data[i].convertedUser}}人{{if(i>0){ }}<ins>{{=it.data[i].downRate}}%<em></em></ins>{{ } }}</span>
+        </li>
+        {{ } }}
+    </ul>
+</script>
+<script id="funnel-group-temp" type="text/x-dot-template">
+    <li class="select-m active"><a data-index="0" data-type="select" draggable="false">全部</a> </li>
+    {{for(var i=0;i<it.length;i++) { }}
+    <li data-type="select"><a data-type="select" data-index="{{=i+1}}" draggable="false">{{=it[i]}}</a> </li>
+    {{ } }}
+</script>
+

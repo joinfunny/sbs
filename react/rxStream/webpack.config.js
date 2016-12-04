@@ -10,7 +10,7 @@ module.exports = {
     //插件项 plugins: [commonsPlugin], 页面入口文件配置
     entry: [
         // 写在入口文件之前
-        "webpack-dev-server/client?http://0.0.0.0:8080",
+        "webpack-dev-server/client?http://127.0.0.1:3000",
         "webpack/hot/only-dev-server",
         './public/src/js/entrys/index.js'
     ],
@@ -19,15 +19,9 @@ module.exports = {
         //打包文件存放的绝对路径
         path: __dirname + '/public/dist/',
         //打包后的文件名
-        filename: "./js/entrys/index.js",
-        publicPath: '/'
+        filename: "stream.bundle.js",
+        //publicPath:'/js/'
     },
-    /*devServer: {
-        contentBase: './public',
-        color: true,
-        historyApiFallback: true,
-        inline: true
-    },*/
     module: {
         //加载器配置
         loaders: [
@@ -57,6 +51,6 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        //new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin()
     ]
 };

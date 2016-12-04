@@ -1,0 +1,15 @@
+///* reset */
+@mixin reset{
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,p,form,fieldset{margin:0;padding:0}
+body,input,textarea,select,button,table{font-size:12px;}
+body{-webkit-text-size-adjust:none;}
+img{border:0;vertical-align:top}
+fieldset{border:0}
+ul,ol{list-style:none}
+em,address{font-style:normal}
+table{border-collapse:collapse}
+input[type="text"]{-webkit-tap-highlight-color: rgba(255,0,0,0); /*-webkit-appearance: none;*/}
+a{color:#444;text-decoration:none;-webkit-appearance:none;-webkit-tap-highlight-color:rgba(255,0,0,0);}
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0)}
+*, *:before, *:after { @include prefixer(box-sizing, border-box); }
+}

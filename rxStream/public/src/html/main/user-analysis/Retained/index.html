@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>留存分析-数据概览</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/css/main/overview-list.css">
+    <% include ../../inc/base-script.html %>
+</head>
+<body>
+<div class="overviews-wrapper user-analysis">
+  <ul class="overview-list" data-role="Retained">
+    <li class="overview overview-new"><a href="/main/user-analysis/Retained/analysis?new" class="overview-link"> </a></li>
+</ul>
+</div> 
+    <script id="overview-temp" type="text/x-dot-template">
+    {{if(it && it.length>0) { for(var i=0;i<it.length;i++){ var curOverView=it[i];}}
+        <li class="overview" data-overview-id="{{= curOverView.UniqueID }}">
+            <% include ../../inc/overview-remove.html %>
+            <a href="/main/user-analysis/Retained/analysis?id={{= curOverView.UniqueID }}" class="overview-link">
+                <div class="icons-analysis">
+                        <ul>
+                          <li class="icon-retained"></li>
+                        </ul>
+                      </div>
+                      <div class="overview-content">
+                        <div class="overview-header">
+                          <h2 class="overview-h" title="{{= curOverView.Title}}">{{= curOverView.Title}}</h2>
+                        </div>
+                        <div class="overview-body">
+                          <p class="description"><span>{{= curOverView.Remark}}</span></p>
+                          <!--<p class="description"><span>后续行为：</span>从用户浏览到注册用户</p>
+                          <p class="description"><span>筛选条件：</span>性别（男）</p>-->
+                        </div>
+                        <div class="overview-footer">
+                          <p class="last-update"><span class="date">更新时间：{{= curOverView.LastTime}}</span></p>
+                        </div>
+                      </div>
+            </a>
+        </li>
+        {{
+ }
+  }
+        }}
+    </script>
+    <script src="/js/main/user-analysis/Retained/index.js"></script>
+</body>
+</html>

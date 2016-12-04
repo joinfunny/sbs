@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <title>登录 | RX STREAM</title>
+    <script>top!==window&&(top.location.href=location.href)</script>
+    <link rel="stylesheet" href="css/main/login.css">
+    <% include main/inc/base-script.html %>
+</head>
+
+<body>
+    <div class="login-warp login-w">
+        <div class="login-inner" style="display: block">
+            <div class="login-header login-bg">
+                <a href="#" class="header-icon help"></a>
+                <a href="#" class="header-icon close-new"></a>
+            </div>
+            <form autocomplete="off">
+            <ul class="input-area">
+                <li>
+                    <p class="global-tips"></p>
+                    <input type="text" name="username" placeholder="请输入您的账号" />
+                    <span class="error-tips"><ins></ins><i>请输入您的密码</i></span>
+                </li>
+                <li>
+                    <input name="password" placeholder="请输入您的密码" type="password" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+            </ul>
+            <ul class="button-area">
+                <li><button class="login-bt" type="button" id="j_btn_login">用户登录</button></li>
+                <li><a class="go-reg-bt" href="javascript:;">注册新用户</a><a href="#" class="forget-pas">忘记密码?</a></li>
+            </ul>
+            </form>
+        </div>
+        <div class="reg-inner" style="display: none;">
+            <div class="login-header reg-bg">
+                <a href="#" class="header-icon help"></a>
+                <a href="#" class="header-icon close-new"></a>
+            </div>
+            <ul class="input-area">
+                <li>
+                    <p class="global-tips"></p>
+                    <input type="text" id="regUserName" name="regUserName" placeholder="系统登录账号" maxlength="20" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+                <li>
+                    <input id="regPwd" name="regPwd" placeholder="系统登录密码" type="password" maxlength="20" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+            </ul>
+            <ul class="input-area cut-line">
+                <li>
+                    <input name="userAppellation" placeholder="您的称呼, 例:  王先生/李女士" type="text" maxlength="20" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+                <li>
+                    <input id="tel" name="tel" placeholder="您的手机号码" type="tel" maxlength="11" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+                <li>
+                    <input id="email" name="email" placeholder="您的常用邮箱" type="email" maxlength="100" />
+                    <span class="error-tips"><ins></ins><i></i></span>
+                </li>
+            </ul>
+            <ul class="button-area">
+                <li><button class="login-bt" type="button" id="j_btn_registUser">完成注册</button></li>
+                <li class="back-login"><a href="javascript:void(0);">立即登录</a></li>
+            </ul>
+            <p class="reg-tips">我们将会对您的个人信息严格保密。</p>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+    <script src="js/registUser.js"></script>
+</body>
+
+</html>

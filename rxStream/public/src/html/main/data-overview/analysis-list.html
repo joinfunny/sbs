@@ -1,0 +1,35 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>用户行为分析</title>
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="/css/main/common.css">
+<link rel="stylesheet" href="/css/main/data-overview/common.css">
+<link rel="stylesheet" href="/css/main/data-overview/analysis-list.css">
+<% include ../inc/base-script.html %>
+</head>
+<body>
+<!-- Dashboard 页眉 -->
+<% include inc/my-dashboard-head.html %>  
+
+<!-- 右侧分析列表面板 -->
+<% include ../inc/analysis-list-panel.html %>  
+
+<!-- 没有分析的 Dashboard -->
+<% include inc/dashboard-blank-slate.html %>  
+
+<!-- Dashboard 分析组件列表 -->
+<div class="dashboard-widgets-list"  data-uniqueid="<%= id %>"> 
+
+  <!-- Dashboard 分析组件 -->
+<% include inc/dashboard-widget-wrapper.html %>
+  
+</div>
+<% if(formData) { %>
+<input type="hidden" value="<%=formData%>" id="filter-input" />
+<% } %>
+<script src="/js/main/data-overview/analysis-list.js"></script>
+</body>
+</html>

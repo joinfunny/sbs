@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SpriteFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CssFileName="../images" ImageName="login_icons" IsPhone="false" SpriteImgFileType="Png" xmlns="CssSprite">
+  <SpriteList>
+    <Sprite Path="icon-refresh.png" LocationX="0" LocationY="0" />
+    <Sprite Path="icon-pwd.png" LocationX="0" LocationY="16" />
+    <Sprite Path="icon-email.png" LocationX="0" LocationY="32" />
+    <Sprite Path="login-tdcode.png" LocationX="0" LocationY="48" />
+    <Sprite Path="login-sina.png" LocationX="0" LocationY="72" />
+    <Sprite Path="login-qq.png" LocationX="0" LocationY="96" />
+  </SpriteList>
+</SpriteFile>

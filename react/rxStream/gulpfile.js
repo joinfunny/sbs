@@ -59,15 +59,15 @@ gulp.task("webpack", shell.task(['webpack -p --progress --colors']));*/
 
 gulp.task("lib", function () {
     return gulp.src([
-            opts.srcDir + '/js/lib/jquery/jquery-3.1.1.js',
-            opts.srcDir + '/js/lib/lodash/lodash.js',
+            opts.srcDir + '/lib/jquery/jquery-3.1.1.js',
+            opts.srcDir + '/lib/lodash/lodash.js',
             /*opts.srcDir + '/js/lib/react/react.js',
             opts.srcDir + '/js/lib/react/react-dom.js',
             opts.srcDir + '/js/lib/react/react-with-addons.js',
             opts.srcDir + '/js/lib/react/react-router.js'*/
         ])
         .pipe(concat('lib.js'))
-        .pipe(gulp.dest(opts.srcDir + '/js/lib/'));
+        .pipe(gulp.dest(opts.srcDir + '/lib/'));
 });
 
 
@@ -82,10 +82,10 @@ gulp.task('watchsass', function () {
 
 gulp.task('copy:js', function () {
     gulp.src([
-            opts.srcDir + '/js/**/libs/*.js',
+            opts.srcDir + '/libs/*.js',
             //opts.srcDir + '/js/**/plugins/*.js'
         ])
-        .pipe(gulp.dest(opts.buildDir + '/js/'));
+        .pipe(gulp.dest(opts.buildDir + '/libs/'));
 });
 
 gulp.task('copy:img', function () {
@@ -131,7 +131,7 @@ gulp.task("webpack-u", shell.task(['webpack --progress --colors']));
 
 gulp.task("webpack-w", shell.task(['webpack --display-error-details --progress --colors --watch']));
 
-gulp.task("webpack-dev-server", shell.task(['webpack-dev-server --hot --inline --content-base ./public/src']));
+gulp.task("webpack-dev-server", shell.task(['webpack-dev-server --hot --inline --content-base ./public/src --port 3000']));
 
 gulp.task('default', ['webpack-dev-server', 'sassfile', 'watchsass']);
 

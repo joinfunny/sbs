@@ -5,6 +5,6 @@
  import Header from '../components/header/header.js';
 
 render(( 
-    <Header />
+    <Header   />
 ), document.getElementById('app'));
 
