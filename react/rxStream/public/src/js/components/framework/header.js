@@ -1,8 +1,6 @@
 'use stricts';
-
 import React from "react";
 import { render } from "react-dom";
-//import { Router, Route, Link, hashHistory, IndexRoute, Redirect, IndexLink} from 'react-router';
 
 export default class Header extends React.Component {
 
@@ -35,12 +33,12 @@ export default class Header extends React.Component {
                                     )
                                 })
                             }
-                            <li data-appId="0" role="switchApp">+新建 应用</li>
+                            <li data-appId="0" role="switchApp">+新建应用</li>
                         </ul>
                     </div>
                     </div>
                 </div>
-                <div className="header-data-count">数据总数：<span>-1-</span></div>
+                <div className="header-data-count">数据总数：<span>--</span></div>
                 <div className="header-right">
                     <ul>
                         <li><a href="javascript:void(0);"><img src="../css/main/img/name.png" /><span className="wel-come"><b className="user-name">{ this.state.userName ? ('欢迎' + this.state.userName) :'' }</b></span></a></li>
