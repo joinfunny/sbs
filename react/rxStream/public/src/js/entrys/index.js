@@ -6,8 +6,13 @@
 
  import LeftNavigations from '../components/framework/left.js';
 
+ import Main from '../components/framework/main.js';
+
 render(( 
-    <Header />,
-    <LeftNavigations />
+    <div>
+        <Header />
+        <LeftNavigations />
+        <Main />
+    </div>
 ), document.getElementById('app'));
 

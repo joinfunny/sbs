@@ -4,20 +4,27 @@ import {render} from "react-dom";
 
 class Navigation extends React.Component{
     render(){
-        return <ul className={this.props.className}>
-                {
-                    this.props.navigations.map(function (navigation,index)
-                    {
-                       return <li key={navigation.id}>
-                                <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title}>
-                                    <i className={navigation.icon} aria-hidden="true"></i>
-                                    <span>{navigation.title}</span>
-                                </a>
-                              </li>
-                        return <Navigation navigations={navigation.children} />
+        var navigation = this.props.navigation; 
+        var hasChildren = navigation.children && navigation.children.length > 0;
+        var childrenElement;
+        var children = navigation.children||[];
+        if(hasChildren){
+            childrenElement = (<ul>
+            {
+                children.map(function(child,index){
+                        return <Navigation navigation={child} key={child.id} /> 
                     })
-                }
-               </ul>
+            }
+            </ul>);
+        }
+         
+        return (<li key={navigation.id}>
+                    <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title}>
+                        <i className={navigation.icon} aria-hidden="true"></i>
+                        <span>{navigation.title}</span>
+                    </a>
+                    {childrenElement}
+                </li>);
     }
 }
 
@@ -27,31 +34,21 @@ export default class LeftNavigations extends React.Component {
     }
     
     render() {
-        return (
-            <div className="left">
-                <h1 className="left-logo"></h1>
-                <ul className="left-menu">
-                {
-                    console.log(this.props.navigations)
-                    this.props.navigations.map(function (navigation,index)
-                    {
-                        return <li key={navigation.id} className={navigation.selected?"branch-actived":""}>
-                            <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title}>
-                                <i className={navigation.icon} aria-hidden="true"></i>
-                                <span>{navigation.title}</span>
-                            </a>
-                        return <Navigation navigations={navigation.children} />
-                        </li>
-                    })
-                }
-                </ul>
-            </div>
-        )
+        return (<div className="left">
+                    <h1 className="left-logo"></h1>
+                    <ul className="left-menu">
+                        {
+                            this.props.navigations.map(function(child,index){
+                                return <Navigation navigation={child} key={child.id} /> 
+                            })
+                        }
+                    </ul>
+                </div>);
     }
 };
 
 LeftNavigations.defaultProps = {
-    navigations : [
+     navigations:[
         {
             id: "data_overview",
             title: "我的数据概览",
