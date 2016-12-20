@@ -3,11 +3,26 @@ import React from "react";
 import {render} from "react-dom";
 
 class Navigation extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected : false
+        };
+    }
+    
+
+    onHandeClick(target,e){
+        this.setState({
+            selected:!this.state.selected
+        });
+    }
+
     render(){
         var navigation = this.props.navigation; 
         var hasChildren = navigation.children && navigation.children.length > 0;
         var childrenElement;
         var children = navigation.children||[];
+        var navigationState=this.state||{};
         if(hasChildren){
             childrenElement = (<ul>
             {
@@ -18,8 +33,8 @@ class Navigation extends React.Component{
             </ul>);
         }
          
-        return (<li key={navigation.id}>
-                    <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title}>
+        return (<li key={navigation.id} className={navigationState.selected?"branch-actived":""}>
+                    <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title} onClick={(e)=>this.onHandeClick(e)}>
                         <i className={navigation.icon} aria-hidden="true"></i>
                         <span>{navigation.title}</span>
                     </a>
@@ -80,13 +95,13 @@ LeftNavigations.defaultProps = {
                     id:"data_custom_event",
                     title:"自定义事件",
                     icon:"icon fa fa-pencil",
-                    href:"main/data-access/custom-events"
+                    href:"#main/data-access/custom-events"
                 },
                 {
                     id:"data_custom_object",
                     title:"事件对象",
                     icon:"icon fa fa-book",
-                    href:"main/data-access/event-object"
+                    href:"#main/data-access/event-object"
                 }
             ]
         }

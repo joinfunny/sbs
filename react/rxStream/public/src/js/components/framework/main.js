@@ -7,9 +7,17 @@ export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            content:'欢迎'
-        }
+            content:'欢迎使用RX STREAM'
+        };
     }
+    
+    componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        content: '加载完毕'
+      });
+    }, 1000);
+  }
 
     render() {
         return (
