@@ -83,7 +83,7 @@ class Navigation extends React.Component{
             {
                 navigation.children.map(function(child,index){
                         return <Navigation ref={child.id} navigation={child} key={child.id} onChildSelected = {(e)=>this.onChildSelected(e)} /> 
-                    }.bind(this))
+                    },this)
             }
             </ul>);
         }
@@ -110,7 +110,7 @@ export default class LeftNavigations extends Navigation {
                         {
                             this.props.navigations.map(function(child,index){
                                 return <Navigation ref={child.id} navigation={child} key={child.id} onChildSelected={(e)=>this.onChildSelected(e)} /> 
-                            }.bind(this))
+                            },this)
                         }
                     </ul>
                 </div>);
