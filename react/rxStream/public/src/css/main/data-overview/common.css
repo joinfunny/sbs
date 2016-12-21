@@ -1,8 +1,8 @@
+@charset "UTF-8";
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot");
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
-
 .glyphicon {
   position: relative;
   top: 1px;
@@ -911,7 +911,8 @@ select,
 textarea {
   color: inherit;
   font: inherit;
-  margin: 0; }
+  margin: 0;
+  color: rgba(0, 0, 0, 0.87); }
 
 button {
   overflow: visible; }
@@ -1009,8 +1010,7 @@ th {
     -ms-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     -o-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
-  .btn.disabled, .btn[disabled],
-  fieldset[disabled] .btn {
+  .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
     -webkit-opacity: 0.65;
     -moz-opacity: 0.65;
@@ -1022,8 +1022,7 @@ th {
     -ms-box-shadow: none;
     -o-box-shadow: none;
     box-shadow: none; }
-  .btna.disabled,
-  fieldset[disabled] .btna {
+  .btna.disabled, fieldset[disabled] .btna {
     pointer-events: none; }
 
 .btn-default {
@@ -1204,8 +1203,7 @@ th {
   color: #337ab7;
   font-weight: normal;
   border-radius: 0; }
-  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled],
-  fieldset[disabled] .btn-link {
+  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -1218,9 +1216,7 @@ th {
     color: #23527c;
     text-decoration: underline;
     background-color: transparent; }
-  .btn-link[disabled]:hover, .btn-link[disabled]:focus,
-  fieldset[disabled] .btn-link:hover,
-  fieldset[disabled] .btn-link:focus {
+  .btn-link[disabled]:hover, .btn-link[disabled]:focus, fieldset[disabled] .btn-link:hover, fieldset[disabled] .btn-link:focus {
     color: #777777;
     text-decoration: none; }
 
@@ -1398,8 +1394,10 @@ body {
         -o-opacity: 0.8;
         opacity: 0.8; }
     .my-dashboard-head .handle-list .icon-save {
-      background-image: url(../../img/main/icon-save.png); }
+      background-image: url(../../img/main/icon-save-grey.png); }
       .my-dashboard-head .handle-list .icon-save.grey {
+        opacity: .5;
+        cursor: no-drop;
         background-image: url(../../img/main/icon-save-grey.png); }
       .my-dashboard-head .handle-list .icon-save:hover {
         -webkit-opacity: 0.8;
@@ -1407,6 +1405,10 @@ body {
         -ms-opacity: 0.8;
         -o-opacity: 0.8;
         opacity: 0.8; }
+      .my-dashboard-head .handle-list .icon-save.icon-loading {
+        background: url(../../img/loading/save_loading.gif) center no-repeat; }
+        .my-dashboard-head .handle-list .icon-save.icon-loading:before {
+          visibility: hidden; }
   .my-dashboard-head .handle-menu {
     float: right;
     height: 55px;
@@ -1688,106 +1690,165 @@ body {
     vertical-align: middle;
     color: #fff; }
 
+/* 提示框 */
+.prompt-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -200px;
+  width: 400px;
+  height: 100px;
+  -webkit-transform: scale(0, 0);
+  -moz-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  -o-transform: scale(0, 0);
+  transform: scale(0, 0);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  -ms-box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.5);
+  z-index: 32767;
+  font-size: 18px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #fff; }
+  .prompt-box i:before {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    display: -moz-inline-box;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background-color: #35F13E;
+    font-size: 40px;
+    vertical-align: middle;
+    color: #fff; }
+
+.prompt-box-success, .prompt-box-failure {
+  -webkit-animation-name: prompt-box-animation;
+  -moz-animation-name: prompt-box-animation;
+  -ms-animation-name: prompt-box-animation;
+  -o-animation-name: prompt-box-animation;
+  animation-name: prompt-box-animation;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  -ms-animation-duration: 1s;
+  -o-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  -ms-animation-timing-function: ease-in-out;
+  -o-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-delay: 0s;
+  -moz-animation-delay: 0s;
+  -ms-animation-delay: 0s;
+  -o-animation-delay: 0s;
+  animation-delay: 0s;
+  -webkit-animation-iteration-count: 2;
+  -moz-animation-iteration-count: 2;
+  -ms-animation-iteration-count: 2;
+  -o-animation-iteration-count: 2;
+  animation-iteration-count: 2;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -ms-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-play-state: running;
+  -moz-animation-play-state: running;
+  -ms-animation-play-state: running;
+  -o-animation-play-state: running;
+  animation-play-state: running; }
+
+.prompt-box-success i:before {
+  background-color: #35F13E; }
+
+.prompt-box-failure i:before {
+  background-color: #e55b41; }
+
+/* 拖拽目标提示 */
+@-webkit-keyframes prompt-box-animation {
+  0% {
+    -webkit-transform: scale(0, 0); }
+  40% {
+    -webkit-transform: scale(1, 1); }
+  100% {
+    -webkit-transform: scale(1, 1); } }
+@-moz-keyframes prompt-box-animation {
+  0% {
+    -moz-transform: scale(0, 0); }
+  40% {
+    -moz-transform: scale(1, 1); }
+  100% {
+    -moz-transform: scale(1, 1); } }
+@-ms-keyframes prompt-box-animation {
+  0% {
+    -ms-transform: scale(0, 0); }
+  40% {
+    -ms-transform: scale(1, 1); }
+  100% {
+    -ms-transform: scale(1, 1); } }
+@-o-keyframes prompt-box-animation {
+  0% {
+    -o-transform: scale(0, 0); }
+  40% {
+    -o-transform: scale(1, 1); }
+  100% {
+    -o-transform: scale(1, 1); } }
+@keyframes prompt-box-animation {
+  0% {
+    transform: scale(0, 0); }
+  40% {
+    transform: scale(1, 1); }
+  100% {
+    transform: scale(1, 1); } }
 @-webkit-keyframes save-hint {
   0% {
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
-    transform: scale(0, 0); }
+    -webkit-transform: scale(0, 0); }
   40% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); }
+    -webkit-transform: scale(1, 1); }
   100% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); } }
-
+    -webkit-transform: scale(1, 1); } }
 @-moz-keyframes save-hint {
   0% {
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
-    transform: scale(0, 0); }
+    -moz-transform: scale(0, 0); }
   40% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); }
+    -moz-transform: scale(1, 1); }
   100% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); } }
-
+    -moz-transform: scale(1, 1); } }
 @-ms-keyframes save-hint {
   0% {
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
-    transform: scale(0, 0); }
+    -ms-transform: scale(0, 0); }
   40% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); }
+    -ms-transform: scale(1, 1); }
   100% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); } }
-
+    -ms-transform: scale(1, 1); } }
 @-o-keyframes save-hint {
   0% {
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
-    transform: scale(0, 0); }
+    -o-transform: scale(0, 0); }
   40% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); }
+    -o-transform: scale(1, 1); }
   100% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1); } }
-
+    -o-transform: scale(1, 1); } }
 @keyframes save-hint {
   0% {
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
     transform: scale(0, 0); }
   40% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
     transform: scale(1, 1); }
   100% {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
-
 .message-tips {
   z-index: 101;
   width: 600px;

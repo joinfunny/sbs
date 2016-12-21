@@ -2,7 +2,6 @@
   font-family: 'Glyphicons Halflings';
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot");
   src: url("/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("/fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("/fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
-
 .glyphicon {
   position: relative;
   top: 1px;
@@ -911,7 +910,8 @@ select,
 textarea {
   color: inherit;
   font: inherit;
-  margin: 0; }
+  margin: 0;
+  color: rgba(0, 0, 0, 0.87); }
 
 button {
   overflow: visible; }
@@ -1009,8 +1009,7 @@ th {
     -ms-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     -o-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
-  .btn.disabled, .btn[disabled],
-  fieldset[disabled] .btn {
+  .btn.disabled, .btn[disabled], fieldset[disabled] .btn {
     cursor: not-allowed;
     -webkit-opacity: 0.65;
     -moz-opacity: 0.65;
@@ -1022,8 +1021,7 @@ th {
     -ms-box-shadow: none;
     -o-box-shadow: none;
     box-shadow: none; }
-  .btna.disabled,
-  fieldset[disabled] .btna {
+  .btna.disabled, fieldset[disabled] .btna {
     pointer-events: none; }
 
 .btn-default {
@@ -1204,8 +1202,7 @@ th {
   color: #337ab7;
   font-weight: normal;
   border-radius: 0; }
-  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled],
-  fieldset[disabled] .btn-link {
+  .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled], fieldset[disabled] .btn-link {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -1218,9 +1215,7 @@ th {
     color: #23527c;
     text-decoration: underline;
     background-color: transparent; }
-  .btn-link[disabled]:hover, .btn-link[disabled]:focus,
-  fieldset[disabled] .btn-link:hover,
-  fieldset[disabled] .btn-link:focus {
+  .btn-link[disabled]:hover, .btn-link[disabled]:focus, fieldset[disabled] .btn-link:hover, fieldset[disabled] .btn-link:focus {
     color: #777777;
     text-decoration: none; }
 
@@ -1376,11 +1371,20 @@ body {
     -moz-transform: rotateY(0deg);
     opacity: 1; }
   .login-warp.login-w {
-    height: 510px;
-    margin-top: -255px; }
+    height: 495px;
+    margin-top: -247.5px; }
   .login-warp.reg-w {
-    height: 670px;
-    margin-top: -335px; }
+    height: 615px;
+    margin-top: -307.5px; }
+  .login-warp.reg-w-step-1 {
+    height: 282px;
+    margin-top: -141px; }
+  .login-warp.reg-w-step-1-2 {
+    height: 340px;
+    margin-top: -170px; }
+  .login-warp.forget-w {
+    height: 450px;
+    margin-top: -225px; }
   .login-warp .login-header {
     border-radius: 3px 3px 0 0;
     text-align: right;
@@ -1400,29 +1404,61 @@ body {
     background: url("img/login-head.png") #59c8e2 no-repeat center 55px; }
     .login-warp .login-inner .login-header.login-bg .header-icon.close-new {
       display: none; }
-  .login-warp .reg-inner {
+  .login-warp .reg-inner .login-header.reg-bg {
+    height: 168px;
+    background: url("img/reg-head.png") no-repeat center 80px, url("img/reg-bg.png") no-repeat center bottom #59c8e2; }
+  .login-warp .reg-inner .reg-success {
+    padding-top: 120px; }
+  .login-warp .forget-inner .login-header.reg-bg {
+    height: 168px;
+    background: url("img/forget-head.png") no-repeat center 80px, url("img/reg-bg.png") no-repeat center bottom #59c8e2; }
+  .login-warp .forget-inner .reg-success {
+    padding-top: 50px; }
+  .login-warp .reg-inner, .login-warp .forget-inner {
     opacity: 0; }
-    .login-warp .reg-inner .login-header.reg-bg {
-      height: 168px;
-      background: url("img/reg-head.png") no-repeat center 80px, url("img/reg-bg.png") no-repeat center bottom #59c8e2; }
-    .login-warp .reg-inner .input-area {
+    .login-warp .reg-inner .input-area, .login-warp .forget-inner .input-area {
       padding-bottom: 10px; }
-      .login-warp .reg-inner .input-area.cut-line {
+      .login-warp .reg-inner .input-area.cut-line, .login-warp .forget-inner .input-area.cut-line {
         padding-top: 10px; }
-    .login-warp .reg-inner .button-area {
-      padding: 0 45px; }
-      .login-warp .reg-inner .button-area .back-login {
+      .login-warp .reg-inner .input-area .reg-title, .login-warp .forget-inner .input-area .reg-title {
+        text-align: center;
+        font-size: 14px;
+        color: #888888; }
+    .login-warp .reg-inner .button-area, .login-warp .forget-inner .button-area {
+      padding: 0 45px;
+      border-top: none; }
+      .login-warp .reg-inner .button-area .back-login, .login-warp .forget-inner .button-area .back-login {
         text-align: center;
         padding: 0px; }
-    .login-warp .reg-inner .reg-tips {
+    .login-warp .reg-inner .reg-tips, .login-warp .forget-inner .reg-tips {
       border-top: solid #eeeeee 1px;
       text-align: center;
       color: #c2c2c2;
-      margin-top: 5px;
+      margin-top: 13px;
       padding-top: 20px; }
+    .login-warp .reg-inner.step-1 .input-area, .login-warp .forget-inner.step-1 .input-area {
+      padding: 30px 45px 45px 45px; }
+    .login-warp .reg-inner.step-get-code .input-area, .login-warp .forget-inner.step-get-code .input-area {
+      padding: 30px 45px 45px 45px; }
+    .login-warp .reg-inner .reg-success, .login-warp .forget-inner .reg-success {
+      width: 100%; }
+      .login-warp .reg-inner .reg-success .reg-success-icon, .login-warp .forget-inner .reg-success .reg-success-icon {
+        background: url("img/reg_success.png") no-repeat;
+        width: 56px;
+        height: 56px;
+        margin: 0 auto; }
+      .login-warp .reg-inner .reg-success .reg-success-tips, .login-warp .forget-inner .reg-success .reg-success-tips {
+        text-align: center;
+        padding-top: 25px;
+        font-size: 24px;
+        color: #5a5a5a; }
+      .login-warp .reg-inner .reg-success .reg-location-tips, .login-warp .forget-inner .reg-success .reg-location-tips {
+        text-align: center;
+        padding-top: 50px;
+        font-size: 14px;
+        color: #b4b4b4; }
   .login-warp .input-area {
-    border-bottom: solid #eeeeee 1px;
-    padding: 25px 45px; }
+    padding: 20px 45px 15px 45px; }
     .login-warp .input-area.cut-line {
       border-bottom: 0;
       padding-bottom: 8px; }
@@ -1437,7 +1473,7 @@ body {
         left: 0;
         width: 100%;
         display: none; }
-      .login-warp .input-area li input {
+      .login-warp .input-area li input:not([type="checkbox"]) {
         border-radius: 2px;
         border: solid #dedede 1px;
         background-color: #f6f8f9;
@@ -1448,14 +1484,47 @@ body {
         text-indent: 1em;
         -webkit-tap-highlight-color: transparent;
         outline: none; }
-        .login-warp .input-area li input:focus {
+        .login-warp .input-area li input:not([type="checkbox"]):focus {
           border: solid #59c8e2 1px; }
-        .login-warp .input-area li input.input-error {
+        .login-warp .input-area li input:not([type="checkbox"]).input-error {
           border: solid #fbb31b 1px; }
-        .login-warp .input-area li input.code {
+        .login-warp .input-area li input:not([type="checkbox"]).code {
           width: 200px; }
-        .login-warp .input-area li input.right {
-          background: url("img/yes-icon.png") no-repeat 284px 13px #f6f8f9; }
+        .login-warp .input-area li input:not([type="checkbox"]).right {
+          background: url("img/yes-icon.png") no-repeat 95% 13px #f6f8f9; }
+      .login-warp .input-area li input[type="checkbox"] {
+        vertical-align: middle;
+        margin-right: 5px;
+        margin-top: -2px; }
+      .login-warp .input-area li .get-code-bt {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #fbb31b;
+        color: #FFFFFF;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        -webkit-tap-highlight-color: transparent;
+        outline: none; }
+        .login-warp .input-area li .get-code-bt:hover {
+          background-color: #f8aa04; }
+        .login-warp .input-area li .get-code-bt.disabled {
+          background-color: #b4b4b4;
+          cursor: no-drop; }
+          .login-warp .input-area li .get-code-bt.disabled:hover {
+            background-color: #a7a7a7; }
+      .login-warp .input-area li.code-input-warp {
+        display: none; }
+      .login-warp .input-area li .forget-pas {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        color: #c2c2c2; }
     .login-warp .input-area .error-tips {
       position: absolute;
       background-color: #fbb31b;
@@ -1483,7 +1552,8 @@ body {
         font-style: normal;
         display: inline; }
   .login-warp .button-area {
-    padding: 25px 45px; }
+    padding: 17px 45px;
+    border-top: solid #eeeeee 1px; }
     .login-warp .button-area li {
       padding: 10px 0;
       position: relative; }
@@ -1521,8 +1591,34 @@ body {
         .login-warp .button-area li .go-reg-bt:hover {
           background: #43c1de;
           text-decoration: none; }
-      .login-warp .button-area li .forget-pas {
-        position: absolute;
-        top: 65px;
-        right: 0;
-        color: #c2c2c2; }
+
+.header-button {
+  text-align: right;
+  padding: 35px 55px 0 0; }
+  .header-button a {
+    display: inline-block;
+    padding: 8px 25px;
+    font-size: 14px;
+    color: #FFFFFF; }
+    .header-button a.header-login-bt {
+      color: #59c8e2; }
+    .header-button a.header-test-bt {
+      color: #fbb31b; }
+    .header-button a:hover {
+      background-color: #423b27;
+      border-radius: 3px; }
+
+.message-tips {
+  width: 600px;
+  position: absolute;
+  height: 50px;
+  line-height: 50px;
+  top: -80px;
+  left: 50%;
+  margin-left: -300px;
+  background-color: #4a90e2;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 5px; }
