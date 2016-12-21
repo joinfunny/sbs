@@ -11,51 +11,106 @@ class Navigation extends React.Component{
     }
     
 
-    onHandeClick(target,e){
-        this.setState({
-            selected:!this.state.selected
-        });
+    onHandleClick(target,e){
+        
+        var state = this.state;
+
+        if(this.props.navigation.children) return;
+
+        this.setState({ selected:!state.selected });
+
+        this.props.onChildSelected && this.props.onChildSelected(this);
+    }
+
+    /**
+    componentWillMount(){
+        console.log('componentWillMount...');
+    }
+
+    componentDidMount(){
+        console.log('componentDidMount...');
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log('componentWillReceiveProps...');
+    }
+    
+    shouldComponentUpdate(nextProps, nextState){
+        console.log('shouldComponentUpdate...');
+        return true;
+    }
+
+    componentWillUpdate(nextProps, nextState){
+        console.log('componentWillUpdate...');
+    }
+
+    componentDidUpdate(){
+        console.log('componentDidUpdate...');
+    }    
+
+    componentWillUnmount(){
+        console.log('componentWillUnmount...');
+    }
+    */
+
+    unSelectTreeNode(node){
+        node.setState({selected:false});
+        for(var i in node.refs){
+            this.unSelectTreeNode(node.refs[i]);            
+        }
+    }
+    
+    onChildSelected(child){
+        
+        this.setState({selected: !child.state.selected});
+        
+        for(var i in this.refs){
+            var item = this.refs[i];
+            item!=child && this.unSelectTreeNode(item);
+        }
+
+        this.props.onChildSelected && this.props.onChildSelected(this);
+        
     }
 
     render(){
+        var children;
+        var navigationState = this.state||{};
         var navigation = this.props.navigation; 
-        var hasChildren = navigation.children && navigation.children.length > 0;
-        var childrenElement;
-        var children = navigation.children||[];
-        var navigationState=this.state||{};
-        if(hasChildren){
-            childrenElement = (<ul>
+        
+        if(navigation.children && navigation.children.length > 0){
+            children = (<ul>
             {
-                children.map(function(child,index){
-                        return <Navigation navigation={child} key={child.id} /> 
-                    })
+                navigation.children.map(function(child,index){
+                        return <Navigation ref={child.id} navigation={child} key={child.id} onChildSelected = {(e)=>this.onChildSelected(e)} /> 
+                    }.bind(this))
             }
             </ul>);
         }
          
         return (<li key={navigation.id} className={navigationState.selected?"branch-actived":""}>
-                    <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title} onClick={(e)=>this.onHandeClick(e)}>
+                    <a id={navigation.id} className="tree-a" href={navigation.href} title={navigation.title} onClick={(e)=>this.onHandleClick(e)} >
                         <i className={navigation.icon} aria-hidden="true"></i>
                         <span>{navigation.title}</span>
                     </a>
-                    {childrenElement}
+                    {children}
                 </li>);
     }
 }
 
-export default class LeftNavigations extends React.Component {
+export default class LeftNavigations extends Navigation {
     constructor(props) {
         super(props);
     }
-    
+
     render() {
         return (<div className="left">
                     <h1 className="left-logo"></h1>
                     <ul className="left-menu">
                         {
                             this.props.navigations.map(function(child,index){
-                                return <Navigation navigation={child} key={child.id} /> 
-                            })
+                                return <Navigation ref={child.id} navigation={child} key={child.id} onChildSelected={(e)=>this.onChildSelected(e)} /> 
+                            }.bind(this))
                         }
                     </ul>
                 </div>);
